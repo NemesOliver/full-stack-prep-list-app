@@ -3,15 +3,33 @@ import { connect } from "react-redux";
 import { changeHeaderTitle, fetchDishes } from "../../actions";
 
 // Material UI Core
-import { useTheme } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import SwipeableViews from "react-swipeable-views";
 import Container from "@material-ui/core/Container";
-import Paper from "@material-ui/core/Paper";
+import Paper from "@material-ui/core/paper";
+import Typography from "@material-ui/core/Typography";
+import {
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
+  TextField,
+} from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: "100%",
+    backgroundColor: theme.palette.background.paper,
+  },
+}));
+
 const DishEdit = ({ changeHeaderTitle, fetchDishes, dishes }) => {
+  const classes = useStyles();
   const theme = useTheme();
+
   //State
   const [value, setValue] = useState(0);
 
@@ -28,6 +46,8 @@ const DishEdit = ({ changeHeaderTitle, fetchDishes, dishes }) => {
     setValue(index);
   };
 
+  const sections = ["teppan", "wok", "fry"];
+
   const TabPanel = (props) => {
     const { children, value, index, ...other } = props;
 
@@ -38,7 +58,11 @@ const DishEdit = ({ changeHeaderTitle, fetchDishes, dishes }) => {
         id={`simple-tabpanel-${index}`}
         {...other}
       >
-        {value === index && <Container>{children}</Container>}
+        {value === index && (
+          <Container maxWidth="md">
+            <List className={classes.root}>{children}</List>
+          </Container>
+        )}
       </div>
     );
   };
@@ -62,6 +86,26 @@ const DishEdit = ({ changeHeaderTitle, fetchDishes, dishes }) => {
         index={value}
         onChangeIndex={handleChangeIndex}
       >
+        {sections.map((section, index) => {
+          return (
+            <TabPanel key={index} value={value} index={index}>
+              {dishes.map((dish) => {
+                if (dish.section === section) {
+                  return (
+                    <ListItem key={dish._id}>
+                      <ListItemText primary={dish.name} />
+                      <ListItemSecondaryAction>
+                        <TextField size="small" label="Have" />
+                        <TextField label="Need" />
+                      </ListItemSecondaryAction>
+                    </ListItem>
+                  );
+                }
+                return null;
+              })}
+            </TabPanel>
+          );
+        })}
         <TabPanel value={value} index={0} dir={theme.direction}>
           Teppan
         </TabPanel>
