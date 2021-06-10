@@ -8,6 +8,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 // Components
 import Header from "./Header";
 import DishList from "./dishes/DishList";
+import DishEdit from "./dishes/DishEdit";
 import Cooking from "./dishes/Cooking";
 import Statistics from "./dishes/Statistics";
 
@@ -19,16 +20,17 @@ const App = () => {
       <Router history={history}>
         <CssBaseline />
         <Header />
+        {/* Route /prep-list/opening */}
+        <Route
+          path="/prep-list"
+          exact
+          render={(props) => <DishEdit {...props} component={DishEdit} />}
+        />
+        <div style={{ marginBottom: "2rem" }}></div>
         <Container maxWidth="md">
           {/* Route / */}
           <Route
             path="/"
-            exact
-            render={(props) => <DishList {...props} component={DishList} />}
-          />
-          {/* Route /prep-list/opening */}
-          <Route
-            path="/prep-list"
             exact
             render={(props) => <DishList {...props} component={DishList} />}
           />

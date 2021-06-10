@@ -24,7 +24,6 @@ import MenuList from "./MenuList";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    marginBottom: "2rem",
   },
   title: {
     flexGrow: 1,
