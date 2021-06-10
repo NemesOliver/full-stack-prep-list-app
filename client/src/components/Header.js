@@ -12,7 +12,7 @@ import Avatar from "@material-ui/core/Avatar";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-import { deepOrange } from "@material-ui/core/colors";
+import { deepOrange, pink } from "@material-ui/core/colors";
 
 // Material UI Icons
 import MenuIcon from "@material-ui/icons/Menu";
@@ -37,6 +37,10 @@ const useStyles = makeStyles((theme) => ({
   orange: {
     color: theme.palette.getContrastText(deepOrange[500]),
     backgroundColor: deepOrange[500],
+  },
+  secondary: {
+    color: theme.palette.getContrastText(pink[500]),
+    backgroundColor: pink[500],
   },
 }));
 
@@ -69,7 +73,7 @@ const Header = ({ title }) => {
       </AppBar>
       <Drawer anchor="right" open={isDrawerOpen} onClose={closeMenu}>
         <div className={classes.avatar}>
-          <Avatar className={classes.orange}>LS</Avatar>
+          <Avatar className={classes.secondary}>LS</Avatar>
         </div>
         <Divider />
         <MenuList closeMenu={closeMenu} />
