@@ -8,10 +8,10 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 // Components
 import Header from "./Header";
 import DishList from "./dishes/DishList";
-import PrepListOpening from "./dishes/PrepListOpening";
-import PrepListClosing from "./dishes/PreplistClosing";
+import Home from "./Home";
 import Cooking from "./dishes/Cooking";
 import Statistics from "./dishes/Statistics";
+import FormDialog from "./FormDialog";
 
 import history from "../history";
 
@@ -26,27 +26,17 @@ const App = () => {
           <Route
             path="/"
             exact
-            render={(props) => <DishList {...props} component={DishList} />}
+            render={(props) => <Home {...props} component={Home} />}
           />
           {/* Route /prep-list/opening */}
           <Route
-            path="/prep-list/opening"
+            path="/prep-list"
             exact
-            render={(props) => (
-              <PrepListOpening {...props} component={PrepListOpening} />
-            )}
-          />
-          {/* Route /prep-list/closing */}
-          <Route
-            path="/prep-list/closing"
-            exact
-            render={(props) => (
-              <PrepListClosing {...props} component={PrepListClosing} />
-            )}
+            render={(props) => <DishList {...props} component={DishList} />}
           />
           {/* Route /overview */}
           <Route
-            path="/overview"
+            path="/statistics"
             exact
             render={(props) => <Statistics {...props} component={Statistics} />}
           />
@@ -57,6 +47,12 @@ const App = () => {
             render={(props) => <Cooking {...props} component={Cooking} />}
           />
         </Container>
+        {/* Route /form-dialog */}
+        <Route
+          path="/form-dialog"
+          exact
+          render={(props) => <FormDialog {...props} component={FormDialog} />}
+        />
       </Router>
     </div>
   );
