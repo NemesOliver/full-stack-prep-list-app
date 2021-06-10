@@ -1,0 +1,24 @@
+{
+  "name": "full-stack-prep-list-app",
+  "version": "1.0.0",
+  "description": "Keep track of daily prep and what you sold",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "server": "nodemon server",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+  },
+  "author": "Oliver Nemes",
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^6.2.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.13"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
