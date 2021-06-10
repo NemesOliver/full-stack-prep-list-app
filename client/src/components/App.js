@@ -11,7 +11,7 @@ import DishList from "./dishes/DishList";
 import PrepListOpening from "./dishes/PrepListOpening";
 import PrepListClosing from "./dishes/PreplistClosing";
 import Cooking from "./dishes/Cooking";
-import Overview from "./dishes/Overview";
+import Statistics from "./dishes/Statistics";
 
 import history from "../history";
 
@@ -48,7 +48,7 @@ const App = () => {
           <Route
             path="/overview"
             exact
-            render={(props) => <Overview {...props} component={Overview} />}
+            render={(props) => <Statistics {...props} component={Statistics} />}
           />
           {/* Route /cooking */}
           <Route

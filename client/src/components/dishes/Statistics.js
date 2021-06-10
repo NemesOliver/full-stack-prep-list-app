@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { changeHeaderTitle } from "../../actions";
 
-const Overview = ({ changeHeaderTitle }) => {
+const Statistics = ({ changeHeaderTitle }) => {
   useEffect(() => {
-    changeHeaderTitle("Overview");
+    changeHeaderTitle("Statistics");
   }, [changeHeaderTitle]);
   return <div>Overview of dishes</div>;
 };
 
 export default connect(null, {
   changeHeaderTitle,
-})(Overview);
+})(Statistics);
