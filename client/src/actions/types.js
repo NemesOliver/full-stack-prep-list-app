@@ -5,3 +5,4 @@ export const DELETE_DISH = "DELETE_DISH";
 export const UPDATE_DISH = "UPDATE_DISH";
 export const UPDATE_DISHES = "UPDATE_DISHES";
 export const UPDATE_SOLD = "UPDATE_SOLD";
+export const CHANGE_TITLE = "CHANGE_TITLE";

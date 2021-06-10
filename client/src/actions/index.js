@@ -7,6 +7,7 @@ import {
   DELETE_DISH,
   UPDATE_DISH,
   UPDATE_SOLD,
+  CHANGE_TITLE,
 } from "./types";
 
 // FETCH ALL DISHES
@@ -58,4 +59,12 @@ export const deleteDish = (id) => async (dispatch) => {
 
   dispatch({ type: DELETE_DISH, payload: id });
   // history.push("/dishes");
+};
+
+// ** TITLE ACTION **
+export const changeHeaderTitle = (title) => {
+  return {
+    type: CHANGE_TITLE,
+    payload: title,
+  };
 };

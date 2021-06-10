@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { fetchDishes } from "../../actions";
+import { fetchDishes, changeHeaderTitle } from "../../actions";
 
-const DishList = ({ fetchDishes, dishes }) => {
+const DishList = ({ fetchDishes, changeHeaderTitle, dishes }) => {
   useEffect(() => {
     fetchDishes();
-  }, [fetchDishes]);
-  console.log(dishes);
+    changeHeaderTitle("Home");
+  }, [fetchDishes, changeHeaderTitle]);
 
   return (
     // MARKUP DISHES LIST
@@ -30,4 +30,5 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   fetchDishes,
+  changeHeaderTitle,
 })(DishList);

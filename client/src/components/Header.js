@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 // Material UI Core
 import AppBar from "@material-ui/core/AppBar";
@@ -39,7 +40,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = () => {
+const Header = ({ title }) => {
+  console.log(title);
   // State
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -58,7 +60,7 @@ const Header = () => {
             <HomeOutlinedIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Home
+            {title.title}
           </Typography>
           <IconButton edge="end" color="inherit" onClick={openMenu}>
             <MenuIcon />
@@ -76,4 +78,8 @@ const Header = () => {
   );
 };
 
-export default Header;
+const mapStateToProps = (state) => {
+  return { title: state.title };
+};
+
+export default connect(mapStateToProps)(Header);
