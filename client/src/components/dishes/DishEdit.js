@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { changeHeaderTitle } from "../../actions";
+import { changeHeaderTitle, fetchDishes } from "../../actions";
 
 // Material UI Core
 import { useTheme } from "@material-ui/core/styles";
@@ -8,16 +8,17 @@ import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import SwipeableViews from "react-swipeable-views";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
-const DishEdit = ({ changeHeaderTitle }) => {
+import Container from "@material-ui/core/Container";
+import Paper from "@material-ui/core/Paper";
+const DishEdit = ({ changeHeaderTitle, fetchDishes, dishes }) => {
   const theme = useTheme();
   //State
   const [value, setValue] = useState(0);
 
   useEffect(() => {
     changeHeaderTitle("Prep list");
-  }, [changeHeaderTitle]);
+    fetchDishes();
+  }, [changeHeaderTitle, fetchDishes]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -27,7 +28,7 @@ const DishEdit = ({ changeHeaderTitle }) => {
     setValue(index);
   };
 
-  function TabPanel(props) {
+  const TabPanel = (props) => {
     const { children, value, index, ...other } = props;
 
     return (
@@ -37,18 +38,14 @@ const DishEdit = ({ changeHeaderTitle }) => {
         id={`simple-tabpanel-${index}`}
         {...other}
       >
-        {value === index && (
-          <Box p={3}>
-            <Typography>{children}</Typography>
-          </Box>
-        )}
+        {value === index && <Container>{children}</Container>}
       </div>
     );
-  }
+  };
 
   return (
     <div>
-      <AppBar position="static">
+      <AppBar position="static" style={{ marginBottom: "2rem" }}>
         <Tabs
           onChange={handleChange}
           variant="fullWidth"
@@ -79,6 +76,11 @@ const DishEdit = ({ changeHeaderTitle }) => {
   );
 };
 
-export default connect(null, {
+const mapStateToProps = (state) => {
+  return { dishes: Object.values(state.dishes) };
+};
+
+export default connect(mapStateToProps, {
   changeHeaderTitle,
+  fetchDishes,
 })(DishEdit);
