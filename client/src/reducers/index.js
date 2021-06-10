@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
+import { dishesReducer } from "./dishesReducer";
 
 export default combineReducers({
-  dummy: () => "dummy reducer",
+  dishes: dishesReducer
 });
