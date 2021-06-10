@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Header = ({ title }) => {
-  console.log(title);
+  const AppBarText = title.title;
   // State
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -60,7 +60,7 @@ const Header = ({ title }) => {
             <HomeOutlinedIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            {title.title}
+            {AppBarText}
           </Typography>
           <IconButton edge="end" color="inherit" onClick={openMenu}>
             <MenuIcon />

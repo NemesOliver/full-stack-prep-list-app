@@ -1,7 +1,7 @@
 import { CHANGE_TITLE } from "../actions/types";
 
 const INITIAL_STATE = {
-  title: null,
+  title: "Home",
 };
 
 export const headerTitleReducer = (state = INITIAL_STATE, action) => {

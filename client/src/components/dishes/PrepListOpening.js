@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { changeHeaderTitle } from "../../actions";
 
-const PrepListOpening = () => {
+const PrepListOpening = ({ changeHeaderTitle }) => {
+  useEffect(() => {
+    changeHeaderTitle("Morning prep list");
+  }, [changeHeaderTitle]);
   return <div>Opening preplist</div>;
 };
 
-export default PrepListOpening;
+export default connect(null, {
+  changeHeaderTitle,
+})(PrepListOpening);

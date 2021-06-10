@@ -1,6 +1,8 @@
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { changeHeaderTitle } from "../../actions";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import React from "react";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -11,7 +13,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Cooking = () => {
+const Cooking = ({ changeHeaderTitle }) => {
+  useEffect(() => {
+    changeHeaderTitle("Cooking");
+  }, [changeHeaderTitle]);
   const classes = useStyles();
 
   return (
@@ -21,4 +26,6 @@ const Cooking = () => {
   );
 };
 
-export default Cooking;
+export default connect(null, {
+  changeHeaderTitle,
+})(Cooking);
