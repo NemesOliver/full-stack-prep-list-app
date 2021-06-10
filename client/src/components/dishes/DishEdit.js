@@ -3,31 +3,24 @@ import { connect } from "react-redux";
 import { changeHeaderTitle, fetchDishes } from "../../actions";
 
 // Material UI Core
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { useTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import SwipeableViews from "react-swipeable-views";
-import Container from "@material-ui/core/Container";
-import Paper from "@material-ui/core/paper";
-import Typography from "@material-ui/core/Typography";
 import {
-  List,
-  ListItem,
-  ListItemSecondaryAction,
-  ListItemText,
   TextField,
+  Typography,
+  Paper,
+  TableContainer,
+  Table,
+  TableBody,
+  TableRow,
+  TableCell,
+  Container,
 } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
-
 const DishEdit = ({ changeHeaderTitle, fetchDishes, dishes }) => {
-  const classes = useStyles();
   const theme = useTheme();
 
   //State
@@ -53,14 +46,17 @@ const DishEdit = ({ changeHeaderTitle, fetchDishes, dishes }) => {
 
     return (
       <div
+        style={{ paddingBottom: "10px" }}
         role="tabpanel"
         hidden={value !== index}
         id={`simple-tabpanel-${index}`}
         {...other}
       >
         {value === index && (
-          <Container maxWidth="md">
-            <List className={classes.root}>{children}</List>
+          <Container>
+            <TableContainer component={Paper} elevation={5}>
+              {children}
+            </TableContainer>
           </Container>
         )}
       </div>
@@ -89,20 +85,40 @@ const DishEdit = ({ changeHeaderTitle, fetchDishes, dishes }) => {
         {sections.map((section, index) => {
           return (
             <TabPanel key={index} value={value} index={index}>
-              {dishes.map((dish) => {
-                if (dish.section === section) {
-                  return (
-                    <ListItem key={dish._id}>
-                      <ListItemText primary={dish.name} />
-                      <ListItemSecondaryAction>
-                        <TextField size="small" label="Have" />
-                        <TextField label="Need" />
-                      </ListItemSecondaryAction>
-                    </ListItem>
-                  );
-                }
-                return null;
-              })}
+              <Table>
+                <TableBody>
+                  {dishes.map((dish) => {
+                    if (dish.section === section) {
+                      return (
+                        <TableRow>
+                          <TableCell align="left">
+                            <Typography noWrap>{dish.name}</Typography>
+                          </TableCell>
+                          <TableCell align="right">
+                            <TextField
+                              type="number"
+                              size="small"
+                              color="secondary"
+                              variant="outlined"
+                              label="Have"
+                            />
+                          </TableCell>
+                          <TableCell align="right">
+                            <TextField
+                              type="number"
+                              size="small"
+                              color="secondary"
+                              variant="outlined"
+                              label="Have"
+                            />
+                          </TableCell>
+                        </TableRow>
+                      );
+                    }
+                    return null;
+                  })}
+                </TableBody>
+              </Table>
             </TabPanel>
           );
         })}
