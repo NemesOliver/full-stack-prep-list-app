@@ -10,15 +10,10 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import IconButton from "@material-ui/core/IconButton";
 
 // --Utils
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-
-// Material UI Icons
-import EditIcon from "@material-ui/icons/Edit";
-import history from "../../history";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,7 +25,7 @@ const DishList = ({ fetchDishes, changeHeaderTitle, dishes }) => {
   // State
   useEffect(() => {
     fetchDishes();
-    changeHeaderTitle("Prep list");
+    changeHeaderTitle("Home");
   }, [fetchDishes, changeHeaderTitle]);
 
   // Styles
@@ -55,7 +50,6 @@ const DishList = ({ fetchDishes, changeHeaderTitle, dishes }) => {
                   <TableCell>{section}</TableCell>
                   <TableCell align="right">Have</TableCell>
                   <TableCell align="right">Need</TableCell>
-                  <TableCell />
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -69,15 +63,6 @@ const DishList = ({ fetchDishes, changeHeaderTitle, dishes }) => {
                         </TableCell>
                         <TableCell align="right">
                           <Typography>{dish.neededAmount}</Typography>
-                        </TableCell>
-                        <TableCell align="right">
-                          <IconButton
-                            onClick={() => history.push("/form-dialog")}
-                            edge="end"
-                            color="secondary"
-                          >
-                            <EditIcon />
-                          </IconButton>
                         </TableCell>
                       </TableRow>
                     );
