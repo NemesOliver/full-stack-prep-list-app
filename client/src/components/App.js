@@ -9,8 +9,8 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Header from "./Header";
 import DishList from "./dishes/DishList";
 import DishEdit from "./dishes/DishEdit";
-import Cooking from "./dishes/Cooking";
-import Statistics from "./dishes/Statistics";
+import Cooking from "./cooking/Cooking";
+import Statistics from "./statistics/Statistics";
 
 import history from "../history";
 

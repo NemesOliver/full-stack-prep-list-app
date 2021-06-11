@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { changeHeaderTitle, fetchDishes } from "../../actions";
 
+// Components
+import DishCreate from "./DishCreate";
+
 // Material UI Core
 import { useTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -18,28 +21,32 @@ import {
   TableRow,
   TableCell,
   Container,
+  Fab,
+  makeStyles,
 } from "@material-ui/core";
+
+import AddIcon from "@material-ui/icons/Add";
+
+const useStyles = makeStyles((theme) => ({
+  fab: {
+    position: "absolute",
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
+  },
+}));
 
 const DishEdit = ({ changeHeaderTitle, fetchDishes, dishes }) => {
   const theme = useTheme();
+  const classes = useStyles();
 
   //State
   const [value, setValue] = useState(0);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   useEffect(() => {
     changeHeaderTitle("Prep list");
     fetchDishes();
   }, [changeHeaderTitle, fetchDishes]);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  const handleChangeIndex = (index) => {
-    setValue(index);
-  };
-
-  const sections = ["teppan", "wok", "fry"];
 
   const TabPanel = (props) => {
     const { children, value, index, ...other } = props;
@@ -63,8 +70,23 @@ const DishEdit = ({ changeHeaderTitle, fetchDishes, dishes }) => {
     );
   };
 
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const handleChangeIndex = (index) => {
+    setValue(index);
+  };
+
+  const onClickOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const sections = ["teppan", "wok", "fry"];
+
   return (
     <div>
+      <DishCreate dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} />
       <AppBar position="static" style={{ marginBottom: "2rem" }}>
         <Tabs
           onChange={handleChange}
@@ -90,7 +112,7 @@ const DishEdit = ({ changeHeaderTitle, fetchDishes, dishes }) => {
                   {dishes.map((dish) => {
                     if (dish.section === section) {
                       return (
-                        <TableRow>
+                        <TableRow key={dish._id}>
                           <TableCell align="left">
                             <Typography noWrap>{dish.name}</Typography>
                           </TableCell>
@@ -101,6 +123,8 @@ const DishEdit = ({ changeHeaderTitle, fetchDishes, dishes }) => {
                               color="secondary"
                               variant="outlined"
                               label="Have"
+                              defaultValue={dish.currentAmount}
+                              onClick={(e) => e.target.select()}
                             />
                           </TableCell>
                           <TableCell align="right">
@@ -109,7 +133,9 @@ const DishEdit = ({ changeHeaderTitle, fetchDishes, dishes }) => {
                               size="small"
                               color="secondary"
                               variant="outlined"
-                              label="Have"
+                              label="Need"
+                              defaultValue={dish.neededAmount}
+                              onClick={(e) => e.target.select()}
                             />
                           </TableCell>
                         </TableRow>
@@ -122,16 +148,15 @@ const DishEdit = ({ changeHeaderTitle, fetchDishes, dishes }) => {
             </TabPanel>
           );
         })}
-        <TabPanel value={value} index={0} dir={theme.direction}>
-          Teppan
-        </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-          Wok
-        </TabPanel>
-        <TabPanel value={value} index={2} dir={theme.direction}>
-          Fry
-        </TabPanel>
       </SwipeableViews>
+      <Fab
+        onClick={onClickOpen}
+        className={classes.fab}
+        color="secondary"
+        aria-label="add"
+      >
+        <AddIcon />
+      </Fab>
     </div>
   );
 };
