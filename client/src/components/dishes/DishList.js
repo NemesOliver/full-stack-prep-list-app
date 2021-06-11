@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { fetchDishes, changeHeaderTitle } from "../../actions";
 
@@ -10,6 +10,9 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import { Zoom, Fab, Link } from "@material-ui/core";
+import EditIcon from "@material-ui/icons/Edit";
+import { green } from "@material-ui/core/colors";
 
 // --Utils
 import Typography from "@material-ui/core/Typography";
@@ -19,9 +22,19 @@ const useStyles = makeStyles((theme) => ({
   root: {
     marginBottom: "1.5rem",
   },
+  fab: {
+    position: "fixed",
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
+  },
+  link: {
+    cursor: "pointer",
+  },
 }));
 
 const DishList = ({ fetchDishes, changeHeaderTitle, dishes }) => {
+  const [isLink, setIsLink] = useState(false);
+
   // State
   useEffect(() => {
     fetchDishes();
@@ -32,6 +45,10 @@ const DishList = ({ fetchDishes, changeHeaderTitle, dishes }) => {
   const classes = useStyles();
 
   const sections = ["Teppan", "Wok", "Fry"];
+
+  const handleFabClick = () => {
+    setIsLink(!isLink);
+  };
 
   // Return statement
   return (
@@ -48,8 +65,8 @@ const DishList = ({ fetchDishes, changeHeaderTitle, dishes }) => {
               <TableHead>
                 <TableRow>
                   <TableCell>{section}</TableCell>
-                  <TableCell align="right">Have</TableCell>
-                  <TableCell align="right">Need</TableCell>
+                  <TableCell align="center">Have</TableCell>
+                  <TableCell align="center">Need</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -57,11 +74,21 @@ const DishList = ({ fetchDishes, changeHeaderTitle, dishes }) => {
                   if (dish.section === section.toLowerCase()) {
                     return (
                       <TableRow key={dish._id}>
-                        <TableCell>{dish.name}</TableCell>
-                        <TableCell align="right">
+                        <TableCell>
+                          {!isLink ? (
+                            dish.name
+                          ) : (
+                            <Typography>
+                              <Link color="secondary" className={classes.link}>
+                                {dish.name}
+                              </Link>
+                            </Typography>
+                          )}
+                        </TableCell>
+                        <TableCell align="center">
                           <Typography>{dish.currentAmount}</Typography>
                         </TableCell>
-                        <TableCell align="right">
+                        <TableCell align="center">
                           <Typography>{dish.neededAmount}</Typography>
                         </TableCell>
                       </TableRow>
@@ -74,6 +101,16 @@ const DishList = ({ fetchDishes, changeHeaderTitle, dishes }) => {
           </TableContainer>
         );
       })}
+      <Zoom timeout={650} in>
+        <Fab
+          onClick={handleFabClick}
+          className={classes.fab}
+          color="primary"
+          aria-label="edit"
+        >
+          <EditIcon />
+        </Fab>
+      </Zoom>
     </div>
   );
 };

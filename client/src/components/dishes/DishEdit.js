@@ -23,13 +23,14 @@ import {
   Container,
   Fab,
   makeStyles,
+  Zoom,
 } from "@material-ui/core";
 
 import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles((theme) => ({
   fab: {
-    position: "absolute",
+    position: "fixed",
     bottom: theme.spacing(2),
     right: theme.spacing(2),
   },
@@ -87,7 +88,7 @@ const DishEdit = ({ changeHeaderTitle, fetchDishes, dishes }) => {
   return (
     <div>
       <DishCreate dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} />
-      <AppBar position="static" style={{ marginBottom: "2rem" }}>
+      <AppBar position="sticky" style={{ marginBottom: "2rem" }}>
         <Tabs
           onChange={handleChange}
           variant="fullWidth"
@@ -149,14 +150,16 @@ const DishEdit = ({ changeHeaderTitle, fetchDishes, dishes }) => {
           );
         })}
       </SwipeableViews>
-      <Fab
-        onClick={onClickOpen}
-        className={classes.fab}
-        color="secondary"
-        aria-label="add"
-      >
-        <AddIcon />
-      </Fab>
+      <Zoom timeout={650} in>
+        <Fab
+          onClick={onClickOpen}
+          className={classes.fab}
+          color="secondary"
+          aria-label="add"
+        >
+          <AddIcon />
+        </Fab>
+      </Zoom>
     </div>
   );
 };

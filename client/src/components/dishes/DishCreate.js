@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { createDish } from "../../actions";
 
 // Material UI Core
 import Button from "@material-ui/core/Button";
@@ -13,16 +15,26 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import Radio from "@material-ui/core/Radio";
 
-const DishCreate = ({ dialogOpen, setDialogOpen }) => {
+const DishCreate = ({ dialogOpen, setDialogOpen, createDish }) => {
   // State
-  const [radioValue, setRadioValue] = useState("");
+  const [inputValue, setInputValue] = useState("");
+  const [radioValue, setRadioValue] = useState("teppan");
 
   const handleClose = () => {
     setDialogOpen(false);
   };
 
-  const handleRadioChange = (e) => {
-    setRadioValue(e.target.value);
+  const handleInputValueChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleRadioChange = (event) => {
+    setRadioValue(event.target.value);
+  };
+
+  const onClickCreate = () => {
+    createDish({ name: inputValue, section: radioValue });
+    handleClose();
   };
 
   return (
@@ -31,6 +43,7 @@ const DishCreate = ({ dialogOpen, setDialogOpen }) => {
         <DialogTitle id="form-dialog-title">Add to the list</DialogTitle>
         <DialogContent>
           <TextField
+            onChange={handleInputValueChange}
             autoFocus
             margin="dense"
             id="name"
@@ -63,7 +76,7 @@ const DishCreate = ({ dialogOpen, setDialogOpen }) => {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={onClickCreate} color="primary">
             Confirm
           </Button>
         </DialogActions>
@@ -72,4 +85,6 @@ const DishCreate = ({ dialogOpen, setDialogOpen }) => {
   );
 };
 
-export default DishCreate;
+export default connect(null, {
+  createDish,
+})(DishCreate);

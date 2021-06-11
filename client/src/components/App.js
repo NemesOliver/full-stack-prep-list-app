@@ -20,7 +20,7 @@ const App = () => {
       <Router history={history}>
         <CssBaseline />
         <Header />
-        {/* Route /prep-list/opening */}
+        {/* Route /prep-list */}
         <Route
           path="/prep-list"
           exact
