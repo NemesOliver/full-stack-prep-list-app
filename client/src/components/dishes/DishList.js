@@ -11,16 +11,16 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { Zoom, Fab, Link } from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Edit";
-import { green } from "@material-ui/core/colors";
-
 // --Utils
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 
+// Material UI Icons
+import EditIcon from "@material-ui/icons/Edit";
+
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginBottom: "1.5rem",
+    marginBottom: theme.spacing(5),
   },
   fab: {
     position: "fixed",

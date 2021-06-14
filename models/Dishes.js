@@ -17,10 +17,6 @@ const DishSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  sold: {
-    type: Array,
-    default: [],
-  },
   total: {
     type: Number,
     default: 0,
