@@ -11,10 +11,30 @@ const Statistics = ({ changeHeaderTitle }) => {
   useEffect(() => {
     changeHeaderTitle("Statistics");
   }, [changeHeaderTitle]);
+
+  // Options
+  const listItems = [
+    {
+      icon: "+",
+      text: "Edit",
+      handler: () => console.log("Edit"),
+    },
+
+    {
+      icon: "+",
+      text: "Add",
+      handler: () => console.log("Add"),
+    },
+  ];
+
   return (
     <div>
       Statistics
-      <FabWithDialog icon={<PieChartIcon />} color="secondary" />
+      <FabWithDialog
+        icon={<PieChartIcon />}
+        color="secondary"
+        listItems={listItems}
+      />
     </div>
   );
 };

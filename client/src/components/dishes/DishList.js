@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { fetchDishes, changeHeaderTitle } from "../../actions";
 
+// Components
+import FabWithDialog from "../FabWithDialog";
+
 // Material UI Core
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -10,13 +13,13 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import { Zoom, Fab, Link } from "@material-ui/core";
 // --Utils
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 
 // Material UI Icons
 import EditIcon from "@material-ui/icons/Edit";
+import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,9 +36,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DishList = ({ fetchDishes, changeHeaderTitle, dishes }) => {
-  const [isLink, setIsLink] = useState(false);
-
   // State
+  const [isEditSelected, setIsEditSelected] = useState(false);
+
   useEffect(() => {
     fetchDishes();
     changeHeaderTitle("Home");
@@ -46,9 +49,20 @@ const DishList = ({ fetchDishes, changeHeaderTitle, dishes }) => {
 
   const sections = ["Teppan", "Wok", "Fry"];
 
-  const handleFabClick = () => {
-    setIsLink(!isLink);
-  };
+  // Options
+  const listItems = [
+    {
+      icon: <EditIcon />,
+      text: "Edit",
+      handler: () => setIsEditSelected(true),
+    },
+
+    {
+      icon: <AddIcon />,
+      text: "Add",
+      handler: () => console.log("Add"),
+    },
+  ];
 
   // Return statement
   return (
@@ -74,17 +88,7 @@ const DishList = ({ fetchDishes, changeHeaderTitle, dishes }) => {
                   if (dish.section === section.toLowerCase()) {
                     return (
                       <TableRow key={dish._id}>
-                        <TableCell>
-                          {!isLink ? (
-                            dish.name
-                          ) : (
-                            <Typography>
-                              <Link color="secondary" className={classes.link}>
-                                {dish.name}
-                              </Link>
-                            </Typography>
-                          )}
-                        </TableCell>
+                        <TableCell>{dish.name}</TableCell>
                         <TableCell align="center">
                           <Typography>{dish.currentAmount}</Typography>
                         </TableCell>
@@ -101,16 +105,7 @@ const DishList = ({ fetchDishes, changeHeaderTitle, dishes }) => {
           </TableContainer>
         );
       })}
-      <Zoom timeout={650} in>
-        <Fab
-          onClick={handleFabClick}
-          className={classes.fab}
-          color="primary"
-          aria-label="edit"
-        >
-          <EditIcon />
-        </Fab>
-      </Zoom>
+      <FabWithDialog icon={<EditIcon />} listItems={listItems} />
     </div>
   );
 };
