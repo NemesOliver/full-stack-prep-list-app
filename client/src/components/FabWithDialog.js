@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 // Material UI Core
-import { makeStyles, Zoom, Fab } from "@material-ui/core";
+import { makeStyles, Zoom, Fab, Typography } from "@material-ui/core";
 import { Dialog, DialogTitle } from "@material-ui/core";
 import { List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 
@@ -35,7 +36,6 @@ const FabWithDialog = (props) => {
     return {
       ...item,
       onClick: () => {
-        item.handler();
         setIsDialogOpen(false);
       },
     };
@@ -43,14 +43,22 @@ const FabWithDialog = (props) => {
 
   return (
     <div>
-      <Dialog onClose={handleClose} open={isDialogOpen}>
+      <Dialog maxWidth="sm" fullWidth onClose={handleClose} open={isDialogOpen}>
         <DialogTitle>{dialogTitle}</DialogTitle>
         <List>
-          {modifiedListItems.map(({ icon, text, onClick }) => {
+          {modifiedListItems.map(({ icon, text, path, onClick }) => {
             return (
-              <ListItem onClick={onClick} key={text} button>
+              <ListItem
+                component={Link}
+                to={path}
+                onClick={onClick}
+                key={text}
+                button
+              >
                 <ListItemIcon>{icon}</ListItemIcon>
-                <ListItemText>{text}</ListItemText>
+                <ListItemText>
+                  <Typography>{text}</Typography>
+                </ListItemText>
               </ListItem>
             );
           })}

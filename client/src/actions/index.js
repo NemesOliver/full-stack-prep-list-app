@@ -1,5 +1,5 @@
 import axios from "axios";
-// import history from "../history";
+import history from "../history";
 import {
   FETCH_DISHES,
   FETCH_DISH,
@@ -32,7 +32,7 @@ export const createDish = (formValues) => async (dispatch) => {
   const { data } = await axios.post("/v1/dishes/new", formValues);
 
   dispatch({ type: CREATE_DISH, payload: data });
-  // history.push("/dishes");
+  history.push("/");
 };
 
 // UPDATE DISH

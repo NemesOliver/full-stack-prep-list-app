@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { fetchDishes, changeHeaderTitle } from "../../actions";
 
@@ -37,8 +37,6 @@ const useStyles = makeStyles((theme) => ({
 
 const DishList = ({ fetchDishes, changeHeaderTitle, dishes }) => {
   // State
-  const [isEditSelected, setIsEditSelected] = useState(false);
-
   useEffect(() => {
     fetchDishes();
     changeHeaderTitle("Home");
@@ -52,15 +50,15 @@ const DishList = ({ fetchDishes, changeHeaderTitle, dishes }) => {
   // Options
   const listItems = [
     {
-      icon: <EditIcon />,
+      icon: <EditIcon color="primary" />,
       text: "Edit",
-      handler: () => setIsEditSelected(true),
+      path: "/edit",
     },
 
     {
-      icon: <AddIcon />,
+      icon: <AddIcon color="primary" />,
       text: "Add",
-      handler: () => console.log("Add"),
+      path: "/add",
     },
   ];
 

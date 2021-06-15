@@ -8,9 +8,11 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 // Components
 import Header from "./Header";
 import DishList from "./dishes/DishList";
-import DishEdit from "./dishes/DishEdit";
+import DishCount from "./dishes/DishCount";
 import Cooking from "./cooking/Cooking";
 import Statistics from "./statistics/Statistics";
+import DishEdit from "./dishes/DishEdit";
+import DishAdd from "./dishes/DishAdd";
 
 import history from "../history";
 
@@ -24,7 +26,7 @@ const App = () => {
         <Route
           path="/prep-list"
           exact
-          render={(props) => <DishEdit {...props} component={DishEdit} />}
+          render={(props) => <DishCount {...props} component={DishCount} />}
         />
         <div style={{ marginBottom: "2rem" }}></div>
         <Container maxWidth="md">
@@ -47,6 +49,8 @@ const App = () => {
             render={(props) => <Cooking {...props} component={Cooking} />}
           />
         </Container>
+        <Route path="/edit" exact component={DishEdit} />
+        <Route path="/add" exact component={DishAdd} />
       </Router>
     </div>
   );
