@@ -2,9 +2,6 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { fetchDishes, changeHeaderTitle } from "../../actions";
 
-// Components
-import FabWithDialog from "../FabWithDialog";
-
 // Material UI Core
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -16,10 +13,6 @@ import TableRow from "@material-ui/core/TableRow";
 // --Utils
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-
-// Material UI Icons
-import EditIcon from "@material-ui/icons/Edit";
-import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,21 +39,6 @@ const DishList = ({ fetchDishes, changeHeaderTitle, dishes }) => {
   const classes = useStyles();
 
   const sections = ["Teppan", "Wok", "Fry"];
-
-  // Options
-  const listItems = [
-    {
-      icon: <EditIcon color="primary" />,
-      text: "Edit",
-      path: "/edit",
-    },
-
-    {
-      icon: <AddIcon color="primary" />,
-      text: "Add",
-      path: "/add",
-    },
-  ];
 
   // Return statement
   return (
@@ -103,7 +81,6 @@ const DishList = ({ fetchDishes, changeHeaderTitle, dishes }) => {
           </TableContainer>
         );
       })}
-      <FabWithDialog icon={<EditIcon />} listItems={listItems} />
     </div>
   );
 };
