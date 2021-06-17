@@ -1,40 +1,48 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { fetchDishes, changeHeaderTitle, getMenuOptions } from "../../actions";
 
 // Material UI Core
-import { makeStyles } from "@material-ui/core/styles";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-// --Utils
-import Typography from "@material-ui/core/Typography";
-import Paper from "@material-ui/core/Paper";
-import history from "../../history";
+import {
+  Grid,
+  CardActions,
+  Typography,
+  makeStyles,
+  Card,
+  CardHeader,
+  CardContent,
+  IconButton,
+  Container,
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  Divider,
+} from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    marginBottom: theme.spacing(5),
-  },
-  fab: {
-    position: "fixed",
-    bottom: theme.spacing(2),
-    right: theme.spacing(2),
-  },
-  link: {
-    cursor: "pointer",
-  },
-}));
+// Material UI Icons
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
+
+import history from "../../history";
 
 const menuOptions = [
   {
     text: "Add item",
     action: () => history.push("/add"),
   },
+  {
+    text: "Search...",
+    action: () => history.push("/search"),
+  },
 ];
+
+const useStyle = makeStyles((theme) => ({
+  "p:firstLetter": {
+    textTransform: "capitalize",
+  },
+}));
 
 const DishList = ({
   fetchDishes,
@@ -49,53 +57,68 @@ const DishList = ({
     getMenuOptions(menuOptions);
   }, [fetchDishes, changeHeaderTitle, getMenuOptions]);
 
-  // Styles
-  const classes = useStyles();
-
-  const sections = ["Teppan", "Wok", "Fry"];
+  const [sections, setSections] = useState(["Teppan", "Wok", "Fry"]);
+  const classes = useStyle();
 
   // Return statement
   return (
-    <div>
-      {sections.map((section) => {
-        return (
-          <TableContainer
-            className={classes.root}
-            key={section}
-            component={Paper}
-            elevation={5}
-          >
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>{section}</TableCell>
-                  <TableCell align="center">Have</TableCell>
-                  <TableCell align="center">Need</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {dishes.map((dish) => {
-                  if (dish.section === section.toLowerCase()) {
-                    return (
-                      <TableRow key={dish._id}>
-                        <TableCell>{dish.name}</TableCell>
-                        <TableCell align="center">
-                          <Typography>{dish.currentAmount}</Typography>
-                        </TableCell>
-                        <TableCell align="center">
-                          <Typography>{dish.neededAmount}</Typography>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  }
-                  return null;
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        );
-      })}
-    </div>
+    <Container>
+      <FormControl component="fieldset">
+        <FormLabel component="legend">Filter by section</FormLabel>
+        <RadioGroup
+          row
+          aria-label="position"
+          name="position"
+          defaultValue="top"
+        >
+          <FormControlLabel
+            value="all"
+            control={<Radio color="secondary" />}
+            label="All"
+          />
+          <FormControlLabel
+            value="teppan"
+            control={<Radio color="secondary" />}
+            label="Teppan"
+          />
+          <FormControlLabel
+            value="wok"
+            control={<Radio color="secondary" />}
+            label="Wok"
+          />
+          <FormControlLabel
+            value="fry"
+            control={<Radio color="secondary" />}
+            label="Fry"
+          />
+        </RadioGroup>
+      </FormControl>
+      <Divider style={{ marginBottom: "10px" }} />
+      <Grid container spacing={5}>
+        {dishes.map((dish) => (
+          <Grid key={dish.name} item xs={12} md={6} lg={4}>
+            <Card elevation={5}>
+              <CardHeader
+                className={classes["p:firstLetter"]}
+                title={dish.name}
+                subheader={dish.section}
+              ></CardHeader>
+              <CardContent>
+                <Typography>Total: {dish.total}</Typography>
+              </CardContent>
+              <CardActions disableSpacing>
+                <IconButton color="secondary" aria-label="add to favorites">
+                  <DeleteIcon />
+                </IconButton>
+                <IconButton color="primary" aria-label="share">
+                  <EditIcon />
+                </IconButton>
+              </CardActions>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
   );
 };
 

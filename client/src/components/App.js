@@ -31,13 +31,13 @@ const App = () => {
           render={(props) => <DishCount {...props} component={DishCount} />}
         />
         <div style={{ marginBottom: "2rem" }}></div>
+        {/* Route / */}
+        <Route
+          path="/"
+          exact
+          render={(props) => <DishList {...props} component={DishList} />}
+        />
         <Container maxWidth="md">
-          {/* Route / */}
-          <Route
-            path="/"
-            exact
-            render={(props) => <DishList {...props} component={DishList} />}
-          />
           {/* Route /overview */}
           <Route
             path="/statistics"
