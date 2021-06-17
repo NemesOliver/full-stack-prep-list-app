@@ -61,7 +61,7 @@ const DishAdd = ({ changeHeaderTitle, createDish }) => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    changeHeaderTitle("Add");
+    changeHeaderTitle("Add item");
   }, [changeHeaderTitle]);
 
   const handleSubmit = () => {

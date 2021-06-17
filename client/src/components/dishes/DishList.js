@@ -13,6 +13,7 @@ import TableRow from "@material-ui/core/TableRow";
 // --Utils
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
+import history from "../../history";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,8 +31,8 @@ const useStyles = makeStyles((theme) => ({
 
 const menuOptions = [
   {
-    text: "option1",
-    action: () => console.log("option1"),
+    text: "Add item",
+    action: () => history.push("/add"),
   },
 ];
 
