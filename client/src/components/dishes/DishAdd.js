@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { changeHeaderTitle, createDish } from "../../actions";
+import history from "../../history";
 
 // Material UI Core
 import {
@@ -14,10 +15,12 @@ import {
   FormLabel,
   FormControlLabel,
   Switch,
+  Grid,
 } from "@material-ui/core";
 
+// Material UI Icons
+
 const useStyles = makeStyles((theme) => ({
-  root: {},
   title: {
     marginTop: theme.spacing(7),
     marginBottom: theme.spacing(2),
@@ -146,15 +149,30 @@ const DishAdd = ({ changeHeaderTitle, createDish }) => {
             fullWidth
           />
         )}
-        <Button
-          size="large"
-          onClick={handleSubmit}
-          variant="contained"
-          fullWidth
-          color="primary"
-        >
-          Submit
-        </Button>
+        <Grid container spacing={9}>
+          <Grid item xs={2}>
+            <Button
+              size="large"
+              onClick={() => history.push("/")}
+              variant="contained"
+              color="default"
+              fullWidth
+            >
+              Back
+            </Button>
+          </Grid>
+          <Grid item xs={10}>
+            <Button
+              size="large"
+              onClick={handleSubmit}
+              variant="contained"
+              color="primary"
+              fullWidth
+            >
+              Submit
+            </Button>
+          </Grid>
+        </Grid>
       </Container>
     </div>
   );
