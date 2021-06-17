@@ -10,6 +10,7 @@ import {
   CHANGE_TITLE,
   OPEN_DRAWER,
   CLOSE_DRAWER,
+  SET_MENU_OPTIONS,
 } from "./types";
 
 // FETCH ALL DISHES
@@ -83,5 +84,13 @@ export const closeDrawer = () => {
   return {
     type: CLOSE_DRAWER,
     payload: false,
+  };
+};
+
+// ** MENU ACTIONS **
+export const getMenuOptions = (itemsArray) => {
+  return {
+    type: SET_MENU_OPTIONS,
+    payload: itemsArray,
   };
 };

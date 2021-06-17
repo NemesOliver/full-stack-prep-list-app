@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { fetchDishes, changeHeaderTitle } from "../../actions";
+import { fetchDishes, changeHeaderTitle, getMenuOptions } from "../../actions";
 
 // Material UI Core
 import { makeStyles } from "@material-ui/core/styles";
@@ -28,12 +28,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DishList = ({ fetchDishes, changeHeaderTitle, dishes }) => {
+const menuOptions = [
+  {
+    text: "option1",
+    action: () => console.log("option1"),
+  },
+];
+
+const DishList = ({
+  fetchDishes,
+  changeHeaderTitle,
+  getMenuOptions,
+  dishes,
+}) => {
   // State
   useEffect(() => {
     fetchDishes();
     changeHeaderTitle("Home");
-  }, [fetchDishes, changeHeaderTitle]);
+    getMenuOptions(menuOptions);
+  }, [fetchDishes, changeHeaderTitle, getMenuOptions]);
 
   // Styles
   const classes = useStyles();
@@ -92,4 +105,5 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   fetchDishes,
   changeHeaderTitle,
+  getMenuOptions,
 })(DishList);

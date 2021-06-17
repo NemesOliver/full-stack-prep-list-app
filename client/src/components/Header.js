@@ -2,6 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { openDrawer } from "../actions";
 
+// Components
+import Menu from "./Menu";
+
 // Material UI Core
 import AppBar from "@material-ui/core/AppBar";
 import ToolBar from "@material-ui/core/Toolbar";
@@ -12,7 +15,6 @@ import Typography from "@material-ui/core/Typography";
 
 // Material UI Icons
 import MenuIcon from "@material-ui/icons/Menu";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,9 +41,7 @@ const Header = ({ title, openDrawer }) => {
           <Typography variant="h6" className={classes.title}>
             {AppBarText}
           </Typography>
-          <IconButton edge="end" color="inherit">
-            <MoreVertIcon />
-          </IconButton>
+          <Menu />
         </ToolBar>
       </AppBar>
     </div>
@@ -49,7 +49,7 @@ const Header = ({ title, openDrawer }) => {
 };
 
 const mapStateToProps = (state) => {
-  return { title: state.title, isDrawerOpen: state.isDrawerOpen };
+  return { title: state.title };
 };
 
 export default connect(mapStateToProps, {

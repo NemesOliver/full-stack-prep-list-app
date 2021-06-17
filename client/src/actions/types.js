@@ -13,3 +13,6 @@ export const CHANGE_TITLE = "CHANGE_TITLE";
 // Drawer action types
 export const OPEN_DRAWER = "OPEN_DRAWER";
 export const CLOSE_DRAWER = "CLOSE_DRAWER";
+
+// Menu action types
+export const SET_MENU_OPTIONS = "SET_MENU_OPTIONS";

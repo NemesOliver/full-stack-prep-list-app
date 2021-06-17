@@ -1,15 +1,24 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { changeHeaderTitle } from "../../actions";
+import { changeHeaderTitle, getMenuOptions } from "../../actions";
 
-const Statistics = ({ changeHeaderTitle }) => {
+const menuOptions = [
+  {
+    text: "optionq",
+    action: () => console.log("optionq"),
+  },
+];
+
+const Statistics = ({ changeHeaderTitle, getMenuOptions }) => {
   useEffect(() => {
     changeHeaderTitle("Statistics");
-  }, [changeHeaderTitle]);
+    getMenuOptions(menuOptions);
+  }, [changeHeaderTitle, getMenuOptions]);
 
   return <div>Statistics</div>;
 };
 
 export default connect(null, {
   changeHeaderTitle,
+  getMenuOptions,
 })(Statistics);
