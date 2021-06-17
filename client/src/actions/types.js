@@ -1,3 +1,4 @@
+// Axios action types
 export const FETCH_DISHES = "FETCH_DISHES";
 export const FETCH_DISH = "FETCH_DISH";
 export const CREATE_DISH = "CREATE_DISH";
@@ -5,4 +6,10 @@ export const DELETE_DISH = "DELETE_DISH";
 export const UPDATE_DISH = "UPDATE_DISH";
 export const UPDATE_DISHES = "UPDATE_DISHES";
 export const UPDATE_SOLD = "UPDATE_SOLD";
+
+// Header action types
 export const CHANGE_TITLE = "CHANGE_TITLE";
+
+// Drawer action types
+export const OPEN_DRAWER = "OPEN_DRAWER";
+export const CLOSE_DRAWER = "CLOSE_DRAWER";

@@ -13,6 +13,7 @@ import Cooking from "./cooking/Cooking";
 import Statistics from "./statistics/Statistics";
 import DishEdit from "./dishes/DishEdit";
 import DishAdd from "./dishes/DishAdd";
+import Drawer from "../components/Drawer";
 
 import history from "../history";
 
@@ -22,6 +23,7 @@ const App = () => {
       <Router history={history}>
         <CssBaseline />
         <Header />
+        <Drawer />
         {/* Route /prep-list */}
         <Route
           path="/prep-list"

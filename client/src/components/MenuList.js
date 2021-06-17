@@ -12,6 +12,7 @@ import { makeStyles } from "@material-ui/core/styles";
 // Material UI Icons
 import WhatshotIcon from "@material-ui/icons/Whatshot";
 import AssignmentIcon from "@material-ui/icons/Assignment";
+import HomeIcon from "@material-ui/icons/Home";
 
 import EqualizerIcon from "@material-ui/icons/Equalizer";
 
@@ -30,6 +31,11 @@ const MenuList = ({ closeMenu }) => {
 
   // Menu items
   const menuItems = [
+    {
+      icon: <HomeIcon />,
+      text: "Home",
+      path: "/",
+    },
     {
       icon: <AssignmentIcon />,
       text: "Prep list",

@@ -1,25 +1,18 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 import { connect } from "react-redux";
+import { openDrawer } from "../actions";
 
 // Material UI Core
 import AppBar from "@material-ui/core/AppBar";
 import ToolBar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import Drawer from "@material-ui/core/Drawer";
-import Avatar from "@material-ui/core/Avatar";
 // -- Utils
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import { deepOrange, pink } from "@material-ui/core/colors";
 
 // Material UI Icons
 import MenuIcon from "@material-ui/icons/Menu";
-import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
-
-// Components
-import MenuList from "./MenuList";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,61 +21,37 @@ const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
-  avatar: {
-    display: "flex",
-    margin: " 0 auto",
-    padding: "10% 0 10% 0",
-  },
-  orange: {
-    color: theme.palette.getContrastText(deepOrange[500]),
-    backgroundColor: deepOrange[500],
-  },
-  secondary: {
-    color: theme.palette.getContrastText(pink[500]),
-    backgroundColor: pink[500],
-  },
 }));
 
-const Header = ({ title }) => {
+const Header = ({ title, openDrawer }) => {
   const AppBarText = title.title;
-  // State
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   // Styles
   const classes = useStyles();
-
-  // Toggle menu
-  const openMenu = () => setIsDrawerOpen(true);
-  const closeMenu = () => setIsDrawerOpen(false);
 
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <ToolBar>
-          <IconButton edge="start" color="inherit" component={Link} to="/">
-            <HomeOutlinedIcon />
+          <IconButton edge="start" color="inherit" onClick={openDrawer}>
+            <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             {AppBarText}
           </Typography>
-          <IconButton edge="end" color="inherit" onClick={openMenu}>
-            <MenuIcon />
+          <IconButton edge="end" color="inherit">
+            <MoreVertIcon />
           </IconButton>
         </ToolBar>
       </AppBar>
-      <Drawer anchor="right" open={isDrawerOpen} onClose={closeMenu}>
-        <div className={classes.avatar}>
-          <Avatar className={classes.secondary}>LS</Avatar>
-        </div>
-        <Divider />
-        <MenuList closeMenu={closeMenu} />
-      </Drawer>
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
-  return { title: state.title };
+  return { title: state.title, isDrawerOpen: state.isDrawerOpen };
 };
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, {
+  openDrawer,
+})(Header);

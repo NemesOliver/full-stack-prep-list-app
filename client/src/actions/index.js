@@ -8,6 +8,8 @@ import {
   UPDATE_DISH,
   UPDATE_SOLD,
   CHANGE_TITLE,
+  OPEN_DRAWER,
+  CLOSE_DRAWER,
 } from "./types";
 
 // FETCH ALL DISHES
@@ -66,5 +68,20 @@ export const changeHeaderTitle = (title) => {
   return {
     type: CHANGE_TITLE,
     payload: title,
+  };
+};
+
+// ** DRAWER ACTIONS **
+export const openDrawer = () => {
+  return {
+    type: OPEN_DRAWER,
+    payload: true,
+  };
+};
+
+export const closeDrawer = () => {
+  return {
+    type: CLOSE_DRAWER,
+    payload: false,
   };
 };
