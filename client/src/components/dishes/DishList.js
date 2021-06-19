@@ -2,16 +2,12 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { fetchDishes, changeHeaderTitle, getMenuOptions } from "../../actions";
 
+//Components
+import DishCard from "./DishCard";
+
 // Material UI Core
 import {
   Grid,
-  CardActions,
-  Typography,
-  makeStyles,
-  Card,
-  CardHeader,
-  CardContent,
-  IconButton,
   Container,
   FormControl,
   FormLabel,
@@ -22,17 +18,7 @@ import {
   Button,
 } from "@material-ui/core";
 
-// Material UI Icons
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
-
 import history from "../../history";
-
-const useStyle = makeStyles((theme) => ({
-  "p:firstLetter": {
-    textTransform: "capitalize",
-  },
-}));
 
 const DishList = (props) => {
   const { fetchDishes, changeHeaderTitle, getMenuOptions, dishes } = props;
@@ -40,7 +26,6 @@ const DishList = (props) => {
   const [radioValue, setRadioValue] = useState("all");
   const [openFilterOptions, setOpenFilterOptions] = useState(false);
   const [filteredOption, setFilteredOption] = useState(radioValue);
-  const classes = useStyle();
 
   useEffect(() => {
     const menuOptions = [
@@ -116,48 +101,14 @@ const DishList = (props) => {
           if (dish.section === filteredOption) {
             return (
               <Grid key={dish.name} item xs={12} md={6} lg={4}>
-                <Card elevation={5}>
-                  <CardHeader
-                    className={classes["p:firstLetter"]}
-                    title={dish.name}
-                    subheader={dish.section}
-                  ></CardHeader>
-                  <CardContent>
-                    <Typography>Total: {dish.total}</Typography>
-                  </CardContent>
-                  <CardActions disableSpacing>
-                    <IconButton color="secondary" aria-label="add to favorites">
-                      <DeleteIcon />
-                    </IconButton>
-                    <IconButton color="primary" aria-label="share">
-                      <EditIcon />
-                    </IconButton>
-                  </CardActions>
-                </Card>
+                <DishCard dish={dish} />
               </Grid>
             );
           }
           if (filteredOption === "all") {
             return (
               <Grid key={dish.name} item xs={12} md={6} lg={4}>
-                <Card elevation={5}>
-                  <CardHeader
-                    className={classes["p:firstLetter"]}
-                    title={dish.name}
-                    subheader={dish.section}
-                  ></CardHeader>
-                  <CardContent>
-                    <Typography>Total: {dish.total}</Typography>
-                  </CardContent>
-                  <CardActions disableSpacing>
-                    <IconButton color="secondary" aria-label="add to favorites">
-                      <DeleteIcon />
-                    </IconButton>
-                    <IconButton color="primary" aria-label="share">
-                      <EditIcon />
-                    </IconButton>
-                  </CardActions>
-                </Card>
+                <DishCard dish={dish} />
               </Grid>
             );
           }
