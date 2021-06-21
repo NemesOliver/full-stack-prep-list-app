@@ -1,5 +1,4 @@
 import React from "react";
-import history from "../../history";
 
 // Material UI Core
 import {
@@ -8,9 +7,14 @@ import {
   Card,
   CardHeader,
   CardContent,
-  Button,
+  IconButton,
   makeStyles,
 } from "@material-ui/core";
+
+// Material UI Icons
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
+import history from "../../history";
 
 const useStyle = makeStyles((theme) => ({
   "p:firstLetter": {
@@ -36,14 +40,19 @@ const DishCard = ({ dish }) => {
         <Typography>Total: {dish.total}</Typography>
         <Typography>Created at: {date.toDateString()}</Typography>
       </CardContent>
+
       <CardActions disableSpacing>
-        <Button
-          onClick={() => history.push(`/show/${dish._id}`)}
+        <IconButton
           className={classes.btn}
-          color="primary"
+          color="secondary"
+          aria-label="delete item"
+          onClick={() => history.push(`/delete/${dish._id}`)}
         >
-          More
-        </Button>
+          <DeleteIcon />
+        </IconButton>
+        <IconButton color="primary" aria-label="edit item">
+          <EditIcon />
+        </IconButton>
       </CardActions>
     </Card>
   );

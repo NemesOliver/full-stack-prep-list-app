@@ -51,7 +51,7 @@ export const deleteDish = (id) => async (dispatch) => {
   await axios.delete(`/v1/dishes/delete/${id}`);
 
   dispatch({ type: DELETE_DISH, payload: id });
-  // history.push("/dishes");
+  history.push("/");
 };
 
 // ** TITLE ACTION **
