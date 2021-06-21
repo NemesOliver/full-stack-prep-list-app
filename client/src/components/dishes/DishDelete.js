@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { deleteDish, fetchDish } from "../../actions";
+import history from "../../history";
 
 // Material UI Core
 import {
+  makeStyles,
   Button,
   Dialog,
   DialogTitle,
@@ -11,10 +13,17 @@ import {
   DialogContentText,
   DialogActions,
 } from "@material-ui/core";
-import history from "../../history";
+
+const useStyles = makeStyles((theme) => ({
+  highlight: {
+    color: "red",
+    fontWeight: 600,
+  },
+}));
 
 const DishDelete = (props) => {
   const { deleteDish, fetchDish, match, dish } = props;
+  const classes = useStyles();
 
   useEffect(() => {
     fetchDish(match.params.id);
@@ -35,7 +44,8 @@ const DishDelete = (props) => {
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
           By confirming you will premanently delete
-          <span style={{ color: "red", fontWeight: 600 }}> {dish.name}</span>
+          <span className={classes.highlight}> {dish.name} </span>
+          from your list.
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -43,7 +53,7 @@ const DishDelete = (props) => {
           Back
         </Button>
         <Button onClick={handleDelete} color="primary">
-          Delete
+          Confirm
         </Button>
       </DialogActions>
     </Dialog>
