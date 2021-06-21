@@ -131,7 +131,7 @@ const DishAdd = ({ changeHeaderTitle, createDish }) => {
               <Switch
                 checked={checked}
                 onChange={() => setChecked(!checked)}
-                name="gilad"
+                name="yes or no"
               />
             }
             label={checked ? "Yes" : "No"}

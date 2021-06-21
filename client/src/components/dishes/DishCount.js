@@ -2,9 +2,6 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { changeHeaderTitle, fetchDishes } from "../../actions";
 
-// Components
-import DishCreate from "./DishCreate";
-
 // Material UI Core
 import { useTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -42,7 +39,6 @@ const DishEdit = ({ changeHeaderTitle, fetchDishes, dishes }) => {
 
   //State
   const [value, setValue] = useState(0);
-  const [dialogOpen, setDialogOpen] = useState(false);
 
   useEffect(() => {
     changeHeaderTitle("Prep list");
@@ -79,15 +75,10 @@ const DishEdit = ({ changeHeaderTitle, fetchDishes, dishes }) => {
     setValue(index);
   };
 
-  const onClickOpen = () => {
-    setDialogOpen(true);
-  };
-
   const sections = ["teppan", "wok", "fry"];
 
   return (
     <div>
-      <DishCreate dialogOpen={dialogOpen} setDialogOpen={setDialogOpen} />
       <AppBar position="sticky" style={{ marginBottom: "2rem" }}>
         <Tabs
           onChange={handleChange}
@@ -151,12 +142,7 @@ const DishEdit = ({ changeHeaderTitle, fetchDishes, dishes }) => {
         })}
       </SwipeableViews>
       <Zoom timeout={650} in>
-        <Fab
-          onClick={onClickOpen}
-          className={classes.fab}
-          color="secondary"
-          aria-label="add"
-        >
+        <Fab className={classes.fab} color="secondary" aria-label="add">
           <AddIcon />
         </Fab>
       </Zoom>

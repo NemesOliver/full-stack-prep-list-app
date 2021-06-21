@@ -50,7 +50,11 @@ const DishCard = ({ dish }) => {
         >
           <DeleteIcon />
         </IconButton>
-        <IconButton color="primary" aria-label="edit item">
+        <IconButton
+          onClick={() => history.push(`/edit/${dish._id}`)}
+          color="primary"
+          aria-label="edit item"
+        >
           <EditIcon />
         </IconButton>
       </CardActions>

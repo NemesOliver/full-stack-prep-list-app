@@ -52,7 +52,7 @@ const App = () => {
             render={(props) => <Cooking {...props} component={Cooking} />}
           />
         </Container>
-        <Route path="/edit" exact component={DishEdit} />
+        <Route path="/edit/:id" exact component={DishEdit} />
         <Route path="/add" exact component={DishAdd} />
         <Route path="/delete/:id" exact component={DishDelete} />
       </Router>
