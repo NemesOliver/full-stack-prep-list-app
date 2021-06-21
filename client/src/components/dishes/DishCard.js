@@ -7,21 +7,22 @@ import {
   Card,
   CardHeader,
   CardContent,
-  IconButton,
+  Button,
   makeStyles,
 } from "@material-ui/core";
-
-// Material UI Icons
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
 
 const useStyle = makeStyles((theme) => ({
   "p:firstLetter": {
     textTransform: "capitalize",
   },
+  btn: {
+    marginLeft: "auto",
+  },
 }));
 
 const DishCard = ({ dish }) => {
+  const date = new Date(dish.date);
+
   const classes = useStyle();
   return (
     <Card elevation={5}>
@@ -32,14 +33,12 @@ const DishCard = ({ dish }) => {
       ></CardHeader>
       <CardContent>
         <Typography>Total: {dish.total}</Typography>
+        <Typography>Created at: {date.toDateString()}</Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton color="secondary" aria-label="add to favorites">
-          <DeleteIcon />
-        </IconButton>
-        <IconButton color="primary" aria-label="share">
-          <EditIcon />
-        </IconButton>
+        <Button className={classes.btn} color="primary">
+          More
+        </Button>
       </CardActions>
     </Card>
   );

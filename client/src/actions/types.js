@@ -5,7 +5,6 @@ export const CREATE_DISH = "CREATE_DISH";
 export const DELETE_DISH = "DELETE_DISH";
 export const UPDATE_DISH = "UPDATE_DISH";
 export const UPDATE_DISHES = "UPDATE_DISHES";
-export const UPDATE_SOLD = "UPDATE_SOLD";
 
 // Header action types
 export const CHANGE_TITLE = "CHANGE_TITLE";

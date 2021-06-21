@@ -6,7 +6,6 @@ import {
   CREATE_DISH,
   DELETE_DISH,
   UPDATE_DISH,
-  UPDATE_SOLD,
   CHANGE_TITLE,
   OPEN_DRAWER,
   CLOSE_DRAWER,
@@ -44,15 +43,6 @@ export const updateDish = (formValues, id) => async (dispatch) => {
   const { data } = await axios.patch(`/v1/dishes/edit/${id}`, formValues);
 
   dispatch({ type: UPDATE_DISH, payload: data });
-};
-
-//UPDATE_SOLD
-//ROUTE /dishes/sold/:id
-export const updateSold = (formValues, id) => async (dispatch) => {
-  const { data } = await axios.patch(`/v1/dishes/sold/${id}`, formValues);
-
-  dispatch({ type: UPDATE_SOLD, payload: data });
-  // history.push("/dishes");
 };
 
 // DELETE DISH

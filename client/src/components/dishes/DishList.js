@@ -50,8 +50,6 @@ const DishList = (props) => {
     setFilteredOption(radioValue);
   };
 
-  // const dishCard = () =>
-
   // Return statement
   return (
     <Container>
