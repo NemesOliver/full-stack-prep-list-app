@@ -93,9 +93,10 @@ const DishList = (props) => {
           <Button variant="contained" color="primary" onClick={onClickFilter}>
             Save
           </Button>
+          <Divider style={{ marginBottom: "10px", marginTop: "10px" }} />
         </div>
       )}
-      <Divider style={{ marginBottom: "10px", marginTop: "10px" }} />
+
       <Grid container spacing={5}>
         {dishes.map((dish) => {
           if (dish.section === filteredOption) {
