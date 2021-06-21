@@ -50,6 +50,8 @@ const DishList = (props) => {
     setFilteredOption(radioValue);
   };
 
+  // const dishCard = () =>
+
   // Return statement
   return (
     <Container>
@@ -96,24 +98,19 @@ const DishList = (props) => {
           <Divider style={{ marginBottom: "10px", marginTop: "10px" }} />
         </div>
       )}
-
       <Grid container spacing={5}>
-        {dishes.map((dish) => {
-          if (dish.section === filteredOption) {
+        {dishes
+          .filter(
+            (dish) =>
+              filteredOption === "all" || dish.section === filteredOption
+          )
+          .map((option) => {
             return (
-              <Grid key={dish.name} item xs={12} md={6} lg={4}>
-                <DishCard dish={dish} />
+              <Grid key={option.name} item xs={12} md={6} lg={4}>
+                <DishCard dish={option} />
               </Grid>
             );
-          }
-          if (filteredOption === "all") {
-            return (
-              <Grid key={dish.name} item xs={12} md={6} lg={4}>
-                <DishCard dish={dish} />
-              </Grid>
-            );
-          }
-        })}
+          })}
       </Grid>
     </Container>
   );
