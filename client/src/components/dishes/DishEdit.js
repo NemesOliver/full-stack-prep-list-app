@@ -72,7 +72,7 @@ const DishEdit = (props) => {
     updateDish(
       {
         name: name || dish.name,
-        section: section || dish.section,
+        section: section || dish.section, // doesnt update correctly !!
         total: total || dish.total,
       },
       match.params.id
