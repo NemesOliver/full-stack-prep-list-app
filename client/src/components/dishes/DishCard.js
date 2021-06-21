@@ -1,4 +1,5 @@
 import React from "react";
+import history from "../../history";
 
 // Material UI Core
 import {
@@ -36,7 +37,11 @@ const DishCard = ({ dish }) => {
         <Typography>Created at: {date.toDateString()}</Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <Button className={classes.btn} color="primary">
+        <Button
+          onClick={() => history.push(`/show/${dish._id}`)}
+          className={classes.btn}
+          color="primary"
+        >
           More
         </Button>
       </CardActions>
