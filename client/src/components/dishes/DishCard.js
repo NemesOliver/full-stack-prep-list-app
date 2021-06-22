@@ -43,6 +43,9 @@ const DishCard = (props) => {
       <CardContent>
         <Typography>Total: {dish.total}</Typography>
         <Typography>Created at: {date.toDateString()}</Typography>
+        <Typography>Have: {dish.currentAmount}</Typography>
+        <Typography>Need: 
+          {dish.neededAmount}</Typography>
       </CardContent>
       {/* </CardActionArea> */}
       <CardActions disableSpacing>
