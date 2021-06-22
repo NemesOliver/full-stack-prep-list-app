@@ -57,10 +57,8 @@ const sections = [
 const DishAdd = ({ changeHeaderTitle, createDish }) => {
   const classes = useStyles();
 
-  const [section, setSection] = useState("");
-  const [name, setName] = useState("");
+  const [formValues, setFormValues] = useState({});
   const [checked, setChecked] = useState(false);
-  const [total, setTotal] = useState(0);
   const [error, setError] = useState(false);
 
   useEffect(() => {
@@ -69,10 +67,11 @@ const DishAdd = ({ changeHeaderTitle, createDish }) => {
 
   const handleSubmit = () => {
     setError(false);
-    if (!(name && section)) {
+    if (!formValues.name || !formValues.section) {
       setError(true);
+      return;
     }
-    createDish({ name, section, total });
+    createDish(formValues);
   };
 
   return (
@@ -95,7 +94,9 @@ const DishAdd = ({ changeHeaderTitle, createDish }) => {
           color="secondary"
           className={classes.input}
           InputLabelProps={{ shrink: true }}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) =>
+            setFormValues({ ...formValues, name: e.target.value })
+          }
           fullWidth
         />
         <TextField
@@ -109,7 +110,9 @@ const DishAdd = ({ changeHeaderTitle, createDish }) => {
           className={classes.input}
           InputLabelProps={{ shrink: true }}
           defaultValue=""
-          onChange={(e) => setSection(e.target.value)}
+          onChange={(e) =>
+            setFormValues({ ...formValues, section: e.target.value })
+          }
           id="sections select"
           select
           fullWidth
@@ -145,7 +148,9 @@ const DishAdd = ({ changeHeaderTitle, createDish }) => {
             color="secondary"
             className={classes.input}
             InputLabelProps={{ shrink: true }}
-            onChange={(e) => setTotal(e.target.value)}
+            onChange={(e) =>
+              setFormValues({ ...formValues, total: e.target.value })
+            }
             fullWidth
           />
         )}
