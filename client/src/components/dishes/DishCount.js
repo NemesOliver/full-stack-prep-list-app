@@ -2,26 +2,17 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { changeHeaderTitle, fetchDishes, updateDish } from "../../actions";
 
+// Components
+import TableRow from "./TableRow";
+import TabPanel from "./TabPanel";
+
 // Material UI Core
 import { useTheme } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import SwipeableViews from "react-swipeable-views";
-import {
-  TextField,
-  Typography,
-  Paper,
-  TableContainer,
-  Table,
-  TableBody,
-  TableRow,
-  TableCell,
-  Container,
-  Fab,
-  makeStyles,
-  Zoom,
-} from "@material-ui/core";
+import { Table, TableBody, Fab, makeStyles, Zoom } from "@material-ui/core";
 
 import AddIcon from "@material-ui/icons/Add";
 
@@ -34,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DishEdit = (props) => {
-  const { changeHeaderTitle, fetchDishes, dishes, updateDish } = props;
+  const { changeHeaderTitle, fetchDishes, dishes } = props;
   const theme = useTheme();
   const classes = useStyles();
 
@@ -45,28 +36,6 @@ const DishEdit = (props) => {
     changeHeaderTitle("Prep list");
     fetchDishes();
   }, [changeHeaderTitle, fetchDishes]);
-
-  const TabPanel = (props) => {
-    const { children, value, index, ...other } = props;
-
-    return (
-      <div
-        style={{ paddingBottom: "10px" }}
-        role="tabpanel"
-        hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        {...other}
-      >
-        {value === index && (
-          <Container>
-            <TableContainer component={Paper} elevation={5}>
-              {children}
-            </TableContainer>
-          </Container>
-        )}
-      </div>
-    );
-  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -104,35 +73,7 @@ const DishEdit = (props) => {
                 <TableBody>
                   {dishes.map((dish) => {
                     if (dish.section === section) {
-                      return (
-                        <TableRow key={dish._id}>
-                          <TableCell align="left">
-                            <Typography noWrap>{dish.name}</Typography>
-                          </TableCell>
-                          <TableCell align="right">
-                            <TextField
-                              type="number"
-                              size="small"
-                              color="secondary"
-                              variant="outlined"
-                              label="Have"
-                              defaultValue={dish.currentAmount}
-                              onClick={(e) => e.target.select()}
-                            />
-                          </TableCell>
-                          <TableCell align="right">
-                            <TextField
-                              type="number"
-                              size="small"
-                              color="secondary"
-                              variant="outlined"
-                              label="Need"
-                              defaultValue={dish.neededAmount}
-                              onClick={(e) => e.target.select()}
-                            />
-                          </TableCell>
-                        </TableRow>
-                      );
+                      return <TableRow key={dish._id} dish={dish} />;
                     }
                     return null;
                   })}
