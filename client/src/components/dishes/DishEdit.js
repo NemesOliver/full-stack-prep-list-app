@@ -61,10 +61,8 @@ const DishEdit = (props) => {
   const { changeHeaderTitle, updateDish, fetchDish, dish, match } = props;
   const classes = useStyles();
 
-  const [section, setSection] = useState("");
-  const [name, setName] = useState("");
+  const [formValues, setFormValues] = useState({});
   const [checked, setChecked] = useState(false);
-  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     fetchDish(match.params.id);
@@ -72,14 +70,7 @@ const DishEdit = (props) => {
   }, [changeHeaderTitle, fetchDish, match.params.id]);
 
   const handleSubmit = () => {
-    updateDish(
-      {
-        name: name || dish.name,
-        section: section || dish.section, // doesnt update correctly !!
-        total: total || dish.total,
-      },
-      match.params.id
-    );
+    updateDish(formValues, match.params.id);
     history.push("/");
   };
 
@@ -106,7 +97,9 @@ const DishEdit = (props) => {
           className={classes.input}
           InputLabelProps={{ shrink: true }}
           defaultValue={dish.name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) =>
+            setFormValues({ ...formValues, name: e.target.value })
+          }
           fullWidth
         />
         <TextField
@@ -118,7 +111,9 @@ const DishEdit = (props) => {
           className={classes.input}
           InputLabelProps={{ shrink: true }}
           defaultValue={dish.section}
-          onChange={(e) => setSection(e.target.value)}
+          onChange={(e) =>
+            setFormValues({ ...formValues, section: e.target.value })
+          }
           id="sections select"
           select
           fullWidth
@@ -156,7 +151,9 @@ const DishEdit = (props) => {
             className={classes.input}
             InputLabelProps={{ shrink: true }}
             defaultValue={dish.total}
-            onChange={(e) => setTotal(e.target.value)}
+            onChange={(e) =>
+              setFormValues({ ...formValues, total: e.target.value })
+            }
             onClick={(e) => e.target.select()}
             fullWidth
           />
