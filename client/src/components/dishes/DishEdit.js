@@ -3,6 +3,9 @@ import { connect } from "react-redux";
 import { changeHeaderTitle, updateDish, fetchDish } from "../../actions";
 import history from "../../history";
 
+// Components
+import Loader from "../Loader";
+
 // Material UI Core
 import {
   Typography,
@@ -81,7 +84,7 @@ const DishEdit = (props) => {
   };
 
   if (!dish) {
-    return <div>Loading...</div>;
+    return <Loader />;
   }
 
   return (
