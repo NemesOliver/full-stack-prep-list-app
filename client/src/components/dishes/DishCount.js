@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { changeHeaderTitle, fetchDishes } from "../../actions";
+import { changeHeaderTitle, fetchDishes, updateDish } from "../../actions";
 
 // Material UI Core
 import { useTheme } from "@material-ui/core/styles";
@@ -33,7 +33,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DishEdit = ({ changeHeaderTitle, fetchDishes, dishes }) => {
+const DishEdit = (props) => {
+  const { changeHeaderTitle, fetchDishes, dishes, updateDish } = props;
   const theme = useTheme();
   const classes = useStyles();
 
@@ -157,4 +158,5 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
   changeHeaderTitle,
   fetchDishes,
+  updateDish,
 })(DishEdit);

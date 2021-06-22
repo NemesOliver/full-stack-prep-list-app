@@ -1,5 +1,5 @@
 import React from "react";
-import { Router, Route, Switch } from "react-router-dom";
+import { Router, Route } from "react-router-dom";
 
 // Material UI core
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -24,19 +24,16 @@ const App = () => {
       <Router history={history}>
         <CssBaseline />
         <Header />
-        <div style={{ marginBottom: "2rem" }}></div>
         <Drawer />
         <ScrollToTop />
-        <Switch>
-          <Route path="/prep-list" exact component={DishCount} />
-
-          <Route path="/" exact component={DishList} />
-          <Route path="/statistics" exact component={Statistics} />
-          <Route path="/cooking" exact component={Cooking} />
-          <Route path="/edit/:id" exact component={DishEdit} />
-          <Route path="/add" exact component={DishAdd} />
-          <Route path="/delete/:id" exact component={DishDelete} />
-        </Switch>
+        <Route path="/prep-list" exact component={DishCount} />
+        <div style={{ marginBottom: "2rem" }}></div>
+        <Route path="/" exact component={DishList} />
+        <Route path="/statistics" exact component={Statistics} />
+        <Route path="/cooking" exact component={Cooking} />
+        <Route path="/edit/:id" exact component={DishEdit} />
+        <Route path="/add" exact component={DishAdd} />
+        <Route path="/delete/:id" exact component={DishDelete} />
       </Router>
     </div>
   );
