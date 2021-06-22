@@ -54,7 +54,8 @@ const sections = [
   },
 ];
 
-const DishAdd = ({ changeHeaderTitle, createDish }) => {
+const DishAdd = (props) => {
+  const { changeHeaderTitle, createDish } = props;
   const classes = useStyles();
 
   const [formValues, setFormValues] = useState({});

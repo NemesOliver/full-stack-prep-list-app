@@ -1,8 +1,7 @@
 import React from "react";
-import { Router, Route } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
 
 // Material UI core
-import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
 // Components
@@ -15,6 +14,7 @@ import DishEdit from "./dishes/DishEdit";
 import DishAdd from "./dishes/DishAdd";
 import Drawer from "../components/Drawer";
 import DishDelete from "./dishes/DishDelete";
+import ScrollToTop from "./ScrollToTop";
 
 import history from "../history";
 
@@ -24,37 +24,19 @@ const App = () => {
       <Router history={history}>
         <CssBaseline />
         <Header />
-        <Drawer />
-        {/* Route /prep-list */}
-        <Route
-          path="/prep-list"
-          exact
-          render={(props) => <DishCount {...props} component={DishCount} />}
-        />
         <div style={{ marginBottom: "2rem" }}></div>
-        {/* Route / */}
-        <Route
-          path="/"
-          exact
-          render={(props) => <DishList {...props} component={DishList} />}
-        />
-        <Container maxWidth="md">
-          {/* Route /overview */}
-          <Route
-            path="/statistics"
-            exact
-            render={(props) => <Statistics {...props} component={Statistics} />}
-          />
-          {/* Route /cooking */}
-          <Route
-            path="/cooking"
-            exact
-            render={(props) => <Cooking {...props} component={Cooking} />}
-          />
-        </Container>
-        <Route path="/edit/:id" exact component={DishEdit} />
-        <Route path="/add" exact component={DishAdd} />
-        <Route path="/delete/:id" exact component={DishDelete} />
+        <Drawer />
+        <ScrollToTop />
+        <Switch>
+          <Route path="/prep-list" exact component={DishCount} />
+
+          <Route path="/" exact component={DishList} />
+          <Route path="/statistics" exact component={Statistics} />
+          <Route path="/cooking" exact component={Cooking} />
+          <Route path="/edit/:id" exact component={DishEdit} />
+          <Route path="/add" exact component={DishAdd} />
+          <Route path="/delete/:id" exact component={DishDelete} />
+        </Switch>
       </Router>
     </div>
   );

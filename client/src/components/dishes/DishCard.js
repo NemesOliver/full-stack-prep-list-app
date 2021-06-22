@@ -7,6 +7,7 @@ import {
   Card,
   CardHeader,
   CardContent,
+  // CardActionArea,
   IconButton,
   makeStyles,
 } from "@material-ui/core";
@@ -25,12 +26,15 @@ const useStyle = makeStyles((theme) => ({
   },
 }));
 
-const DishCard = ({ dish }) => {
+const DishCard = (props) => {
+  const { dish } = props;
+  const classes = useStyle();
+
   const date = new Date(dish.date);
 
-  const classes = useStyle();
   return (
     <Card elevation={5}>
+      {/* <CardActionArea> */}
       <CardHeader
         className={classes["p:firstLetter"]}
         title={dish.name}
@@ -40,7 +44,7 @@ const DishCard = ({ dish }) => {
         <Typography>Total: {dish.total}</Typography>
         <Typography>Created at: {date.toDateString()}</Typography>
       </CardContent>
-
+      {/* </CardActionArea> */}
       <CardActions disableSpacing>
         <IconButton
           className={classes.btn}
