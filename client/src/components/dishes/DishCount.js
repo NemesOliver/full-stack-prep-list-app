@@ -39,10 +39,12 @@ const DishEdit = (props) => {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    fetchDishes();
   };
 
   const handleChangeIndex = (index) => {
     setValue(index);
+    fetchDishes();
   };
 
   const sections = ["teppan", "wok", "fry"];
