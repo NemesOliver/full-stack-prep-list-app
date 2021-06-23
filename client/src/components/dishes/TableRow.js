@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { updateDish } from "../../actions";
 import axios from "axios";
@@ -48,7 +48,10 @@ const TableRow = (props) => {
           color="secondary"
           variant="outlined"
           label="Need"
-          defaultValue="0"
+          onChange={(e) => {
+            debounce(e, { neededAmount: e.target.value });
+          }}
+          defaultValue={dish.neededAmount}
           onClick={(e) => e.target.select()}
         />
       </TableCell>
