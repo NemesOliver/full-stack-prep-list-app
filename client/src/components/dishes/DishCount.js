@@ -32,7 +32,6 @@ const DishEdit = (props) => {
 
   //State
   const [value, setValue] = useState(0);
-  const [soldItems, setSoldItems] = useState({});
 
   useEffect(() => {
     changeHeaderTitle("Prep list");
@@ -47,18 +46,6 @@ const DishEdit = (props) => {
   const handleChangeIndex = (index) => {
     setValue(index);
     fetchDishes();
-  };
-
-  const recordSoldItems = () => {
-    fetchDishes();
-    const arr = dishes.map((dish) => {
-      return {
-        name: dish.name,
-        date: new Date(),
-        total: dish.currentAmount + dish.neededAmount,
-      };
-    });
-    console.log(arr);
   };
 
   const sections = ["teppan", "wok", "fry"];
@@ -100,12 +87,7 @@ const DishEdit = (props) => {
         })}
       </SwipeableViews>
       <Zoom timeout={650} in>
-        <Fab
-          onClick={recordSoldItems}
-          className={classes.fab}
-          color="secondary"
-          aria-label="add"
-        >
+        <Fab className={classes.fab} color="secondary" aria-label="add">
           <SyncIcon />
         </Fab>
       </Zoom>
