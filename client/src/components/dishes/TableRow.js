@@ -33,7 +33,7 @@ const TableRow = (props) => {
           variant="outlined"
           label="Have"
           onChange={(e) => {
-            debounce( { currentAmount: e.target.value });
+            debounce({ currentAmount: e.target.value });
           }}
           defaultValue={dish.currentAmount}
           onClick={(e) => e.target.select()}
@@ -47,7 +47,9 @@ const TableRow = (props) => {
           variant="outlined"
           label="Need"
           onChange={(e) => {
-            debounce({ neededAmount: e.target.value });
+            debounce({
+              neededAmount: e.target.value,
+            });
           }}
           defaultValue={dish.neededAmount}
           onClick={(e) => e.target.select()}
