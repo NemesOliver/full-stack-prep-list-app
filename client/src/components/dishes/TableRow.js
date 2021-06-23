@@ -1,6 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
-import { updateDish } from "../../actions";
 import axios from "axios";
 
 // Material UI Core
@@ -14,7 +12,7 @@ import {
 const TableRow = (props) => {
   const { dish } = props;
 
-  const debounce = (e, value) => {
+  const debounce = (value) => {
     const timerId = setTimeout(() => {
       axios.patch(`/v1/dishes/edit/${dish._id}`, value);
     }, 500);
@@ -35,7 +33,7 @@ const TableRow = (props) => {
           variant="outlined"
           label="Have"
           onChange={(e) => {
-            debounce(e, { currentAmount: e.target.value });
+            debounce( { currentAmount: e.target.value });
           }}
           defaultValue={dish.currentAmount}
           onClick={(e) => e.target.select()}
@@ -49,7 +47,7 @@ const TableRow = (props) => {
           variant="outlined"
           label="Need"
           onChange={(e) => {
-            debounce(e, { neededAmount: e.target.value });
+            debounce({ neededAmount: e.target.value });
           }}
           defaultValue={dish.neededAmount}
           onClick={(e) => e.target.select()}
@@ -59,6 +57,4 @@ const TableRow = (props) => {
   );
 };
 
-export default connect(null, {
-  updateDish,
-})(TableRow);
+export default TableRow;
