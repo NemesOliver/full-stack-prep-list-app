@@ -15,6 +15,7 @@ import DishAdd from "./dishes/DishAdd";
 import Drawer from "../components/Drawer";
 import DishDelete from "./dishes/DishDelete";
 import ScrollToTop from "./ScrollToTop";
+import RecordSales from "./dishes/RecordSales";
 
 import history from "../history";
 
@@ -34,6 +35,7 @@ const App = () => {
         <Route path="/edit/:id" exact component={DishEdit} />
         <Route path="/add" exact component={DishAdd} />
         <Route path="/delete/:id" exact component={DishDelete} />
+        <Route path="/record" exact component={RecordSales} />
       </Router>
     </div>
   );

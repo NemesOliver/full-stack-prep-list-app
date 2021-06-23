@@ -16,6 +16,7 @@ import { Table, TableBody, Fab, makeStyles, Zoom } from "@material-ui/core";
 
 // Material UI Icons
 import SyncIcon from "@material-ui/icons/Sync";
+import history from "../../history";
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -87,7 +88,12 @@ const DishEdit = (props) => {
         })}
       </SwipeableViews>
       <Zoom timeout={650} in>
-        <Fab className={classes.fab} color="secondary" aria-label="add">
+        <Fab
+          onClick={() => history.push("/record")}
+          className={classes.fab}
+          color="secondary"
+          aria-label="add"
+        >
           <SyncIcon />
         </Fab>
       </Zoom>
