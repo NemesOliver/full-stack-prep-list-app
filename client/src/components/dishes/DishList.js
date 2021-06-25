@@ -22,7 +22,7 @@ import history from "../../history";
 
 const DishList = (props) => {
   const { fetchDishes, changeHeaderTitle, getMenuOptions, dishes } = props;
-  console.log(dishes);
+
   // State
   const [radioValue, setRadioValue] = useState("all");
   const [openFilterOptions, setOpenFilterOptions] = useState(false);

@@ -65,13 +65,15 @@ router.delete("/delete/:id", async (req, res) => {
 });
 
 //BULKWRITE
-router.patch("/bulkwrite", async (req, res) => {
+router.patch("/recordTotal", async (req, res) => {
   const documents = req.body;
 
   const bulkOps = documents.map((document) => ({
     updateOne: {
       filter: { _id: mongoose.Types.ObjectId(document._id) },
-      update: { $set: { total: document.total } },
+      update: {
+        $set: { total: document.total },
+      },
       upsert: true,
     },
   }));
