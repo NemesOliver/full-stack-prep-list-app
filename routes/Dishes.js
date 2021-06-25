@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const Dishes = require("../models/Dishes");
 const router = express.Router();
 //Model
@@ -61,6 +62,23 @@ router.delete("/delete/:id", async (req, res) => {
   const result = await Dish.findByIdAndDelete({ _id: req.params.id });
 
   res.json(result);
+});
+
+//BULKWRITE
+router.patch("/bulkwrite", async (req, res) => {
+  const documents = req.body;
+
+  const bulkOps = documents.map((document) => ({
+    updateOne: {
+      filter: { _id: mongoose.Types.ObjectId(document._id) },
+      update: { $set: { total: document.total } },
+      upsert: true,
+    },
+  }));
+
+  const results = await Dish.collection.bulkWrite(bulkOps);
+
+  res.json(results);
 });
 
 module.exports = router;

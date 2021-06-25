@@ -13,6 +13,7 @@ import {
   Button,
 } from "@material-ui/core";
 import history from "../../history";
+import axios from "axios";
 
 const RecordSales = (props) => {
   const { fetchDishes, dishes } = props;
@@ -23,10 +24,14 @@ const RecordSales = (props) => {
 
   const handleClose = () => history.push("/prep-list");
   const handleSubmit = () => {
-    const arr = dishes.map((dish) => {
-      return { name: dish.name, total: dish.currentAmount + dish.neededAmount };
+    const bulkOps = dishes.map((dish) => {
+      return {
+        total: dish.currentAmount + dish.neededAmount,
+        _id: dish._id,
+      };
     });
-    console.log(arr);
+    history.push("/prep-list");
+    axios.patch("/v1/dishes/bulkwrite", bulkOps);
   };
 
   if (!dishes) {
@@ -40,21 +45,18 @@ const RecordSales = (props) => {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">
-        {"Do you wish to reset prep sheet?"}
-      </DialogTitle>
+      <DialogTitle id="alert-dialog-title">{"Reset"}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Let Google help apps determine location. This means sending anonymous
-          location data to Google, even when no apps are running.
+          Are you sure you want to reset prep list? Changes can not be reverted.
         </DialogContentText>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary">
-          Disagree
+          Back
         </Button>
         <Button onClick={handleSubmit} color="primary" autoFocus>
-          Agree
+          Confirm
         </Button>
       </DialogActions>
     </Dialog>
