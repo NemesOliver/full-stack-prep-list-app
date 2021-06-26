@@ -21,3 +21,7 @@ app.listen(PORT, console.log(`Server started on port ${PORT}`));
 // Dishes
 const DishesRoute = require("./routes/Dishes");
 app.use("/v1/dishes", DishesRoute);
+
+// Sold Items
+const SoldItemsRoute = require("./routes/SoldItems");
+app.use("/v1/sold", SoldItemsRoute);

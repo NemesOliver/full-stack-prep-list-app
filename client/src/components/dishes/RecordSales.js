@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { fetchDishes } from "../../actions";
 
@@ -24,15 +24,29 @@ const RecordSales = (props) => {
 
   const handleClose = () => history.push("/prep-list");
 
+  const calculateSoldItems = () => {
+    const soldItems = dishes.map((dish) => {
+      return {
+        name: dish.name,
+        dishId: dish._id,
+        sold: dish.total - dish.currentAmount,
+      };
+    });
+    return { sold: soldItems };
+  };
+
   const handleSubmit = () => {
+    const sold = calculateSoldItems();
     const bulkOps = dishes.map((dish) => {
       const total = dish.currentAmount + dish.neededAmount;
       return {
         total,
         _id: dish._id,
+        amount: 0,
       };
     });
-    axios.patch("/v1/dishes/recordTotal", bulkOps);
+    axios.post("/v1/sold/record", sold);
+    axios.patch("/v1/dishes/bulkwrite/recordTotal", bulkOps);
     history.push("/prep-list");
   };
 
@@ -50,8 +64,7 @@ const RecordSales = (props) => {
       <DialogTitle id="alert-dialog-title">{"Reset"}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          "Are you sure you want to reset prep list? Changes can not be
-          reverted."
+          Are you sure you want to reset prep list? Changes can not be reverted.
         </DialogContentText>
       </DialogContent>
       <DialogActions>
