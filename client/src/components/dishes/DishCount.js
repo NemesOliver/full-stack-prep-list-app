@@ -26,8 +26,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DishEdit = (props) => {
-  const { changeHeaderTitle, fetchDishes, dishes } = props;
+const DishCount = (props) => {
+  const { changeHeaderTitle, fetchDishes, dishes, time } = props;
   const theme = useTheme();
   const classes = useStyles();
 
@@ -77,7 +77,9 @@ const DishEdit = (props) => {
                 <TableBody>
                   {dishes.map((dish) => {
                     if (dish.section === section) {
-                      return <TableRow key={dish._id} dish={dish} />;
+                      return (
+                        <TableRow time={time} key={dish._id} dish={dish} />
+                      );
                     }
                     return null;
                   })}
@@ -87,7 +89,7 @@ const DishEdit = (props) => {
           );
         })}
       </SwipeableViews>
-      <Zoom timeout={650} in>
+      {/* <Zoom timeout={650} in>
         <Fab
           onClick={() => history.push("/record")}
           className={classes.fab}
@@ -96,7 +98,7 @@ const DishEdit = (props) => {
         >
           <SyncIcon />
         </Fab>
-      </Zoom>
+      </Zoom> */}
     </div>
   );
 };
@@ -109,4 +111,4 @@ export default connect(mapStateToProps, {
   changeHeaderTitle,
   fetchDishes,
   updateDish,
-})(DishEdit);
+})(DishCount);
