@@ -28,7 +28,7 @@ const RecordSales = (props) => {
     fetchDishes();
   }, [fetchDishes]);
 
-  const handleClose = () => history.push("/prep-list");
+  const handleClose = () => history.push("/");
 
   const calculateSoldItems = () => {
     const soldItems = dishes.map((dish) => {

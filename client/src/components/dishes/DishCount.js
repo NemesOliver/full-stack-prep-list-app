@@ -12,32 +12,21 @@ import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import SwipeableViews from "react-swipeable-views";
-import { Table, TableBody, Fab, makeStyles, Zoom } from "@material-ui/core";
-
-// Material UI Icons
-import SyncIcon from "@material-ui/icons/Sync";
-import history from "../../history";
-
-const useStyles = makeStyles((theme) => ({
-  fab: {
-    position: "fixed",
-    bottom: theme.spacing(2),
-    right: theme.spacing(2),
-  },
-}));
+import { Table, TableBody } from "@material-ui/core";
 
 const DishCount = (props) => {
   const { changeHeaderTitle, fetchDishes, dishes, time } = props;
   const theme = useTheme();
-  const classes = useStyles();
 
   //State
   const [value, setValue] = useState(0);
 
   useEffect(() => {
-    changeHeaderTitle("Prep list");
+    changeHeaderTitle(
+      time === "morning" ? "Morning prep list" : "Evening count"
+    );
     fetchDishes();
-  }, [changeHeaderTitle, fetchDishes]);
+  }, [changeHeaderTitle, fetchDishes, time]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -89,16 +78,6 @@ const DishCount = (props) => {
           );
         })}
       </SwipeableViews>
-      {/* <Zoom timeout={650} in>
-        <Fab
-          onClick={() => history.push("/record")}
-          className={classes.fab}
-          color="secondary"
-          aria-label="add"
-        >
-          <SyncIcon />
-        </Fab>
-      </Zoom> */}
     </div>
   );
 };
