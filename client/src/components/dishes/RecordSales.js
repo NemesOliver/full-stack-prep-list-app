@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { fetchDishes } from "../../actions";
+import { Link } from "react-router-dom";
 
 import Loader from "../Loader";
 
@@ -11,12 +12,17 @@ import {
   DialogContentText,
   DialogActions,
   Button,
+  List,
+  ListItem,
+  ListItemText,
 } from "@material-ui/core";
 import history from "../../history";
 import axios from "axios";
 
 const RecordSales = (props) => {
   const { fetchDishes, dishes } = props;
+  const [validateError, setValidateError] = useState(false);
+  const [noTotalDishes, setNoTotalDishes] = useState([]);
 
   useEffect(() => {
     fetchDishes();
@@ -50,6 +56,20 @@ const RecordSales = (props) => {
     history.push("/prep-list");
   };
 
+  const validate = () => {
+    const containsNoTotal = dishes.filter(
+      // Check if you sold more than prepped
+      (dish) => dish.currentAmount > dish.total
+    );
+    if (containsNoTotal.length !== 0) {
+      setValidateError(true);
+      setNoTotalDishes(containsNoTotal);
+      return null;
+    }
+    setValidateError(false);
+    handleSubmit();
+  };
+
   if (!dishes) {
     return <Loader />;
   }
@@ -61,19 +81,46 @@ const RecordSales = (props) => {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">{"Reset"}</DialogTitle>
+      <DialogTitle id="alert-dialog-title">
+        {!validateError ? "Reset" : "Error"}
+      </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Are you sure you want to reset prep list? Changes can not be reverted.
+          {!validateError
+            ? "Are you sure you want to reset prep list? Changes can not be reverted"
+            : `Some ${
+                noTotalDishes.length === 1 ? "item" : "items"
+              } show that you sold more than you have prepped, please adjust total amount or current amount in following ${
+                noTotalDishes.length === 1 ? "item" : "items"
+              }:`}
         </DialogContentText>
+        {validateError && (
+          <List>
+            {noTotalDishes.map((dish) => (
+              <ListItem
+                component={Link}
+                to={`/edit/${dish._id}`}
+                key={dish.name}
+              >
+                <ListItemText
+                  primary={dish.name}
+                  secondary={`Prepped: ${dish.total}
+                   Counted: ${dish.currentAmount}`}
+                />
+              </ListItem>
+            ))}
+          </List>
+        )}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose} color="primary">
           Back
         </Button>
-        <Button onClick={handleSubmit} color="primary" autoFocus>
-          Confirm
-        </Button>
+        {!validateError && (
+          <Button onClick={validate} color="primary" autoFocus>
+            Confirm
+          </Button>
+        )}
       </DialogActions>
     </Dialog>
   );

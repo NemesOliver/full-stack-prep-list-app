@@ -164,7 +164,7 @@ const DishEdit = (props) => {
               size="large"
               onClick={() => history.push("/")}
               variant="contained"
-              color="default"
+              color="secondary"
               fullWidth
             >
               Back
