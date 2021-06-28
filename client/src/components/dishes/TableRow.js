@@ -12,12 +12,8 @@ import {
 const TableRow = (props) => {
   const { dish } = props;
 
-  const debounce = (value) => {
-    const timerId = setTimeout(() => {
-      axios.patch(`/v1/dishes/edit/${dish._id}`, value);
-    }, 500);
-
-    return () => clearTimeout(timerId);
+  const handleChange = (value) => {
+    axios.patch(`/v1/dishes/edit/${dish._id}`, value);
   };
 
   return (
@@ -33,7 +29,7 @@ const TableRow = (props) => {
           variant="outlined"
           label="Have"
           onChange={(e) => {
-            debounce({ currentAmount: e.target.value });
+            handleChange({ currentAmount: e.target.value });
           }}
           defaultValue={dish.currentAmount}
           onClick={(e) => e.target.select()}
@@ -47,7 +43,7 @@ const TableRow = (props) => {
           variant="outlined"
           label="Need"
           onChange={(e) => {
-            debounce({
+            handleChange({
               neededAmount: e.target.value,
             });
           }}
