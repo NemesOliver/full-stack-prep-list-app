@@ -1,4 +1,6 @@
 import React from "react";
+import axios from "axios";
+import { connect } from "react-redux";
 
 import DishCount from "./DishCount";
 
@@ -19,8 +21,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MorningCount = () => {
+const MorningCount = (props) => {
   const classes = useStyles();
+  const { dishes } = props;
+
+  const calculateTotal = () =>
+    dishes.map((dish) => {
+      const total = dish.currentAmount + dish.neededAmount;
+      return {
+        total,
+        _id: dish._id,
+      };
+    });
+
+  const handleSubmit = () => {
+    const bulkOps = calculateTotal();
+    axios.patch("/v1/dishes/bulkwrite/update_total", bulkOps);
+    history.push("/");
+  };
 
   return (
     <div>
@@ -28,7 +46,7 @@ const MorningCount = () => {
       <Zoom timeout={650} in>
         <Fab
           variant="extended"
-          onClick={() => history.push("/record")}
+          onClick={handleSubmit}
           className={classes.fab}
           color="secondary"
           aria-label="add"
@@ -41,4 +59,8 @@ const MorningCount = () => {
   );
 };
 
-export default MorningCount;
+const mapStateToProps = (state) => {
+  return { dishes: Object.values(state.dishes) };
+};
+
+export default connect(mapStateToProps, {})(MorningCount);

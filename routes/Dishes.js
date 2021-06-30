@@ -65,7 +65,7 @@ router.delete("/delete/:id", async (req, res) => {
 });
 
 //BULKWRITE
-router.patch("/bulkwrite/recordTotal", async (req, res) => {
+router.patch("/bulkwrite/update_total", async (req, res) => {
   const documents = req.body;
 
   const bulkOps = documents.map((document) => ({
@@ -74,8 +74,6 @@ router.patch("/bulkwrite/recordTotal", async (req, res) => {
       update: {
         $set: {
           total: document.total,
-          currentAmount: document.amount,
-          neededAmount: document.amount,
         },
       },
       upsert: true,
