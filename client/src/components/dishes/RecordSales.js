@@ -41,19 +41,21 @@ const RecordSales = (props) => {
     return { sold: soldItems };
   };
 
-  const handleSubmit = () => {
-    const sold = calculateSoldItems();
-    const bulkOps = dishes.map((dish) => {
-      const total = dish.currentAmount + dish.neededAmount;
+  const resetEveningPreplist = () =>
+    dishes.map((dish) => {
       return {
-        total,
         _id: dish._id,
-        amount: 0,
       };
     });
+
+  const handleSubmit = () => {
+    const sold = calculateSoldItems();
+    const bulkOps = resetEveningPreplist();
+
     axios.post("/v1/sold/record", sold);
-    axios.patch("/v1/dishes/bulkwrite/recordTotal", bulkOps);
-    history.push("/prep-list");
+    axios.patch("/v1/dishes/bulkwrite/reset_morning", bulkOps);
+
+    history.push("/");
   };
 
   const validate = () => {

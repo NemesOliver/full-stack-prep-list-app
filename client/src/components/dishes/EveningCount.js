@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const EveningCount = () => {
+const EveningCount = (props) => {
   const classes = useStyles();
 
   return (

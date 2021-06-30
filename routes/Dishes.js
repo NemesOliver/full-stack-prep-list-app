@@ -41,21 +41,6 @@ router.patch("/edit/:id", async (req, res) => {
   res.json(dish);
 });
 
-//PATCH record sold items
-//Route /dishes/sold/:id
-router.patch("/sold/:id", async (req, res) => {
-  try {
-    const sold = await Dish.findOneAndUpdate(
-      { _id: req.params.id },
-      { $push: { sold: req.body } }
-    );
-
-    res.json(sold);
-  } catch (err) {
-    console.error(err);
-  }
-});
-
 //DELETE   delete a dish
 //Route /dishes/delete/:id
 router.delete("/delete/:id", async (req, res) => {
@@ -65,6 +50,7 @@ router.delete("/delete/:id", async (req, res) => {
 });
 
 //BULKWRITE
+// Update total and reset current amount
 router.patch("/bulkwrite/update_total", async (req, res) => {
   const documents = req.body;
 
@@ -75,6 +61,27 @@ router.patch("/bulkwrite/update_total", async (req, res) => {
         $set: {
           total: document.total,
           currentAmount: 0,
+        },
+      },
+      upsert: true,
+    },
+  }));
+
+  const results = await Dish.collection.bulkWrite(bulkOps);
+
+  res.json(results);
+});
+
+// Reset evening preplist
+router.patch("/bulkwrite/reset_morning", async (req, res) => {
+  const documents = req.body;
+
+  const bulkOps = documents.map((document) => ({
+    updateOne: {
+      filter: { _id: mongoose.Types.ObjectId(document._id) },
+      update: {
+        $set: {
+          neededAmount: 0,
         },
       },
       upsert: true,
