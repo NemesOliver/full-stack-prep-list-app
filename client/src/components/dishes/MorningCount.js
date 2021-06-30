@@ -2,10 +2,11 @@ import React from "react";
 
 import DishCount from "./DishCount";
 
+// Material UI Core
 import { Fab, Zoom, makeStyles } from "@material-ui/core";
 
 // Material UI Icons
-import SyncIcon from "@material-ui/icons/Sync";
+import SendIcon from "@material-ui/icons/Send";
 import history from "../../history";
 
 const useStyles = makeStyles((theme) => ({
@@ -33,7 +34,7 @@ const MorningCount = (props) => {
           color="secondary"
           aria-label="add"
         >
-          <SyncIcon className={classes.extendedIcon} />
+          <SendIcon className={classes.extendedIcon} />
           Submit
         </Fab>
       </Zoom>

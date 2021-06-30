@@ -74,6 +74,7 @@ router.patch("/bulkwrite/update_total", async (req, res) => {
       update: {
         $set: {
           total: document.total,
+          currentAmount: 0,
         },
       },
       upsert: true,
