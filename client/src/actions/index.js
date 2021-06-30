@@ -11,6 +11,7 @@ import {
   CLOSE_DRAWER,
   SET_MENU_OPTIONS,
   FETCH_SOLD_ITEMS,
+  IS_MORNING_COMPLETED,
 } from "./types";
 
 // ** DISHES ACTIONS **
@@ -95,5 +96,13 @@ export const getMenuOptions = (itemsArray) => {
   return {
     type: SET_MENU_OPTIONS,
     payload: itemsArray,
+  };
+};
+
+// ** PREPLIST ACTIONS **
+export const isMorningCompleted = (completed) => {
+  return {
+    type: IS_MORNING_COMPLETED,
+    payload: completed,
   };
 };

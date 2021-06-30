@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 // Material UI Core
 import List from "@material-ui/core/List";
@@ -35,10 +36,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MenuList = ({ closeMenu }) => {
+const MenuList = (props) => {
   const classes = useStyles();
+  const { closeMenu, completed } = props;
   const [open, setOpen] = useState(false);
-
+  console.log(completed);
   // Menu items
   const menuItems = [
     {
@@ -63,6 +65,7 @@ const MenuList = ({ closeMenu }) => {
               component={Link}
               to="/prep-list/morning"
               button
+              disabled={completed && true}
               className={classes.nested}
             >
               <ListItemIcon>
@@ -75,6 +78,7 @@ const MenuList = ({ closeMenu }) => {
               component={Link}
               to="/prep-list/evening"
               button
+              disabled={!completed && true}
               className={classes.nested}
             >
               <ListItemIcon>
@@ -124,4 +128,8 @@ const MenuList = ({ closeMenu }) => {
   );
 };
 
-export default MenuList;
+const mapStateToProps = (state) => {
+  return { completed: state.completed };
+};
+
+export default connect(mapStateToProps, {})(MenuList);

@@ -6,7 +6,12 @@ import {
   fetchSoldItems,
 } from "../../actions";
 
-import { TextField, makeStyles } from "@material-ui/core";
+import {
+  TextField,
+  makeStyles,
+  Container,
+  Typography,
+} from "@material-ui/core";
 
 // Components
 import Loader from "../Loader";
@@ -22,11 +27,6 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     flexWrap: "wrap",
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 200,
   },
 }));
 
@@ -64,38 +64,50 @@ const Statistics = (props) => {
 
   return (
     <div>
-      <TextField
-        id="date"
-        label="Birthday"
-        type="date"
-        onChange={(e) => setSelectedDate(e.target.value)}
-        defaultValue={selectedDate}
-        className={classes.textField}
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
+      <Container maxWidth="sm">
+        <TextField
+          fullWidth
+          id="date"
+          color="secondary"
+          label="Date"
+          type="date"
+          onChange={(e) => setSelectedDate(e.target.value)}
+          defaultValue={selectedDate}
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+      </Container>
+      <Container>
+        {filterByDate.length === 0 ? (
+          <Typography>No data</Typography>
+        ) : (
+          filterByDate.map((day, index) => {
+            const displayDate = new Date(day.date).toDateString();
 
-      {filterByDate.map((day, index) => {
-        if (index === 0) {
-          return (
-            <div key={day.id}>
-              <h3>{day.date}</h3>
-              <br />
-              {day.sold.map((item) => {
-                return (
-                  <div key={item.name}>
-                    <h5>{item.name}</h5>
-                    <h5>{item.sold}</h5>
-                    <h5>{item.dishId}</h5>
-                  </div>
-                );
-              })}
-            </div>
-          );
-        }
-        return null;
-      })}
+            if (index === 0) {
+              return (
+                <div key={day.id}>
+                  <h3>{displayDate}</h3>
+                  <br />
+                  {/* Placeholder for a Chart below */}
+                  {day.sold.map((item) => {
+                    return (
+                      <div key={item.name}>
+                        <h5>{item.name}</h5>
+                        <h5>{item.sold}</h5>
+                        <hr />
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            }
+            return null;
+          })
+        )}
+      </Container>
     </div>
   );
 };

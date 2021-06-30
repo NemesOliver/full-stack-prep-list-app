@@ -16,3 +16,6 @@ export const CLOSE_DRAWER = "CLOSE_DRAWER";
 
 // Menu action types
 export const SET_MENU_OPTIONS = "SET_MENU_OPTIONS";
+
+// Preplist action types
+export const IS_MORNING_COMPLETED = "IS_MORNING_COMPLETED";
