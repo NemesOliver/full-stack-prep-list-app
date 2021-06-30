@@ -10,7 +10,10 @@ import {
   OPEN_DRAWER,
   CLOSE_DRAWER,
   SET_MENU_OPTIONS,
+  FETCH_SOLD_ITEMS,
 } from "./types";
+
+// ** DISHES ACTIONS **
 
 // FETCH ALL DISHES
 // Route /dishes
@@ -52,6 +55,16 @@ export const deleteDish = (id) => async (dispatch) => {
 
   dispatch({ type: DELETE_DISH, payload: id });
   history.push("/");
+};
+
+// ** DISHES ACTIONS **
+
+// GET SOLD ITEMS
+// Route /sold
+export const fetchSoldItems = () => async (dispatch) => {
+  const { data } = await axios.get("/v1/sold");
+
+  dispatch({ type: FETCH_SOLD_ITEMS, payload: data });
 };
 
 // ** TITLE ACTION **
