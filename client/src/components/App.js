@@ -19,6 +19,7 @@ import MorningCount from "./dishes/MorningCount";
 import EveningCount from "./dishes/EveningCount";
 
 import history from "../history";
+import MorningDialog from "./dishes/MorningDialog";
 
 const App = () => {
   return (
@@ -38,6 +39,7 @@ const App = () => {
         <Route path="/add" exact component={DishAdd} />
         <Route path="/delete/:id" exact component={DishDelete} />
         <Route path="/record" exact component={RecordSales} />
+        <Route path="/morning-preplist/submit" exact component={MorningDialog} />
       </Router>
     </div>
   );
