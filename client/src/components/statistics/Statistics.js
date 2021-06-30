@@ -6,11 +6,7 @@ import {
   fetchSoldItems,
 } from "../../actions";
 
-import DateFnsUtils from "@date-io/date-fns";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
+import { TextField, makeStyles } from "@material-ui/core";
 
 // Components
 import Loader from "../Loader";
@@ -22,17 +18,26 @@ const menuOptions = [
   },
 ];
 
-const _date = new Date(); // <= Testing date
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+  },
+}));
+
+const _date = new Date().toISOString().substring(0, 10); // <= Testing date
 
 const Statistics = (props) => {
+  const classes = useStyles();
   const { changeHeaderTitle, getMenuOptions, fetchSoldItems, soldItems } =
     props;
 
   const [selectedDate, setSelectedDate] = useState(_date);
-
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
 
   useEffect(() => {
     changeHeaderTitle("Statistics");
@@ -44,13 +49,13 @@ const Statistics = (props) => {
   }, [fetchSoldItems]);
 
   const soldItemsArray = soldItems.map((item) => {
-    const dateObj = new Date(item.date).toLocaleDateString();
+    const dateObj = new Date(item.date).toISOString().substring(0, 10);
 
     return { date: dateObj, sold: item.sold, id: item._id };
   });
 
   const filterByDate = soldItemsArray.filter(
-    (day) => day.date === selectedDate.toLocaleDateString()
+    (day) => day.date === selectedDate
   );
 
   if (!soldItems) {
@@ -59,19 +64,17 @@ const Statistics = (props) => {
 
   return (
     <div>
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <KeyboardDatePicker
-          margin="normal"
-          id="date-picker-dialog"
-          label="Date picker dialog"
-          format="MM/dd/yyyy"
-          value={selectedDate}
-          onChange={handleDateChange}
-          KeyboardButtonProps={{
-            "aria-label": "change date",
-          }}
-        />
-      </MuiPickersUtilsProvider>
+      <TextField
+        id="date"
+        label="Birthday"
+        type="date"
+        onChange={(e) => setSelectedDate(e.target.value)}
+        defaultValue={selectedDate}
+        className={classes.textField}
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
 
       {filterByDate.map((day, index) => {
         if (index === 0) {
