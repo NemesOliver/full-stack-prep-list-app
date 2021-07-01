@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { fetchDishes } from "../../actions";
+import { fetchDishes, isMorningCompleted } from "../../actions";
 import { Link } from "react-router-dom";
 
 import Loader from "../Loader";
@@ -20,7 +20,7 @@ import history from "../../history";
 import axios from "axios";
 
 const RecordSales = (props) => {
-  const { fetchDishes, dishes } = props;
+  const { fetchDishes, dishes, isMorningCompleted } = props;
   const [validateError, setValidateError] = useState(false);
   const [noTotalDishes, setNoTotalDishes] = useState([]);
 
@@ -52,8 +52,9 @@ const RecordSales = (props) => {
     const sold = calculateSoldItems();
     const bulkOps = resetEveningPreplist();
 
-    axios.post("/v1/sold/record", sold);
-    axios.patch("/v1/dishes/bulkwrite/reset_morning", bulkOps);
+    // axios.post("/v1/sold/record", sold);
+    // axios.patch("/v1/dishes/bulkwrite/reset_morning", bulkOps);
+    isMorningCompleted(false);
 
     history.push("/");
   };
@@ -134,4 +135,5 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   fetchDishes,
+  isMorningCompleted,
 })(RecordSales);

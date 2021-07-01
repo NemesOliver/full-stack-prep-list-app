@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import { fetchDishes } from "../../actions";
+import { fetchDishes, isMorningCompleted } from "../../actions";
 import history from "../../history";
 
 // Material UI Core
@@ -15,7 +15,7 @@ import {
 } from "@material-ui/core";
 
 const MorningDialog = (props) => {
-  const { dishes, fetchDishes } = props;
+  const { dishes, fetchDishes, isMorningCompleted } = props;
 
   useEffect(() => {
     fetchDishes();
@@ -34,7 +34,8 @@ const MorningDialog = (props) => {
 
   const handleSubmit = () => {
     const bulkOps = calculateTotal();
-    axios.patch("/v1/dishes/bulkwrite/update_total", bulkOps);
+    // axios.patch("/v1/dishes/bulkwrite/update_total", bulkOps);
+    isMorningCompleted(true);
     history.push("/");
   };
 
@@ -63,4 +64,7 @@ const mapStateToProps = (state) => {
   return { dishes: Object.values(state.dishes) };
 };
 
-export default connect(mapStateToProps, { fetchDishes })(MorningDialog);
+export default connect(mapStateToProps, {
+  fetchDishes,
+  isMorningCompleted,
+})(MorningDialog);

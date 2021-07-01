@@ -38,7 +38,10 @@ const useStyles = makeStyles((theme) => ({
 
 const MenuList = (props) => {
   const classes = useStyles();
-  const { closeMenu, completed } = props;
+  const {
+    closeMenu,
+    completed: { completed },
+  } = props;
   const [open, setOpen] = useState(false);
   console.log(completed);
   // Menu items
@@ -54,7 +57,6 @@ const MenuList = (props) => {
     {
       icon: <AssignmentIcon />,
       text: "Prep list",
-      // path: "/prep-list",
       onClick: () => setOpen(!open),
       expand: open ? <ExpandLess /> : <ExpandMore />,
       collapse: (
