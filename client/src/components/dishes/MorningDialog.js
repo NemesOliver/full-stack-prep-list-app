@@ -34,7 +34,8 @@ const MorningDialog = (props) => {
 
   const handleSubmit = () => {
     const bulkOps = calculateTotal();
-    // axios.patch("/v1/dishes/bulkwrite/update_total", bulkOps);
+
+    axios.patch("/v1/dishes/bulkwrite/update_total", bulkOps);
     isMorningCompleted(true);
     history.push("/");
   };

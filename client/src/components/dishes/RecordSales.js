@@ -52,8 +52,9 @@ const RecordSales = (props) => {
     const sold = calculateSoldItems();
     const bulkOps = resetEveningPreplist();
 
-    // axios.post("/v1/sold/record", sold);
-    // axios.patch("/v1/dishes/bulkwrite/reset_morning", bulkOps);
+    axios.post("/v1/sold/record", sold);
+    axios.patch("/v1/dishes/bulkwrite/reset_morning", bulkOps);
+
     isMorningCompleted(false);
 
     history.push("/");
