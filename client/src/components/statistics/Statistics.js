@@ -6,15 +6,12 @@ import {
   fetchSoldItems,
 } from "../../actions";
 
-import {
-  TextField,
-  makeStyles,
-  Container,
-  Typography,
-} from "@material-ui/core";
-
 // Components
 import Loader from "../Loader";
+import AvgPerDayChart from "./AvgPerDayChart";
+
+// Material UI Core
+import { TextField, makeStyles, Container } from "@material-ui/core";
 
 const menuOptions = [
   {
@@ -30,14 +27,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const _date = new Date().toISOString().substring(0, 10); // <= Testing date
+const _date = new Date();
+
+const yesterday = new Date(_date.setDate(_date.getDate() - 1));
+const formatedYesterdayDate = yesterday.toISOString().substring(0, 10);
 
 const Statistics = (props) => {
   const classes = useStyles();
   const { changeHeaderTitle, getMenuOptions, fetchSoldItems, soldItems } =
     props;
 
-  const [selectedDate, setSelectedDate] = useState(_date);
+  const [selectedDate, setSelectedDate] = useState(formatedYesterdayDate);
 
   useEffect(() => {
     changeHeaderTitle("Statistics");
@@ -79,34 +79,8 @@ const Statistics = (props) => {
           }}
         />
       </Container>
-      <Container>
-        {filterByDate.length === 0 ? (
-          <Typography>No data</Typography>
-        ) : (
-          filterByDate.map((day, index) => {
-            const displayDate = new Date(day.date).toDateString();
-
-            if (index === 0) {
-              return (
-                <div key={day.id}>
-                  <h3>{displayDate}</h3>
-                  <br />
-                  {/* Placeholder for a Chart below */}
-                  {day.sold.map((item) => {
-                    return (
-                      <div key={item.name}>
-                        <h5>{item.name}</h5>
-                        <h5>{item.sold}</h5>
-                        <hr />
-                      </div>
-                    );
-                  })}
-                </div>
-              );
-            }
-            return null;
-          })
-        )}
+      <Container maxWidth="md">
+        <AvgPerDayChart filteredByDate={filterByDate} />
       </Container>
     </div>
   );
