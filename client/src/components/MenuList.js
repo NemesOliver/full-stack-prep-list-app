@@ -39,10 +39,7 @@ const useStyles = makeStyles((theme) => ({
 const MenuList = (props) => {
   const classes = useStyles();
 
-  const {
-    completed: { completed },
-    closeMenu,
-  } = props;
+  const { closeMenu } = props;
 
   const [open, setOpen] = useState(false);
 

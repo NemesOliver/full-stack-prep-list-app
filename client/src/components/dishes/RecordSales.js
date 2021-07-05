@@ -34,6 +34,7 @@ const RecordSales = (props) => {
     const soldItems = dishes.map((dish) => {
       return {
         name: dish.name,
+        section: dish.section,
         dishId: dish._id,
         sold: dish.total - dish.currentAmount,
       };

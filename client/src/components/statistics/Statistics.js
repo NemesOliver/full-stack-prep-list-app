@@ -8,7 +8,7 @@ import {
 
 // Components
 import Loader from "../Loader";
-import AvgPerDayChart from "./AvgPerDayChart";
+import AvgPerDayList from "./AvgPerDayList";
 
 // Material UI Core
 import { TextField, makeStyles, Container } from "@material-ui/core";
@@ -42,6 +42,10 @@ const Statistics = (props) => {
     changeHeaderTitle("Statistics");
     getMenuOptions(menuOptions);
   }, [changeHeaderTitle, getMenuOptions]);
+
+  useEffect(() => {
+    getMenuOptions(menuOptions);
+  }, [getMenuOptions]);
 
   useEffect(() => {
     fetchSoldItems();
@@ -79,7 +83,7 @@ const Statistics = (props) => {
         />
       </Container>
       <Container maxWidth="md">
-        <AvgPerDayChart filteredByDate={filterByDate} />
+        <AvgPerDayList filteredByDate={filterByDate} />
       </Container>
     </div>
   );

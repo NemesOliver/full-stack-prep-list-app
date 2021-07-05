@@ -7,7 +7,7 @@ import {
   Card,
   CardHeader,
   CardContent,
-  // CardActionArea,
+  CardActionArea,
   IconButton,
   makeStyles,
 } from "@material-ui/core";
@@ -32,22 +32,26 @@ const DishCard = (props) => {
 
   const date = new Date(dish.date);
 
+  const handleClick = () => history.push(`/show/${dish._id}`);
+
   return (
     <Card elevation={5}>
-      {/* <CardActionArea> */}
-      <CardHeader
-        className={classes["p:firstLetter"]}
-        title={dish.name}
-        subheader={dish.section}
-      ></CardHeader>
-      <CardContent>
-        <Typography>Total: {dish.total}</Typography>
-        <Typography>Created at: {date.toDateString()}</Typography>
-        <Typography>Have: {dish.currentAmount}</Typography>
-        <Typography>Need: 
-          {dish.neededAmount}</Typography>
-      </CardContent>
-      {/* </CardActionArea> */}
+      <CardActionArea onClick={handleClick}>
+        <CardHeader
+          className={classes["p:firstLetter"]}
+          title={dish.name}
+          subheader={dish.section}
+        ></CardHeader>
+        <CardContent>
+          <Typography>Total: {dish.total}</Typography>
+          <Typography>Created at: {date.toDateString()}</Typography>
+          <Typography>Have: {dish.currentAmount}</Typography>
+          <Typography>
+            Need:
+            {dish.neededAmount}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
       <CardActions disableSpacing>
         <IconButton
           className={classes.btn}

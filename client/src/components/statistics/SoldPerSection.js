@@ -12,31 +12,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// const options = {
-//   indexAxis: "y",
-//   scales: {
-//     yAxes: [
-//       {
-//         ticks: {
-//           beginAtZero: true,
-//         },
-//       },
-//     ],
-//   },
-//   plugins: {
-//     legend: {
-//       display: false,
-//     },
-//     title: {
-//       display: true,
-//       text: "Sold items",
-//     },
-//   },
-// };
-
-const AvgPerDayChart = (props) => {
+const SoldPerSection = (props) => {
   const classes = useStyles();
   const { filteredByDate } = props;
+
+  console.log(filteredByDate);
 
   const getOneDay =
     filteredByDate.length > 0 && filteredByDate[filteredByDate.length - 1].sold; // Get most recent entry
@@ -76,4 +56,4 @@ const AvgPerDayChart = (props) => {
   );
 };
 
-export default AvgPerDayChart;
+export default SoldPerSection;

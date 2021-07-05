@@ -66,8 +66,11 @@ const DishEdit = (props) => {
 
   useEffect(() => {
     fetchDish(match.params.id);
+  }, [fetchDish, match.params.id]);
+
+  useEffect(() => {
     changeHeaderTitle("Edit item");
-  }, [changeHeaderTitle, fetchDish, match.params.id]);
+  }, [changeHeaderTitle]);
 
   const handleSubmit = () => {
     updateDish(formValues, match.params.id);
