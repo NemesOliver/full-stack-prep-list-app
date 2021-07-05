@@ -23,6 +23,7 @@ const DishShow = (props) => {
   const translateToDays = (arrayToFilter) => {
     const daysData = arrayToFilter.map((item) => {
       const { sold } = item;
+
       return {
         day: new Date(item.date).toLocaleDateString(navigator.language, {
           weekday: "long",
@@ -33,25 +34,39 @@ const DishShow = (props) => {
     return daysData;
   };
 
-  console.log(translateToDays(soldItems));
+  const filterSoldItemsPerDay = (myDay) => {
+    const allDays = myDay && translateToDays(soldItems);
+
+    if (allDays && allDays.length > 0) {
+      const day = allDays.filter((day) => day.day === myDay);
+      return day;
+    }
+  };
+
+  const matchDayToDish = (stringDay) => {
+    const soldOnDay = filterSoldItemsPerDay(stringDay);
+
+    const dishData = soldOnDay && soldOnDay.map((day) => day.sold).flat();
+
+    const matchToDish =
+      dishData &&
+      dish &&
+      dishData
+        .map((record) => {
+          if (record.dishId !== dish._id) {
+            return null;
+          }
+          return record.sold;
+        })
+        .filter((x) => x !== null);
+    console.log(matchToDish);
+  };
+
+  matchDayToDish("Wednesday");
 
   const handleClick = () => history.push("/");
 
   const allSoldData = soldItems.map((entry) => entry.sold).flat(); // Maybe filter this by date and flatten thi later, maybe return an object with matchin date and sold arr
-
-  const getDataByDay = (day) => {
-    soldItems.map((item) =>
-      console.log(new Date(item.date).toLocaleDateString())
-    );
-  };
-
-  //   getDataByDay();
-
-  const matchDishToData = () => {
-    // This needs a date too so i can sort it by day, example: monday => sold this much
-    const dishData = allSoldData.filter((entry) => entry.dishId === dish._id);
-    return dishData;
-  };
 
   if (!dish) {
     return <Loader />;
