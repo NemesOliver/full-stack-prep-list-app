@@ -1,26 +1,38 @@
 import React from "react";
-import { Bar } from "react-chartjs-2";
+import { Pie } from "react-chartjs-2";
 
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, Paper } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   barChart: {
     marginTop: theme.spacing(5),
   },
+  paper: {
+    padding: theme.spacing(3),
+  },
 }));
 
-const options = {
-  indexAxis: "y",
-  scales: {
-    yAxes: [
-      {
-        ticks: {
-          beginAtZero: true,
-        },
-      },
-    ],
-  },
-};
+// const options = {
+//   indexAxis: "y",
+//   scales: {
+//     yAxes: [
+//       {
+//         ticks: {
+//           beginAtZero: true,
+//         },
+//       },
+//     ],
+//   },
+//   plugins: {
+//     legend: {
+//       display: false,
+//     },
+//     title: {
+//       display: true,
+//       text: "Sold items",
+//     },
+//   },
+// };
 
 const AvgPerDayChart = (props) => {
   const classes = useStyles();
@@ -39,7 +51,7 @@ const AvgPerDayChart = (props) => {
     labels: chartLabels,
     datasets: [
       {
-        label: "# of Votes",
+        label: "sold",
         data: chartData,
         backgroundColor: [
           "rgba(255, 99, 132, 0.7)",
@@ -55,7 +67,11 @@ const AvgPerDayChart = (props) => {
 
   return (
     <div className={classes.barChart}>
-      <Bar data={data} options={options} />
+      {chartData.length || chartLabels.length > 0 ? (
+        <Paper elevation={5} className={classes.paper}>
+          <Pie data={data} />
+        </Paper>
+      ) : null}
     </div>
   );
 };

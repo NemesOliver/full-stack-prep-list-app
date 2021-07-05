@@ -69,7 +69,6 @@ const MenuList = (props) => {
               component={Link}
               to="/prep-list/morning"
               button
-              disabled={completed && true}
               className={classes.nested}
             >
               <ListItemIcon>
@@ -82,7 +81,6 @@ const MenuList = (props) => {
               component={Link}
               to="/prep-list/evening"
               button
-              disabled={!completed && true}
               className={classes.nested}
             >
               <ListItemIcon>

@@ -21,9 +21,8 @@ const menuOptions = [
 ];
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    display: "flex",
-    flexWrap: "wrap",
+  chartContainer: {
+    minHeight: "600px",
   },
 }));
 
