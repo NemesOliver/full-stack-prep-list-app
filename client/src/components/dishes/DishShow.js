@@ -7,6 +7,7 @@ import { fetchDish, fetchSoldItems } from "../../actions";
 import { Button, Container, Typography } from "@material-ui/core";
 
 // Components
+import ParlevelsChart from "../statistics/ParlevelsChart";
 import Loader from "../Loader";
 
 const DishShow = (props) => {
@@ -64,7 +65,7 @@ const DishShow = (props) => {
   };
 
   // Next - calculate averages ie: [1,2,3].addTogether && divide by length
-  const calculateAverages = () => {
+  const caluclateParlevels = () => {
     const days = [
       "Monday",
       "Tuesday",
@@ -83,7 +84,7 @@ const DishShow = (props) => {
       if (!totalAmount) {
         return {
           day,
-          totalAmount: 0,
+          par: 0,
         };
       }
       return {
@@ -94,7 +95,7 @@ const DishShow = (props) => {
     return parlevels;
   };
 
-  console.log(calculateAverages());
+  // Next - Import chartJs chart and pass in parlevels as prop
 
   const handleClick = () => history.push("/");
 
@@ -111,6 +112,9 @@ const DishShow = (props) => {
         <Typography variant="body2" align="center">
           {dish.section.toUpperCase()}
         </Typography>
+      </div>
+      <div>
+        <ParlevelsChart dish={dish} />
       </div>
       <Button variant="outlined" color="secondary" onClick={handleClick}>
         Back
