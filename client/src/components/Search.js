@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { searchDishes } from "../actions";
 
@@ -58,9 +58,14 @@ export const Search = (props) => {
     return matches.filter((match) => match !== null);
   };
 
+  const handleSearch = () => {
+    searchDishes(searchResults());
+  };
+
+  const handleAllButton = () => {};
+
   const handleChange = (e) => {
     setSearchValue(e.target.value);
-    searchDishes(searchResults());
   };
 
   return (
@@ -78,6 +83,7 @@ export const Search = (props) => {
           color="primary"
           className={classes.iconButton}
           aria-label="search"
+          onClick={handleSearch}
         >
           <SearchIcon />
         </IconButton>
