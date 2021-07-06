@@ -100,6 +100,7 @@ export const ParlevelsChart = (props) => {
           "rgba(75, 192, 192, 0.7)",
           "rgba(153, 102, 255, 0.7)",
           "rgba(255, 159, 64, 0.7)",
+          "rgba(212, 11, 88, 0.7)",
         ],
       },
     ],
@@ -114,6 +115,11 @@ export const ParlevelsChart = (props) => {
           },
         },
       ],
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
     },
   };
 
