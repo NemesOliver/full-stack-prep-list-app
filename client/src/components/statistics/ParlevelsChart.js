@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Bar } from "react-chartjs-2";
+import { changeHeaderTitle } from "../../actions";
+
+import { makeStyles, Paper, Typography } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  chartTitle: {
+    margin: theme.spacing(3),
+  },
+}));
 
 export const ParlevelsChart = (props) => {
-  const { soldItems, dish } = props;
+  const classes = useStyles();
+  const { soldItems, dish, changeHeaderTitle } = props;
+
+  useEffect(() => {
+    if (dish) {
+      changeHeaderTitle(`${dish.name} parlevels`);
+    }
+  }, [changeHeaderTitle, dish]);
 
   const translateToDays = (arrayToFilter) => {
     const daysData = arrayToFilter.map((item) => {
@@ -124,9 +140,14 @@ export const ParlevelsChart = (props) => {
   };
 
   return (
-    <div>
-      <Bar data={data} options={options} />
-    </div>
+    <Paper elevation={5}>
+      <div style={{ padding: "10px" }}>
+        <Typography className={classes.chartTitle} variant="h5" align="center">
+          PAR LEVELS
+        </Typography>
+        <Bar data={data} options={options} />
+      </div>
+    </Paper>
   );
 };
 
@@ -134,4 +155,7 @@ const mapStateToProps = (state) => ({
   soldItems: Object.values(state.soldItems),
 });
 
-export default connect(mapStateToProps, {})(ParlevelsChart);
+export default connect(mapStateToProps, {
+  useEffect,
+  changeHeaderTitle,
+})(ParlevelsChart);

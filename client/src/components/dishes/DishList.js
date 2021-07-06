@@ -4,6 +4,7 @@ import { fetchDishes, changeHeaderTitle, getMenuOptions } from "../../actions";
 
 //Components
 import DishCard from "./DishCard";
+import Search from "../Search";
 
 // Material UI Core
 import {
@@ -21,7 +22,15 @@ import {
 import history from "../../history";
 
 const DishList = (props) => {
-  const { fetchDishes, changeHeaderTitle, getMenuOptions, dishes } = props;
+  const {
+    fetchDishes,
+    changeHeaderTitle,
+    getMenuOptions,
+    dishes,
+    searchResults,
+  } = props;
+
+  console.log(searchResults);
 
   // State
   const [radioValue, setRadioValue] = useState("all");
@@ -54,7 +63,7 @@ const DishList = (props) => {
   // Return statement
   return (
     <Container>
-      {openFilterOptions && (
+      {openFilterOptions ? (
         <div>
           <FormControl component="fieldset">
             <FormLabel component="legend">Filter by section</FormLabel>
@@ -96,6 +105,8 @@ const DishList = (props) => {
           </Button>
           <Divider style={{ marginBottom: "10px", marginTop: "10px" }} />
         </div>
+      ) : (
+        <Search />
       )}
       <Grid container spacing={5}>
         {dishes
@@ -116,7 +127,10 @@ const DishList = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return { dishes: Object.values(state.dishes) };
+  return {
+    dishes: Object.values(state.dishes),
+    searchResults: state.searchResults,
+  };
 };
 
 export default connect(mapStateToProps, {

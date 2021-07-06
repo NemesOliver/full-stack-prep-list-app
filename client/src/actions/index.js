@@ -12,6 +12,7 @@ import {
   SET_MENU_OPTIONS,
   FETCH_SOLD_ITEMS,
   IS_MORNING_COMPLETED,
+  SEARCH_ITEMS,
 } from "./types";
 
 // ** DISHES ACTIONS **
@@ -104,5 +105,13 @@ export const isMorningCompleted = (completed) => {
   return {
     type: IS_MORNING_COMPLETED,
     payload: completed,
+  };
+};
+
+// ** PREPLIST ACTIONS **
+export const searchDishes = (searchResults) => {
+  return {
+    type: SEARCH_ITEMS,
+    payload: searchResults,
   };
 };
