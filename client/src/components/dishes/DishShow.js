@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { fetchDish, fetchSoldItems } from "../../actions";
 
 // Material UI Core
-import { makeStyles, Button, Container, Typography } from "@material-ui/core";
+import { Button, Container, Typography } from "@material-ui/core";
 
 // Components
 import Loader from "../Loader";
@@ -43,6 +43,7 @@ const DishShow = (props) => {
     }
   };
 
+  // get array of sold amounts per current dish and per day
   const matchDayToDish = (stringDay) => {
     const soldOnDay = filterSoldItemsPerDay(stringDay);
 
@@ -58,15 +59,46 @@ const DishShow = (props) => {
           }
           return record.sold;
         })
-        .filter((x) => x !== null);
-    console.log(matchToDish);
+        .filter((i) => i !== null);
+    return matchToDish;
   };
 
-  matchDayToDish("Wednesday");
+  // matchDayToDish("Monday");
+
+  // Next - calculate averages ie: [1,2,3].addTogether && divide by length
+  const calculateAverages = () => {
+    const days = [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ];
+    const reducer = (accumulator, currentValue) => accumulator + currentValue;
+    const parlevels = days.map((day) => {
+      const soldOnDay = matchDayToDish(day);
+      const totalAmount = soldOnDay && soldOnDay.reduce(reducer, 0);
+      const parlevel = soldOnDay && totalAmount / soldOnDay.length;
+
+      if (!totalAmount) {
+        return {
+          day,
+          totalAmount: 0,
+        };
+      }
+      return {
+        day,
+        parlevel,
+      };
+    });
+    console.log(parlevels);
+  };
+
+  calculateAverages();
 
   const handleClick = () => history.push("/");
-
-  const allSoldData = soldItems.map((entry) => entry.sold).flat(); // Maybe filter this by date and flatten thi later, maybe return an object with matchin date and sold arr
 
   if (!dish) {
     return <Loader />;

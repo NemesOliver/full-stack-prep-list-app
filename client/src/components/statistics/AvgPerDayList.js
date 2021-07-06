@@ -29,7 +29,7 @@ const AvgPerDayList = (props) => {
 
   return (
     <div className={classes.barChart}>
-      <TableContainer component={Paper}>
+      <TableContainer elevation={5} component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
