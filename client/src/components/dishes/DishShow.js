@@ -63,8 +63,6 @@ const DishShow = (props) => {
     return matchToDish;
   };
 
-  // matchDayToDish("Monday");
-
   // Next - calculate averages ie: [1,2,3].addTogether && divide by length
   const calculateAverages = () => {
     const days = [
@@ -80,7 +78,7 @@ const DishShow = (props) => {
     const parlevels = days.map((day) => {
       const soldOnDay = matchDayToDish(day);
       const totalAmount = soldOnDay && soldOnDay.reduce(reducer, 0);
-      const parlevel = soldOnDay && totalAmount / soldOnDay.length;
+      const parlevel = soldOnDay && Math.round(totalAmount / soldOnDay.length);
 
       if (!totalAmount) {
         return {
@@ -93,10 +91,10 @@ const DishShow = (props) => {
         parlevel,
       };
     });
-    console.log(parlevels);
+    return parlevels;
   };
 
-  calculateAverages();
+  console.log(calculateAverages());
 
   const handleClick = () => history.push("/");
 
