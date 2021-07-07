@@ -4,8 +4,10 @@ import { connect } from "react-redux";
 const Parlevels = (props) => {
   const { dishes, soldItems } = props;
 
-  const _parlevels = () =>
-    dishes.map((dish) => {
+  const getParlevels = (dishData, soldData) =>
+    dishData &&
+    soldData &&
+    dishData.map((dish) => {
       const translateToDays = (arrayToFilter) => {
         const daysData = arrayToFilter.map((item) => {
           const { sold } = item;
@@ -22,7 +24,7 @@ const Parlevels = (props) => {
       };
 
       const filterSoldItemsPerDay = (myDay) => {
-        const allDays = soldItems && translateToDays(soldItems);
+        const allDays = soldData && translateToDays(soldData);
 
         if (allDays && allDays.length > 0) {
           const day = allDays.filter((day) => day.day === myDay);
@@ -88,7 +90,7 @@ const Parlevels = (props) => {
 
   return (
     <div>
-      {_parlevels().map((dish) => {
+      {getParlevels(dishes, soldItems).map((dish) => {
         return (
           <div>
             <h3>{dish.name}</h3>
