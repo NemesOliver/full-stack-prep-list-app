@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Bar } from "react-chartjs-2";
 import { changeHeaderTitle } from "../../actions";
 
-import { makeStyles, Paper, Typography } from "@material-ui/core";
+import { makeStyles, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   chartTitle: {
@@ -139,14 +139,12 @@ export const ParlevelsChart = (props) => {
   };
 
   return (
-    <Paper elevation={5}>
-      <div style={{ padding: "10px" }}>
-        <Typography className={classes.chartTitle} variant="h5" align="center">
-          PAR LEVELS
-        </Typography>
-        <Bar data={data} options={options} />
-      </div>
-    </Paper>
+    <div style={{ padding: "10px" }}>
+      <Typography className={classes.chartTitle} variant="h5" align="center">
+        PAR LEVELS
+      </Typography>
+      <Bar data={data} options={options} />
+    </div>
   );
 };
 

@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(4),
     display: "flex",
     alignItems: "center",
-    width: "100%",
   },
   input: {
     paddingLeft: theme.spacing(1),
@@ -51,34 +50,41 @@ const DishList = (props) => {
   const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
+    fetchDishes();
+  }, [fetchDishes]);
+
+  useEffect(() => {
     const menuOptions = [
       {
         text: "Add item",
         action: () => history.push("/add"),
       },
     ];
-    fetchDishes();
+
     changeHeaderTitle("Home");
     getMenuOptions(menuOptions);
-  }, [fetchDishes, changeHeaderTitle, getMenuOptions]);
 
-  // Search dishes and return searched []
+    return () => getMenuOptions([]);
+  }, [changeHeaderTitle, getMenuOptions]);
+
   const searchResults = () => {
-    const matches = dishes.map((dish) => {
-      const { name, section } = dish;
-      const nameToMatch = name.toLowerCase();
-      const sectionToMatch = section.toLowerCase();
+    const matches = dishes
+      .map((dish) => {
+        const { name, section } = dish;
+        const nameToMatch = name.toLowerCase();
+        const sectionToMatch = section.toLowerCase();
 
-      if (
-        nameToMatch.includes(searchValue.toLowerCase()) ||
-        sectionToMatch.includes(searchValue.toLowerCase())
-      ) {
-        return dish;
-      }
-      return null;
-    });
+        if (
+          nameToMatch.includes(searchValue.toLowerCase()) ||
+          sectionToMatch.includes(searchValue.toLowerCase())
+        ) {
+          return dish;
+        }
+        return null;
+      })
+      .filter((match) => match !== null);
 
-    return matches.filter((match) => match !== null);
+    return matches;
   };
 
   const handleChange = (e) => {
@@ -90,7 +96,7 @@ const DishList = (props) => {
   // Return statement
   return (
     <Container>
-      <Paper elevation={2} component="form" className={classes.root}>
+      <Paper elevation={2} className={classes.root}>
         <InputBase
           className={classes.input}
           placeholder="Search dishes"
