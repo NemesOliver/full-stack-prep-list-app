@@ -4,6 +4,7 @@ import {
   changeHeaderTitle,
   getMenuOptions,
   fetchSoldItems,
+  fetchDishes,
 } from "../../actions";
 
 // Components
@@ -12,6 +13,7 @@ import AvgPerDayList from "./AvgPerDayList";
 
 // Material UI Core
 import { TextField, makeStyles, Container } from "@material-ui/core";
+import Parlevels from "./Parlevels";
 
 const menuOptions = [
   {
@@ -33,10 +35,14 @@ const formatedYesterdayDate = yesterday.toISOString().substring(0, 10);
 
 const Statistics = (props) => {
   const classes = useStyles();
-  const { changeHeaderTitle, getMenuOptions, fetchSoldItems, soldItems } =
+  const { changeHeaderTitle, getMenuOptions, fetchSoldItems, soldItems,fetchDishes } =
     props;
 
   const [selectedDate, setSelectedDate] = useState(formatedYesterdayDate);
+
+  useEffect(() => {
+    fetchDishes();
+  }, [fetchDishes]);
 
   useEffect(() => {
     changeHeaderTitle("Statistics");
@@ -67,7 +73,9 @@ const Statistics = (props) => {
 
   return (
     <div>
-      <Container maxWidth="sm">
+      {/* will be seperate component */}
+
+      {/* <Container maxWidth="sm">
         <TextField
           fullWidth
           id="date"
@@ -84,7 +92,9 @@ const Statistics = (props) => {
       </Container>
       <Container maxWidth="md">
         <AvgPerDayList filteredByDate={filterByDate} />
-      </Container>
+      </Container> */}
+
+      <Parlevels />
     </div>
   );
 };
@@ -97,4 +107,5 @@ export default connect(mapStateToProps, {
   changeHeaderTitle,
   getMenuOptions,
   fetchSoldItems,
+  fetchDishes
 })(Statistics);

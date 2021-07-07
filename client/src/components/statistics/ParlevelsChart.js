@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Bar } from "react-chartjs-2";
-import { changeHeaderTitle } from "../../actions";
 
 import { makeStyles, Typography } from "@material-ui/core";
 
@@ -13,13 +12,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const ParlevelsChart = (props) => {
   const classes = useStyles();
-  const { soldItems, dish, changeHeaderTitle } = props;
-
-  useEffect(() => {
-    if (dish) {
-      changeHeaderTitle(`${dish.name} parlevels`);
-    }
-  }, [changeHeaderTitle, dish]);
+  const { soldItems, dish } = props;
 
   const translateToDays = (arrayToFilter) => {
     const daysData = arrayToFilter.map((item) => {
@@ -152,7 +145,4 @@ const mapStateToProps = (state) => ({
   soldItems: Object.values(state.soldItems),
 });
 
-export default connect(mapStateToProps, {
-  useEffect,
-  changeHeaderTitle,
-})(ParlevelsChart);
+export default connect(mapStateToProps, {})(ParlevelsChart);

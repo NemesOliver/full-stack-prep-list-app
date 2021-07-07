@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import history from "../../history";
 import { connect } from "react-redux";
-import { fetchDish, fetchSoldItems } from "../../actions";
+import { fetchDish, fetchSoldItems, changeHeaderTitle } from "../../actions";
 
 // Material UI Core
 import { Button, Container } from "@material-ui/core";
@@ -11,7 +11,13 @@ import ParlevelsChart from "../statistics/ParlevelsChart";
 import Loader from "../Loader";
 
 const DishShow = (props) => {
-  const { fetchDish, fetchSoldItems, match, dish } = props;
+  const { fetchDish, fetchSoldItems, match, dish, changeHeaderTitle } = props;
+
+  useEffect(() => {
+    if (dish) {
+      changeHeaderTitle(`${dish.name}`);
+    }
+  }, [changeHeaderTitle, dish]);
 
   useEffect(() => {
     fetchDish(match.params.id);
@@ -46,4 +52,5 @@ const mapStateToProps = (state, ownProps) => {
 export default connect(mapStateToProps, {
   fetchDish,
   fetchSoldItems,
+  changeHeaderTitle,
 })(DishShow);
