@@ -4,38 +4,51 @@ import { fetchDishes, changeHeaderTitle, getMenuOptions } from "../../actions";
 
 //Components
 import DishCard from "./DishCard";
-import Search from "../Search";
 
 // Material UI Core
 import {
+  makeStyles,
   Grid,
   Container,
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
+  Paper,
+  IconButton,
+  InputBase,
   Divider,
   Button,
 } from "@material-ui/core";
 
+// Material UI Icons
+import SearchIcon from "@material-ui/icons/Search";
+
 import history from "../../history";
 
-const DishList = (props) => {
-  const {
-    fetchDishes,
-    changeHeaderTitle,
-    getMenuOptions,
-    dishes,
-    searchResults,
-  } = props;
+const useStyles = makeStyles((theme) => ({
+  root: {
+    marginBottom: theme.spacing(4),
+    display: "flex",
+    alignItems: "center",
+    width: "100%",
+  },
+  input: {
+    paddingLeft: theme.spacing(1),
+    marginLeft: theme.spacing(1),
+    flex: 1,
+  },
+  iconButton: {
+    padding: 10,
+  },
+  divider: {
+    height: 28,
+    margin: 4,
+  },
+}));
 
-  console.log(searchResults);
+const DishList = (props) => {
+  const classes = useStyles();
+  const { fetchDishes, changeHeaderTitle, getMenuOptions, dishes } = props;
 
   // State
-  const [radioValue, setRadioValue] = useState("all");
-  const [openFilterOptions, setOpenFilterOptions] = useState(false);
-  const [filteredOption, setFilteredOption] = useState(radioValue);
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     const menuOptions = [
@@ -43,84 +56,73 @@ const DishList = (props) => {
         text: "Add item",
         action: () => history.push("/add"),
       },
-      {
-        text: "Filter",
-        action: () => setOpenFilterOptions(true),
-      },
     ];
     fetchDishes();
     changeHeaderTitle("Home");
     getMenuOptions(menuOptions);
   }, [fetchDishes, changeHeaderTitle, getMenuOptions]);
 
-  const changeRadioValue = (e) => setRadioValue(e.target.value);
+  // Search dishes and return searched []
+  const searchResults = () => {
+    const matches = dishes.map((dish) => {
+      const { name, section } = dish;
+      const nameToMatch = name.toLowerCase();
+      const sectionToMatch = section.toLowerCase();
 
-  const onClickFilter = () => {
-    setOpenFilterOptions(false);
-    setFilteredOption(radioValue);
+      if (
+        nameToMatch.includes(searchValue.toLowerCase()) ||
+        sectionToMatch.includes(searchValue.toLowerCase())
+      ) {
+        return dish;
+      }
+      return null;
+    });
+
+    return matches.filter((match) => match !== null);
   };
+
+  const handleChange = (e) => {
+    setSearchValue(e.target.value);
+  };
+
+  const clearSearchBar = () => setSearchValue("");
 
   // Return statement
   return (
     <Container>
-      {openFilterOptions ? (
-        <div>
-          <FormControl component="fieldset">
-            <FormLabel component="legend">Filter by section</FormLabel>
-            <RadioGroup
-              row
-              aria-label="position"
-              name="position"
-              value={radioValue}
-            >
-              <FormControlLabel
-                value="all"
-                control={<Radio color="secondary" />}
-                label="All"
-                onChange={(e) => changeRadioValue(e)}
-              />
-              <FormControlLabel
-                value="teppan"
-                control={<Radio color="secondary" />}
-                label="Teppan"
-                onChange={(e) => changeRadioValue(e)}
-              />
-              <FormControlLabel
-                value="wok"
-                control={<Radio color="secondary" />}
-                label="Wok"
-                onChange={(e) => changeRadioValue(e)}
-              />
-              <FormControlLabel
-                value="fry"
-                control={<Radio color="secondary" />}
-                label="Fry"
-                onChange={(e) => changeRadioValue(e)}
-              />
-            </RadioGroup>
-          </FormControl>
-          <br />
-          <Button variant="contained" color="primary" onClick={onClickFilter}>
-            Save
-          </Button>
-          <Divider style={{ marginBottom: "10px", marginTop: "10px" }} />
-        </div>
-      ) : (
-        <Search />
-      )}
+      <Paper elevation={2} component="form" className={classes.root}>
+        <InputBase
+          className={classes.input}
+          placeholder="Search dishes"
+          value={searchValue}
+          onChange={handleChange}
+          inputProps={{ "aria-label": "search dishes" }}
+        />
+
+        <IconButton
+          color="primary"
+          className={classes.iconButton}
+          aria-label="search"
+        >
+          <SearchIcon />
+        </IconButton>
+        <Divider className={classes.divider} orientation="vertical" />
+        <Button
+          onClick={clearSearchBar}
+          color="secondary"
+          className={classes.iconButton}
+        >
+          Clear
+        </Button>
+      </Paper>
       <Grid container spacing={5}>
-        {dishes
-          .filter(
-            (dish) =>
-              filteredOption === "all" || dish.section === filteredOption
-          )
-          .map((option) => {
-            return (
-              <Grid key={option.name} item xs={12} md={6} lg={4}>
-                <DishCard dish={option} />
-              </Grid>
-            );
-          })}
+        {searchResults().map((option) => {
+          return (
+            <Grid key={option.name} item xs={12} md={6} lg={4}>
+              <DishCard dish={option} />
+            </Grid>
+          );
+        })}
       </Grid>
     </Container>
   );
