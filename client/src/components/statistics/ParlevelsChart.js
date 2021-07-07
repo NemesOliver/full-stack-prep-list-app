@@ -2,16 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Bar } from "react-chartjs-2";
 
-import { makeStyles, Typography } from "@material-ui/core";
-
-const useStyles = makeStyles((theme) => ({
-  chartTitle: {
-    margin: theme.spacing(3),
-  },
-}));
-
 export const ParlevelsChart = (props) => {
-  const classes = useStyles();
   const { soldItems, dish } = props;
 
   const translateToDays = (arrayToFilter) => {
@@ -133,9 +124,6 @@ export const ParlevelsChart = (props) => {
 
   return (
     <div style={{ padding: "10px" }}>
-      <Typography className={classes.chartTitle} variant="h5" align="center">
-        PAR LEVELS
-      </Typography>
       <Bar data={data} options={options} />
     </div>
   );

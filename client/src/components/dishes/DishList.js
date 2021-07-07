@@ -95,7 +95,7 @@ const DishList = (props) => {
 
   // Return statement
   return (
-    <Container>
+    <Container maxWidth="lg">
       <Paper elevation={2} className={classes.root}>
         <InputBase
           className={classes.input}

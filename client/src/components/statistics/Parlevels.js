@@ -1,37 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 
-const days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
-const getDay = (date) => {
-  return days[date.getDay()];
-};
-
 const Parlevels = (props) => {
   const { dishes, soldItems } = props;
-
-  //   console.log(dishes, soldItems);
-
-  //   // expected output
-  //    [
-  //     {
-  //       monday: {
-  //         katsu: 0,
-  //         raisu: 10,
-  //       },
-  //       tuesday: {
-  //         katsu: 0,
-  //         raisu: 10,
-  //       },
-  //     },
-  //   ];
 
   const _parlevels = dishes.map((dish) => {
     const translateToDays = (arrayToFilter) => {
@@ -39,6 +10,7 @@ const Parlevels = (props) => {
         const { sold } = item;
 
         return {
+          // Replace if data grows too big // Limit 10k
           day: new Date(item.date).toLocaleDateString(navigator.language, {
             weekday: "long",
           }),
@@ -102,7 +74,7 @@ const Parlevels = (props) => {
           parlevel,
         };
       });
-      console.log(parlevels);
+
       return parlevels;
     };
     return {
@@ -113,7 +85,23 @@ const Parlevels = (props) => {
   });
   console.log(_parlevels);
 
-  return <div>ParLevels</div>;
+  return (
+    <div>
+      {_parlevels.map((dish) => {
+        return (
+          <div>
+            <h3>{dish.name}</h3>
+            {dish.parlevels.map((day) => (
+              <div>
+                <h4>{`${day.day}: ${day.parlevel}`}</h4>
+                <hr />
+              </div>
+            ))}
+          </div>
+        );
+      })}
+    </div>
+  );
 };
 
 const mapStateToProps = (state) => ({
