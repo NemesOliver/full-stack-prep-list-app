@@ -35,8 +35,13 @@ const formatedYesterdayDate = yesterday.toISOString().substring(0, 10);
 
 const Statistics = (props) => {
   const classes = useStyles();
-  const { changeHeaderTitle, getMenuOptions, fetchSoldItems, soldItems,fetchDishes } =
-    props;
+  const {
+    changeHeaderTitle,
+    getMenuOptions,
+    fetchSoldItems,
+    soldItems,
+    fetchDishes,
+  } = props;
 
   const [selectedDate, setSelectedDate] = useState(formatedYesterdayDate);
 
@@ -107,5 +112,5 @@ export default connect(mapStateToProps, {
   changeHeaderTitle,
   getMenuOptions,
   fetchSoldItems,
-  fetchDishes
+  fetchDishes,
 })(Statistics);
