@@ -69,30 +69,28 @@ export const Search = (props) => {
   };
 
   return (
-    <Container maxWidth="sm" align="center">
-      <Paper elevation={2} component="form" className={classes.root}>
-        <InputBase
-          className={classes.input}
-          placeholder="Search dishes"
-          value={searchValue}
-          onChange={handleChange}
-          inputProps={{ "aria-label": "search dishes" }}
-        />
+    <Paper elevation={2} component="form" className={classes.root}>
+      <InputBase
+        className={classes.input}
+        placeholder="Search dishes"
+        value={searchValue}
+        onChange={handleChange}
+        inputProps={{ "aria-label": "search dishes" }}
+      />
 
-        <IconButton
-          color="primary"
-          className={classes.iconButton}
-          aria-label="search"
-          onClick={handleSearch}
-        >
-          <SearchIcon />
-        </IconButton>
-        <Divider className={classes.divider} orientation="vertical" />
-        <Button color="secondary" className={classes.iconButton}>
-          All
-        </Button>
-      </Paper>
-    </Container>
+      <IconButton
+        color="primary"
+        className={classes.iconButton}
+        aria-label="search"
+        onClick={handleSearch}
+      >
+        <SearchIcon />
+      </IconButton>
+      <Divider className={classes.divider} orientation="vertical" />
+      <Button color="secondary" className={classes.iconButton}>
+        All
+      </Button>
+    </Paper>
   );
 };
 

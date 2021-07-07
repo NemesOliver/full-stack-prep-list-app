@@ -65,7 +65,6 @@ export const ParlevelsChart = (props) => {
     return matchToDish;
   };
 
-  // Next - calculate averages ie: [1,2,3].addTogether && divide by length
   const calculateParlevels = () => {
     const days = [
       "Monday",
@@ -97,8 +96,8 @@ export const ParlevelsChart = (props) => {
     return labelsArray.map(({ day }) => day);
   };
 
-  const generateChartData = (labelsArray) => {
-    return labelsArray.map(({ parlevel }) => parlevel);
+  const generateChartData = (dataArray) => {
+    return dataArray.map(({ parlevel }) => parlevel);
   };
   const chartLabels = generateChartLabels(calculateParlevels());
   const chartData = generateChartData(calculateParlevels());
