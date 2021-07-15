@@ -87,12 +87,12 @@ const RecordSales = (props) => {
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">
-        {!validateError ? "Reset" : "Error"}
+        {!validateError ? "Submit evening preplist" : "Error"}
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
           {!validateError
-            ? "Are you sure you want to reset prep list? Changes can not be reverted"
+            ? "Are you sure you want to submit prep list? Changes can not be reverted"
             : `Some ${
                 noTotalDishes.length === 1 ? "item" : "items"
               } show that you sold more than you have prepped, please adjust total amount or current amount in following ${

@@ -1,20 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import { fetchDishes, fetchSoldItems } from "../../actions";
 
 // Utils
 import { useParlevels } from "../../utils/useParlevels";
 
 const Parlevels = (props) => {
-  const { dishes, soldItems } = props;
+  const { dishes, soldItems, fetchDishes, fetchSoldItems } = props;
+
+  useEffect(() => {
+    fetchDishes();
+    fetchSoldItems();
+  }, [fetchDishes, fetchSoldItems]);
 
   return (
     <div>
       {useParlevels(dishes, soldItems).map((dish) => {
         return (
-          <div>
+          <div key={dish._id}>
             <h3>{dish.name}</h3>
             {dish.parlevels.map((day) => (
-              <div>
+              <div key={day.day}>
                 <h4>{`${day.day}: ${day.parlevel}`}</h4>
                 <hr />
               </div>
@@ -31,4 +37,7 @@ const mapStateToProps = (state) => ({
   soldItems: Object.values(state.soldItems),
 });
 
-export default connect(mapStateToProps, {})(Parlevels);
+export default connect(mapStateToProps, {
+  fetchDishes,
+  fetchSoldItems,
+})(Parlevels);

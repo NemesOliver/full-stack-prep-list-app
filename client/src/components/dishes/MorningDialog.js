@@ -46,7 +46,9 @@ const MorningDialog = (props) => {
       <DialogContent>
         <DialogContentText>
           Do you wish to submit morning preplist? This will reset evening
-          preplist. Changes can not be reverted.
+          preplist.
+          <br />
+          Changes can not be reverted.
         </DialogContentText>
       </DialogContent>
       <DialogActions>

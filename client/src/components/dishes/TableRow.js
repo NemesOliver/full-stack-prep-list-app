@@ -57,6 +57,7 @@ const TableRow = (props) => {
             }}
             defaultValue={dish.neededAmount}
             onClick={(e) => e.target.select()}
+            helperText="" // parlevels here 
           />
         </TableCell>
       )}

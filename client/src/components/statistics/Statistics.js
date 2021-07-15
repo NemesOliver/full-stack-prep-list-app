@@ -1,49 +1,50 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import {
-  changeHeaderTitle,
-  getMenuOptions,
-  fetchSoldItems,
-  fetchDishes,
-} from "../../actions";
+import { changeHeaderTitle, getMenuOptions, fetchDishes } from "../../actions";
+import history from "../../history";
 
 // Components
-import Loader from "../Loader";
-import AvgPerDayList from "./AvgPerDayList";
+// import SoldYesterday from "./SoldYesterday";
 
-// Material UI Core
-import { TextField, makeStyles, Container } from "@material-ui/core";
-import Parlevels from "./Parlevels";
+// Material UI
+import {
+  makeStyles,
+  Container,
+  Typography,
+  Grid,
+  Card,
+  CardContent,
+  CardActionArea,
+} from "@material-ui/core";
+import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
 
 const menuOptions = [
   {
-    text: "optionq",
-    action: () => console.log("optionq"),
+    text: "option1",
+    action: () => console.log("option1"),
   },
 ];
 
 const useStyles = makeStyles((theme) => ({
-  chartContainer: {
-    minHeight: "600px",
+  root: {
+    minWidth: 275,
+  },
+  arrow: {
+    float: "right",
+    marginRight: theme.spacing(2),
+    marginBottom: theme.spacing(1),
+  },
+  title: {
+    fontSize: 14,
+  },
+  pos: {
+    marginBottom: 12,
   },
 }));
 
-const _date = new Date();
-
-const yesterday = new Date(_date.setDate(_date.getDate() - 1));
-const formatedYesterdayDate = yesterday.toISOString().substring(0, 10);
-
 const Statistics = (props) => {
   const classes = useStyles();
-  const {
-    changeHeaderTitle,
-    getMenuOptions,
-    fetchSoldItems,
-    soldItems,
-    fetchDishes,
-  } = props;
-
-  const [selectedDate, setSelectedDate] = useState(formatedYesterdayDate);
+  const { changeHeaderTitle, getMenuOptions, fetchDishes } = props;
 
   useEffect(() => {
     fetchDishes();
@@ -58,59 +59,41 @@ const Statistics = (props) => {
     getMenuOptions(menuOptions);
   }, [getMenuOptions]);
 
-  useEffect(() => {
-    fetchSoldItems();
-  }, [fetchSoldItems]);
-
-  const soldItemsArray = soldItems.map((item) => {
-    const dateObj = new Date(item.date).toISOString().substring(0, 10);
-
-    return { date: dateObj, sold: item.sold, id: item._id };
-  });
-
-  const filterByDate = soldItemsArray.filter(
-    (day) => day.date === selectedDate
-  );
-
-  if (!soldItems) {
-    return <Loader />;
-  }
-
   return (
     <div>
-      {/* will be seperate component */}
-
-      {/* <Container maxWidth="sm">
-        <TextField
-          fullWidth
-          id="date"
-          color="secondary"
-          label="Date"
-          type="date"
-          onChange={(e) => setSelectedDate(e.target.value)}
-          defaultValue={selectedDate}
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
+      <Container>
+        <Grid container spacing={5}>
+          <Grid item xs={12} md={6} lg={4}>
+            <Card elevation={5} className={classes.root}>
+              <CardActionArea onClick={() => history.push("/parlevels")}>
+                <CardContent>
+                  <Typography variant="h5" component="h2">
+                    PAR LEVELS
+                  </Typography>
+                  <Typography className={classes.pos} color="textSecondary">
+                    weekly
+                  </Typography>
+                  <Typography variant="body2" component="p">
+                    Display par weekly par levels
+                  </Typography>
+                  <br />
+                </CardContent>
+                <ArrowRightAltIcon
+                  color="secondary"
+                  className={classes.arrow}
+                  fontSize="large"
+                />
+              </CardActionArea>
+            </Card>
+          </Grid>
+        </Grid>
       </Container>
-      <Container maxWidth="md">
-        <AvgPerDayList filteredByDate={filterByDate} />
-      </Container> */}
-
-      <Parlevels />
     </div>
   );
 };
 
-const mapStateToProps = (state) => {
-  return { soldItems: Object.values(state.soldItems) };
-};
-
-export default connect(mapStateToProps, {
+export default connect(null, {
   changeHeaderTitle,
   getMenuOptions,
-  fetchSoldItems,
   fetchDishes,
 })(Statistics);

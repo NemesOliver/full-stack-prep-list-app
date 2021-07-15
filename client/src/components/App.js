@@ -1,5 +1,6 @@
 import React from "react";
 import { Router, Route } from "react-router-dom";
+import history from "../history";
 
 // Material UI core
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -18,9 +19,8 @@ import RecordSales from "./dishes/RecordSales";
 import MorningCount from "./dishes/MorningCount";
 import EveningCount from "./dishes/EveningCount";
 import DishShow from "./dishes/DishShow";
-
-import history from "../history";
 import MorningDialog from "./dishes/MorningDialog";
+import Parlevels from "./statistics/Parlevels";
 
 const App = () => {
   return (
@@ -41,6 +41,7 @@ const App = () => {
         <Route path="/add" exact component={DishAdd} />
         <Route path="/delete/:id" exact component={DishDelete} />
         <Route path="/record" exact component={RecordSales} />
+        <Route path="/parlevels" exact component={Parlevels} />
         <Route
           path="/morning-preplist/submit"
           exact
