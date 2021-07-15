@@ -1,90 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Bar } from "react-chartjs-2";
+import { useAllParlevels } from "../../utils/useParlevels";
 
 export const ParlevelsChart = (props) => {
   const { soldItems, dish } = props;
 
-  const translateToDays = (arrayToFilter) => {
-    const daysData = arrayToFilter.map((item) => {
-      const { sold } = item;
+  const parlevels = useAllParlevels([dish], soldItems)
+    .map((entry) => entry.parlevels)
+    .flat();
 
-      return {
-        day: new Date(item.date).toLocaleDateString(navigator.language, {
-          weekday: "long",
-        }),
-        sold,
-      };
-    });
-    return daysData;
-  };
-
-  const filterSoldItemsPerDay = (myDay) => {
-    const allDays = soldItems && translateToDays(soldItems);
-
-    if (allDays && allDays.length > 0) {
-      const day = allDays.filter((day) => day.day === myDay);
-      return day;
-    }
-  };
-
-  // get array of sold amounts per current dish and per day
-  const matchDayToDish = (stringDay) => {
-    const soldOnDay = filterSoldItemsPerDay(stringDay);
-
-    const dishData = soldOnDay && soldOnDay.map((day) => day.sold).flat();
-
-    const matchToDish =
-      dishData &&
-      dish &&
-      dishData
-        .map((record) => {
-          if (record.dishId !== dish._id) {
-            return null;
-          }
-          return record.sold;
-        })
-        .filter((i) => i !== null);
-
-    return matchToDish;
-  };
-
-  const calculateParlevels = () => {
-    const days = [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday",
-    ];
-    const reducer = (accumulator, currentValue) => accumulator + currentValue;
-    const parlevels = days.map((day) => {
-      const soldOnDay = matchDayToDish(day);
-      const totalAmount = soldOnDay && soldOnDay.reduce(reducer, 0);
-      const parlevel =
-        soldOnDay && soldOnDay.length > 0
-          ? Math.round(totalAmount / soldOnDay.length)
-          : 0;
-
-      return {
-        day,
-        parlevel,
-      };
-    });
-    return parlevels;
-  };
-
-  const generateChartLabels = (labelsArray) => {
-    return labelsArray.map(({ day }) => day);
-  };
-
-  const generateChartData = (dataArray) => {
-    return dataArray.map(({ parlevel }) => parlevel);
-  };
-  const chartLabels = generateChartLabels(calculateParlevels());
-  const chartData = generateChartData(calculateParlevels());
+  const chartLabels = parlevels.map(({ day }) => day);
+  const chartData = parlevels.map(({ parlevel }) => parlevel);
 
   const data = {
     labels: chartLabels,
@@ -131,6 +58,7 @@ export const ParlevelsChart = (props) => {
 
 const mapStateToProps = (state) => ({
   soldItems: Object.values(state.soldItems),
+  dishes: Object.values(state.dishes),
 });
 
 export default connect(mapStateToProps, {})(ParlevelsChart);

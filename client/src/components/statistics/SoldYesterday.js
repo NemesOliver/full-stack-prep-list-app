@@ -7,7 +7,12 @@ import Loader from "../Loader";
 import AvgPerDayList from "./AvgPerDayList";
 
 // Material UI Core
-import { TextField, makeStyles, Container } from "@material-ui/core";
+import {
+  TextField,
+  makeStyles,
+  Container,
+  Typography,
+} from "@material-ui/core";
 
 const _date = new Date();
 
@@ -61,7 +66,13 @@ export const SoldYesterday = (props) => {
         />
       </Container>
       <Container maxWidth="md">
-        <AvgPerDayList filteredByDate={filterByDate} />
+        {filterByDate.length > 0 ? (
+          <AvgPerDayList filteredByDate={filterByDate} />
+        ) : (
+          <Typography align="center" style={{ marginTop: "100px" }}>
+            No current data
+          </Typography>
+        )}
       </Container>
     </div>
   );
