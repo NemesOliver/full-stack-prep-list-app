@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { fetchSoldItems } from "../../actions";
+import { fetchSoldItems, changeHeaderTitle } from "../../actions";
 
 // Components
 import Loader from "../Loader";
@@ -27,8 +27,12 @@ const useStyles = makeStyles((theme) => ({
 
 export const SoldYesterday = (props) => {
   const classes = useStyles();
-  const { fetchSoldItems, soldItems } = props;
+  const { changeHeaderTitle, fetchSoldItems, soldItems } = props;
   const [selectedDate, setSelectedDate] = useState(formatedYesterdayDate);
+
+  useEffect(() => {
+    changeHeaderTitle("History");
+  }, [changeHeaderTitle]);
 
   useEffect(() => {
     fetchSoldItems();
@@ -84,4 +88,5 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   fetchSoldItems,
+  changeHeaderTitle,
 })(SoldYesterday);

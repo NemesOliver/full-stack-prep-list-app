@@ -52,7 +52,7 @@ const Statistics = (props) => {
       <Container>
         <Grid container spacing={5}>
           {cardProps.map(({ title, subtitle, description, linkTo }) => (
-            <Grid item xs={12} md={6} lg={4}>
+            <Grid key={title} item xs={12} md={6} lg={4}>
               <StatisticsCard
                 title={title}
                 subtitle={subtitle}

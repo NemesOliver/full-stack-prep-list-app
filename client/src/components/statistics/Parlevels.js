@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { fetchDishes, fetchSoldItems } from "../../actions";
+import { fetchDishes, fetchSoldItems, changeHeaderTitle } from "../../actions";
 
 // Utils
 import { useAllParlevels } from "../../utils/useParlevels";
@@ -61,7 +61,8 @@ const currentDay = new Date().toLocaleDateString(navigator.language, {
 
 const Parlevels = (props) => {
   const classes = useStyles();
-  const { dishes, soldItems, fetchDishes, fetchSoldItems } = props;
+  const { dishes, soldItems, fetchDishes, fetchSoldItems, changeHeaderTitle } =
+    props;
 
   const [day, setDay] = useState(currentDay);
 
@@ -70,26 +71,28 @@ const Parlevels = (props) => {
     fetchSoldItems();
   }, [fetchDishes, fetchSoldItems]);
 
+  useEffect(() => {
+    changeHeaderTitle("Parlevels");
+  }, [changeHeaderTitle]);
+
   const handleChange = (event) => {
     setDay(event.target.value);
   };
 
-  // console.log(useAllParlevels(dishes, soldItems));
+  const rows = useAllParlevels(dishes, soldItems).map((item) => {
+    const parlevel = item.parlevels.map(
+      (parlevel) => parlevel.day === day && parlevel.parlevel
+    );
 
-  function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
+    return createData(item.name, parlevel);
+  });
+
+  function createData(name, parlevel) {
+    return { name, parlevel };
   }
 
-  const rows = [
-    createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-    createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-    createData("Eclair", 262, 16.0, 24, 6.0),
-    createData("Cupcake", 305, 3.7, 67, 4.3),
-    createData("Gingerbread", 356, 16.0, 49, 3.9),
-  ];
-
   return (
-    <Container>
+    <Container maxWidth="md">
       <TextField
         className={classes.dropdown}
         color="secondary"
@@ -106,11 +109,6 @@ const Parlevels = (props) => {
         ))}
       </TextField>
       <Paper elevation={5}>
-        <Toolbar>
-          <Typography variant="h4" className={classes.title} align="center">
-            Monday
-          </Typography>
-        </Toolbar>
         <TableContainer>
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
@@ -125,7 +123,7 @@ const Parlevels = (props) => {
                   <TableCell component="th" scope="row">
                     {row.name}
                   </TableCell>
-                  <TableCell align="right">{row.calories}</TableCell>
+                  <TableCell align="right">{row.parlevel}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -144,4 +142,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   fetchDishes,
   fetchSoldItems,
+  changeHeaderTitle,
 })(Parlevels);
