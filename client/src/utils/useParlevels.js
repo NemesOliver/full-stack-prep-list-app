@@ -1,4 +1,4 @@
-export const useParlevels = (dishData, soldData) =>
+export const useAllParlevels = (dishData, soldData) =>
   dishData &&
   soldData &&
   dishData.map((dish) => {

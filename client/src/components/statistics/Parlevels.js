@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { fetchDishes, fetchSoldItems } from "../../actions";
 
 // Utils
-import { useParlevels } from "../../utils/useParlevels";
+import { useAllParlevels } from "../../utils/useParlevels";
 
 const Parlevels = (props) => {
   const { dishes, soldItems, fetchDishes, fetchSoldItems } = props;
@@ -13,9 +13,11 @@ const Parlevels = (props) => {
     fetchSoldItems();
   }, [fetchDishes, fetchSoldItems]);
 
+  console.log(useAllParlevels(dishes, soldItems));
+
   return (
     <div>
-      {useParlevels(dishes, soldItems).map((dish) => {
+      {useAllParlevels(dishes, soldItems).map((dish) => {
         return (
           <div key={dish._id}>
             <h3>{dish.name}</h3>

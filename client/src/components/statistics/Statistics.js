@@ -1,22 +1,13 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { changeHeaderTitle, getMenuOptions, fetchDishes } from "../../actions";
-import history from "../../history";
 
 // Components
+import StatisticsCard from "./StatisticsCard";
 // import SoldYesterday from "./SoldYesterday";
 
 // Material UI
-import {
-  makeStyles,
-  Container,
-  Typography,
-  Grid,
-  Card,
-  CardContent,
-  CardActionArea,
-} from "@material-ui/core";
-import ArrowRightAltIcon from "@material-ui/icons/ArrowRightAlt";
+import { Container, Grid } from "@material-ui/core";
 
 const menuOptions = [
   {
@@ -25,25 +16,22 @@ const menuOptions = [
   },
 ];
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    minWidth: 275,
+const cardProps = [
+  {
+    title: "Par levels",
+    subtitle: "Weekly",
+    description: "Display list of par levels for each dish",
+    linkTo: "/parlevels",
   },
-  arrow: {
-    float: "right",
-    marginRight: theme.spacing(2),
-    marginBottom: theme.spacing(1),
+  {
+    title: "Track sold items",
+    subtitle: "By Date",
+    description: "Display list of sold items on specific date",
+    linkTo: "/soldYesterday",
   },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
-}));
+];
 
 const Statistics = (props) => {
-  const classes = useStyles();
   const { changeHeaderTitle, getMenuOptions, fetchDishes } = props;
 
   useEffect(() => {
@@ -63,29 +51,16 @@ const Statistics = (props) => {
     <div>
       <Container>
         <Grid container spacing={5}>
-          <Grid item xs={12} md={6} lg={4}>
-            <Card elevation={5} className={classes.root}>
-              <CardActionArea onClick={() => history.push("/parlevels")}>
-                <CardContent>
-                  <Typography variant="h5" component="h2">
-                    PAR LEVELS
-                  </Typography>
-                  <Typography className={classes.pos} color="textSecondary">
-                    weekly
-                  </Typography>
-                  <Typography variant="body2" component="p">
-                    Display par weekly par levels
-                  </Typography>
-                  <br />
-                </CardContent>
-                <ArrowRightAltIcon
-                  color="secondary"
-                  className={classes.arrow}
-                  fontSize="large"
-                />
-              </CardActionArea>
-            </Card>
-          </Grid>
+          {cardProps.map(({ title, subtitle, description, linkTo }) => (
+            <Grid item xs={12} md={6} lg={4}>
+              <StatisticsCard
+                title={title}
+                subtitle={subtitle}
+                description={description}
+                linkTo={linkTo}
+              />
+            </Grid>
+          ))}
         </Grid>
       </Container>
     </div>

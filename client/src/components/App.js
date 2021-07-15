@@ -21,6 +21,7 @@ import EveningCount from "./dishes/EveningCount";
 import DishShow from "./dishes/DishShow";
 import MorningDialog from "./dishes/MorningDialog";
 import Parlevels from "./statistics/Parlevels";
+import SoldYesterday from "./statistics/SoldYesterday";
 
 const App = () => {
   return (
@@ -42,6 +43,7 @@ const App = () => {
         <Route path="/delete/:id" exact component={DishDelete} />
         <Route path="/record" exact component={RecordSales} />
         <Route path="/parlevels" exact component={Parlevels} />
+        <Route path="/soldYesterday" exact component={SoldYesterday} />
         <Route
           path="/morning-preplist/submit"
           exact
