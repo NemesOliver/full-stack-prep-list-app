@@ -37,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
   input: {
     marginBottom: theme.spacing(6),
   },
+  inputSecondary: {
+    marginBottom: theme.spacing(2),
+  },
   label: {
     marginBottom: theme.spacing(1),
   },
@@ -146,20 +149,58 @@ const DishEdit = (props) => {
           />
         </FormControl>
         {checked && (
-          <TextField
-            label="Amount"
-            type="number"
-            variant="outlined"
-            color="secondary"
-            className={classes.input}
-            InputLabelProps={{ shrink: true }}
-            defaultValue={dish.total}
-            onChange={(e) =>
-              setFormValues({ ...formValues, total: e.target.value })
-            }
-            onClick={(e) => e.target.select()}
-            fullWidth
-          />
+          <>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <TextField
+                  type="number"
+                  variant="outlined"
+                  color="secondary"
+                  className={classes.inputSecondary}
+                  label="Have"
+                  defaultValue={dish.currentAmount}
+                  onChange={(e) =>
+                    setFormValues({
+                      ...formValues,
+                      currentAmount: e.target.value,
+                    })
+                  }
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  type="number"
+                  variant="outlined"
+                  color="secondary"
+                  className={classes.inputSecondary}
+                  label="Need"
+                  defaultValue={dish.neededAmount}
+                  onChange={(e) =>
+                    setFormValues({
+                      ...formValues,
+                      neededAmount: e.target.value,
+                    })
+                  }
+                  fullWidth
+                />
+              </Grid>
+            </Grid>
+            <TextField
+              label="Total"
+              type="number"
+              variant="outlined"
+              color="secondary"
+              className={classes.input}
+              InputLabelProps={{ shrink: true }}
+              defaultValue={dish.total}
+              onChange={(e) =>
+                setFormValues({ ...formValues, total: e.target.value })
+              }
+              onClick={(e) => e.target.select()}
+              fullWidth
+            />
+          </>
         )}
         <Grid container spacing={9}>
           <Grid item xs={2}>
