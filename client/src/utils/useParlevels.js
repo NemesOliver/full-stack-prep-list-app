@@ -77,6 +77,7 @@ export const useAllParlevels = (dishData, soldData) =>
     return {
       id: dish._id,
       name: dish.name,
+      section: dish.section,
       parlevels: calculateParlevels(),
     };
   });
