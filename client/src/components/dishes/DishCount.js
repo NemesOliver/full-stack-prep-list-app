@@ -38,7 +38,7 @@ const DishCount = (props) => {
   //State
   const [value, setValue] = useState(0);
   const [buffer, setBuffer] = useState(10);
-  const [bufferSelected, setBufferSelected] = useState("");
+  const [bufferSelected, setBufferSelected] = useState(10);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
