@@ -17,7 +17,7 @@ const currentDay = new Date().toLocaleDateString(navigator.language, {
 });
 
 const TableRow = (props) => {
-  const { dish, time, fetchSoldItems, soldItems } = props;
+  const { dish, time, fetchSoldItems, soldItems, buffer = 0 } = props;
 
   useEffect(() => {
     fetchSoldItems();
@@ -37,12 +37,21 @@ const TableRow = (props) => {
     return parlevelValue;
   };
 
+  const calculatePercentage = (initialAmount, percent) => {
+    const percentage = (initialAmount / 100) * percent;
+
+    return parseInt(percentage.toFixed());
+  };
+
   const recommendParlevels = () => {
     if (parlevelForToday() === "No Data") {
       return parlevelForToday();
     }
 
-    const recommended = parlevelForToday() - dish.currentAmount;
+    const recommended =
+      parlevelForToday() +
+      calculatePercentage(parlevelForToday(), buffer) -
+      dish.currentAmount;
     return recommended < 0 ? 0 : recommended;
   };
 

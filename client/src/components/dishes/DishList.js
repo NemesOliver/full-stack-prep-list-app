@@ -42,6 +42,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const menuOptions = [
+  {
+    text: "Add item",
+    action: () => history.push("/add"),
+  },
+];
+
 const DishList = (props) => {
   const classes = useStyles();
   const { fetchDishes, changeHeaderTitle, getMenuOptions, dishes } = props;
@@ -54,13 +61,6 @@ const DishList = (props) => {
   }, [fetchDishes]);
 
   useEffect(() => {
-    const menuOptions = [
-      {
-        text: "Add item",
-        action: () => history.push("/add"),
-      },
-    ];
-
     changeHeaderTitle("Home");
     getMenuOptions(menuOptions);
 
