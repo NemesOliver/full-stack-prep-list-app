@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
+import { connect } from "react-redux";
+import { fetchSoldItems } from "../../actions";
+import { useAllParlevels } from "../../utils/useParlevels";
 
 // Material UI Core
 import {
@@ -9,8 +12,39 @@ import {
   TableCell,
 } from "@material-ui/core";
 
+const currentDay = new Date().toLocaleDateString(navigator.language, {
+  weekday: "long",
+});
+
 const TableRow = (props) => {
-  const { dish, time } = props;
+  const { dish, time, fetchSoldItems, soldItems } = props;
+
+  useEffect(() => {
+    fetchSoldItems();
+  }, [fetchSoldItems]);
+
+  const parlevels = useAllParlevels([dish], soldItems)[0].parlevels;
+
+  const parlevelForToday = () => {
+    const parlevelValue = parlevels
+      .map(({ day, parlevel }) => day === currentDay && parlevel)
+      .filter((value) => value && value)[0];
+
+    if (!parlevelValue) {
+      return "No Data";
+    }
+
+    return parlevelValue;
+  };
+
+  const recommendParlevels = () => {
+    if (parlevelForToday() === "No Data") {
+      return parlevelForToday();
+    }
+
+    const recommended = parlevelForToday() - dish.currentAmount;
+    return recommended < 0 ? 0 : recommended;
+  };
 
   const handleChange = (value) => {
     axios.patch(`/v1/dishes/edit/${dish._id}`, value);
@@ -37,7 +71,9 @@ const TableRow = (props) => {
               handleChange({ currentAmount: e.target.value });
             }}
             defaultValue={dish.currentAmount}
-            onClick={(e) => e.target.select()}
+            onFocus={(e) => {
+              e.target.select();
+            }}
           />
         )}
       </TableCell>
@@ -56,8 +92,8 @@ const TableRow = (props) => {
               });
             }}
             defaultValue={dish.neededAmount}
-            onClick={(e) => e.target.select()}
-            helperText="" // parlevels here 
+            onFocus={(e) => e.target.select()}
+            helperText={`Recommended: ${recommendParlevels()}`}
           />
         </TableCell>
       )}
@@ -65,4 +101,10 @@ const TableRow = (props) => {
   );
 };
 
-export default TableRow;
+const mapStateToProps = (state) => {
+  return { soldItems: Object.values(state.soldItems) };
+};
+
+export default connect(mapStateToProps, {
+  fetchSoldItems,
+})(TableRow);
