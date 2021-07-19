@@ -17,12 +17,13 @@ const currentDay = new Date().toLocaleDateString(navigator.language, {
 });
 
 const TableRow = (props) => {
-  const { dish, time, fetchSoldItems, soldItems, buffer = 0 } = props;
+  const { dish, time, fetchSoldItems, soldItems, buffer = 10 } = props;
 
   useEffect(() => {
     fetchSoldItems();
   }, [fetchSoldItems]);
 
+  // from here =>
   const parlevels = useAllParlevels([dish], soldItems)[0].parlevels;
 
   const parlevelForToday = () => {
@@ -54,6 +55,7 @@ const TableRow = (props) => {
       dish.currentAmount;
     return recommended < 0 ? 0 : recommended;
   };
+  // To here <=
 
   const handleChange = (value) => {
     axios.patch(`/v1/dishes/edit/${dish._id}`, value);
@@ -73,16 +75,15 @@ const TableRow = (props) => {
           <TextField
             type="number"
             size="small"
+            name="currentAmount"
             color="secondary"
             variant="outlined"
             label="Have"
             onChange={(e) => {
-              handleChange({ currentAmount: e.target.value });
+              handleChange({ [e.target.name]: e.target.value });
             }}
             defaultValue={dish.currentAmount}
-            onFocus={(e) => {
-              e.target.select();
-            }}
+            onFocus={(e) => e.currentTarget.select()}
           />
         )}
       </TableCell>
@@ -95,9 +96,10 @@ const TableRow = (props) => {
             color="secondary"
             variant="outlined"
             label="Need"
+            name="neededAmount"
             onChange={(e) => {
               handleChange({
-                neededAmount: e.target.value,
+                [e.target.name]: e.target.value,
               });
             }}
             defaultValue={dish.neededAmount}
