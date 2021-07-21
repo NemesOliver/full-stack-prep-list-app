@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import { fetchSoldItems } from "../../actions";
 import { useAllParlevels } from "../../utils/useParlevels";
 
 // Material UI Core
