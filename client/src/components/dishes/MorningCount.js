@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { getMenuOptions } from "../../actions";
+import { fetchSoldItems } from "../../actions";
 
 import DishCount from "./DishCount";
 
@@ -36,11 +37,15 @@ const useStyles = makeStyles((theme) => ({
 
 const MorningCount = (props) => {
   const classes = useStyles();
-  const { getMenuOptions } = props;
+  const { getMenuOptions, fetchSoldItems } = props;
 
   const [buffer, setBuffer] = useState(10);
   const [bufferSelected, setBufferSelected] = useState(10);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    fetchSoldItems();
+  }, [fetchSoldItems]);
 
   useEffect(() => {
     const menuOptions = [
@@ -120,4 +125,7 @@ const MorningCount = (props) => {
   );
 };
 
-export default connect(null, { getMenuOptions })(MorningCount);
+export default connect(null, {
+  getMenuOptions,
+  fetchSoldItems,
+})(MorningCount);

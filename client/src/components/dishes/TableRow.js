@@ -17,11 +17,7 @@ const currentDay = new Date().toLocaleDateString(navigator.language, {
 });
 
 const TableRow = (props) => {
-  const { dish, time, fetchSoldItems, soldItems, buffer = 10 } = props;
-
-  useEffect(() => {
-    fetchSoldItems();
-  }, [fetchSoldItems]);
+  const { dish, time, soldItems, buffer = 10 } = props;
 
   // from here =>
   const parlevels = useAllParlevels([dish], soldItems)[0].parlevels;
