@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import { useAllParlevels } from "../../utils/useParlevels";
 
 // Material UI Core
 import {
@@ -16,22 +15,24 @@ const currentDay = new Date().toLocaleDateString(navigator.language, {
 });
 
 const TableRow = (props) => {
-  const { dish, time, soldItems, buffer = 10 } = props;
+  const { dish, time, parlevels, buffer = 10 } = props;
 
-  // from here =>
-  const parlevels = useAllParlevels([dish], soldItems)[0].parlevels;
+  const findDishInParlevels = (dishId) => {
+    const foundDish = parlevels.filter((item) => dishId === item.id && item);
 
-  const parlevelForToday = () => {
-    const parlevelValue = parlevels
-      .map(({ day, parlevel }) => day === currentDay && parlevel)
-      .filter((value) => value && value)[0];
-
-    if (!parlevelValue) {
-      return "No Data";
-    }
-
-    return parlevelValue;
+    return foundDish && foundDish[0].parlevels;
   };
+
+  const todaysParlevel = (dishInParlevels) => {
+    const matchedParlevels = dishInParlevels(dish._id);
+    const parlevel = matchedParlevels
+      .map(({ day, parlevel }) => day === currentDay && parlevel)
+      .filter((x) => x && x);
+
+    return parlevel[0];
+  };
+
+  console.log();
 
   const calculatePercentage = (initialAmount, percent) => {
     const percentage = (initialAmount / 100) * percent;
@@ -40,17 +41,16 @@ const TableRow = (props) => {
   };
 
   const recommendParlevels = () => {
-    if (parlevelForToday() === "No Data") {
-      return parlevelForToday();
+    const parlevel = parseInt(todaysParlevel(findDishInParlevels));
+
+    if (!parlevel) {
+      return "No Data";
     }
 
     const recommended =
-      parlevelForToday() +
-      calculatePercentage(parlevelForToday(), buffer) -
-      dish.currentAmount;
+      parlevel + calculatePercentage(parlevel, buffer) - dish.currentAmount;
     return recommended < 0 ? 0 : recommended;
   };
-  // To here <=
 
   const handleChange = (value) => {
     axios.patch(`/v1/dishes/edit/${dish._id}`, value);
@@ -111,6 +111,4 @@ const mapStateToProps = (state) => {
   return { soldItems: Object.values(state.soldItems) };
 };
 
-export default connect(mapStateToProps, {
-  fetchSoldItems,
-})(TableRow);
+export default connect(mapStateToProps, {})(TableRow);

@@ -15,15 +15,12 @@ import SwipeableViews from "react-swipeable-views";
 import { Table, TableBody } from "@material-ui/core";
 
 const DishCount = (props) => {
-  const { changeHeaderTitle, fetchDishes, dishes, time, buffer } = props;
+  const { changeHeaderTitle, fetchDishes, dishes, time, buffer, parlevels } =
+    props;
   const theme = useTheme();
 
   //State
   const [value, setValue] = useState(0);
-
-  useEffect(() => {
-    fetchDishes();
-  }, [fetchDishes]);
 
   useEffect(() => {
     changeHeaderTitle(
@@ -71,6 +68,7 @@ const DishCount = (props) => {
                     (dish) =>
                       dish.section === section && (
                         <TableRow
+                          parlevels={parlevels}
                           buffer={buffer}
                           time={time}
                           key={dish._id}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { getMenuOptions } from "../../actions";
-import { fetchSoldItems } from "../../actions";
+import { getMenuOptions, fetchSoldItems, fetchDishes } from "../../actions";
+// import { useAllParlevels } from "../../utils/useParlevels";
 
 import DishCount from "./DishCount";
 
@@ -23,6 +23,7 @@ import {
 // Material UI Icons
 import SendIcon from "@material-ui/icons/Send";
 import history from "../../history";
+import { useAllParlevels } from "../../utils/useParlevels";
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -37,7 +38,8 @@ const useStyles = makeStyles((theme) => ({
 
 const MorningCount = (props) => {
   const classes = useStyles();
-  const { getMenuOptions, fetchSoldItems } = props;
+  const { getMenuOptions, fetchSoldItems, fetchDishes, dishes, soldItems } =
+    props;
 
   const [buffer, setBuffer] = useState(10);
   const [bufferSelected, setBufferSelected] = useState(10);
@@ -45,7 +47,8 @@ const MorningCount = (props) => {
 
   useEffect(() => {
     fetchSoldItems();
-  }, [fetchSoldItems]);
+    fetchDishes();
+  }, [fetchSoldItems, fetchDishes]);
 
   useEffect(() => {
     const menuOptions = [
@@ -59,6 +62,7 @@ const MorningCount = (props) => {
   }, [getMenuOptions]);
 
   // Try to put parlevels logic here
+  const parlevels = useAllParlevels(dishes, soldItems);
 
   const handleBufferChange = (e) => {
     setBufferSelected(e.target.value);
@@ -108,7 +112,7 @@ const MorningCount = (props) => {
           </Button>
         </DialogActions>
       </Dialog>
-      <DishCount time={"morning"} buffer={buffer} />
+      <DishCount parlevels={parlevels} time={"morning"} buffer={buffer} />
       <Zoom timeout={650} in>
         <Fab
           variant="extended"
@@ -125,7 +129,13 @@ const MorningCount = (props) => {
   );
 };
 
-export default connect(null, {
+const mapStateToProps = (state) => ({
+  dishes: Object.values(state.dishes),
+  soldItems: Object.values(state.soldItems),
+});
+
+export default connect(mapStateToProps, {
   getMenuOptions,
   fetchSoldItems,
+  fetchDishes,
 })(MorningCount);
