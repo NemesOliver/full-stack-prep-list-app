@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { getMenuOptions, fetchSoldItems, fetchDishes } from "../../actions";
-// import { useAllParlevels } from "../../utils/useParlevels";
+import { useTest } from "../../utils/useParlevelsHook";
 
 import DishCount from "./DishCount";
 
@@ -44,6 +44,10 @@ const MorningCount = (props) => {
   const [buffer, setBuffer] = useState(10);
   const [bufferSelected, setBufferSelected] = useState(10);
   const [open, setOpen] = useState(false);
+
+  const x = useTest(dishes, soldItems);
+
+  console.log(x);
 
   useEffect(() => {
     fetchSoldItems();
