@@ -1,6 +1,3 @@
-import { useState } from "react";
-
-const YAKI_SOBA = "60f3f89cd409ec0015e4eb0b";
 const currentDay = "Monday";
 
 export const useTest = (dishesArr, soldItemsArr) => {
