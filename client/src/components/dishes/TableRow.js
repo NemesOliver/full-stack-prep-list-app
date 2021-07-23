@@ -15,42 +15,31 @@ const currentDay = new Date().toLocaleDateString(navigator.language, {
 });
 
 const TableRow = (props) => {
-  const { dish, time, parlevels, buffer = 10 } = props;
+  const { dish, time, buffer = 10 } = props;
 
-  const findDishInParlevels = (dishId) => {
-    const foundDish = parlevels.filter((item) => dishId === item.id && item);
+  // const findDishInParlevels = (dishId) => {
+  //   const foundDish = parlevels.filter((item) => dishId === item.id && item);
 
-    return foundDish && foundDish[0].parlevels;
-  };
+  //   return foundDish && foundDish[0].parlevels;
+  // };
 
-  const todaysParlevel = (dishInParlevels) => {
-    const matchedParlevels = dishInParlevels(dish._id);
-    const parlevel = matchedParlevels
-      .map(({ day, parlevel }) => day === currentDay && parlevel)
-      .filter((x) => x && x);
+  // const calculatePercentage = (initialAmount, percent) => {
+  //   const percentage = (initialAmount / 100) * percent;
 
-    return parlevel[0];
-  };
+  //   return parseInt(percentage.toFixed());
+  // };
 
-  console.log();
+  // const recommendParlevels = () => {
+  //   const parlevel = parseInt(todaysParlevel(findDishInParlevels));
 
-  const calculatePercentage = (initialAmount, percent) => {
-    const percentage = (initialAmount / 100) * percent;
+  //   if (!parlevel) {
+  //     return "No Data";
+  //   }
 
-    return parseInt(percentage.toFixed());
-  };
-
-  const recommendParlevels = () => {
-    const parlevel = parseInt(todaysParlevel(findDishInParlevels));
-
-    if (!parlevel) {
-      return "No Data";
-    }
-
-    const recommended =
-      parlevel + calculatePercentage(parlevel, buffer) - dish.currentAmount;
-    return recommended < 0 ? 0 : recommended;
-  };
+  //   const recommended =
+  //     parlevel + calculatePercentage(parlevel, buffer) - dish.currentAmount;
+  //   return recommended < 0 ? 0 : recommended;
+  // };
 
   const handleChange = (value) => {
     axios.patch(`/v1/dishes/edit/${dish._id}`, value);
@@ -99,7 +88,8 @@ const TableRow = (props) => {
             }}
             defaultValue={dish.neededAmount}
             onFocus={(e) => e.target.select()}
-            helperText={`Recommended: ${recommendParlevels()}`}
+            helperText={`Recommended: DONT KNOW
+            `}
           />
         </TableCell>
       )}

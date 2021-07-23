@@ -68,7 +68,6 @@ const DishCount = (props) => {
                     (dish) =>
                       dish.section === section && (
                         <TableRow
-                          parlevels={parlevels}
                           buffer={buffer}
                           time={time}
                           key={dish._id}
