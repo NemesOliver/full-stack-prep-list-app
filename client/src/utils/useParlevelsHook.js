@@ -1,7 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const useParlevelsHook = (dishesArr, soldItemsArr) => {
-  const [currentDay, setCurrentDay] = useState("Monday");
+  const [day, setDay] = useState("Monday");
+
+  const currentDay = new Date().toLocaleDateString(navigator.language, {
+    weekday: "long",
+  });
+
+  // useEffect(() => {
+  //   setDay(currentDay);
+  // }, [setDay, currentDay]);
 
   // Helpers
   const dateToDayString = (date) =>
@@ -14,7 +22,7 @@ export const useParlevelsHook = (dishesArr, soldItemsArr) => {
   // Get average parlevels for single dish
   const calculateParLevel = (DISH_ID) => {
     const totalSoldPerDish = soldItemsArr
-      .map(({ date, sold }) => dateToDayString(date) === currentDay && sold)
+      .map(({ date, sold }) => dateToDayString(date) === day && sold)
       .flat()
       .filter(({ dishId }) => dishId === DISH_ID)
       .map(({ sold }) => sold);
@@ -27,9 +35,11 @@ export const useParlevelsHook = (dishesArr, soldItemsArr) => {
   };
 
   // Loop through all dishes and get parlevel for each
-  const parlevelsForAllDishes = dishesArr.map(({ _id: id }) => ({
-    [id]: calculateParLevel(id),
+  const parlevelsForAllDishes = dishesArr.map(({ _id: id, name }) => ({
+    id: id,
+    name,
+    parlevel: calculateParLevel(id),
   }));
 
-  return [parlevelsForAllDishes, setCurrentDay];
+  return [parlevelsForAllDishes, setDay];
 };

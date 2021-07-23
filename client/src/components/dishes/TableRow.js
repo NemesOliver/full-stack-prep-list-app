@@ -10,36 +10,31 @@ import {
   TableCell,
 } from "@material-ui/core";
 
-const currentDay = new Date().toLocaleDateString(navigator.language, {
-  weekday: "long",
-});
-
 const TableRow = (props) => {
-  const { dish, time, buffer = 10 } = props;
+  const { dish, time, parlevel, buffer = 10 } = props;
 
-  // const findDishInParlevels = (dishId) => {
-  //   const foundDish = parlevels.filter((item) => dishId === item.id && item);
+  const {
+    0: { parlevel: amount },
+  } = { ...parlevel };
 
-  //   return foundDish && foundDish[0].parlevels;
-  // };
+  const calculatePercentage = (initialAmount, percent) => {
+    const percentage = (initialAmount / 100) * percent;
 
-  // const calculatePercentage = (initialAmount, percent) => {
-  //   const percentage = (initialAmount / 100) * percent;
+    return parseInt(percentage.toFixed());
+  };
 
-  //   return parseInt(percentage.toFixed());
-  // };
+  const recommendParlevels = () => {
+    const parlevelToInt = parseInt(amount);
+    if (!parlevel) {
+      return "No Data";
+    }
 
-  // const recommendParlevels = () => {
-  //   const parlevel = parseInt(todaysParlevel(findDishInParlevels));
-
-  //   if (!parlevel) {
-  //     return "No Data";
-  //   }
-
-  //   const recommended =
-  //     parlevel + calculatePercentage(parlevel, buffer) - dish.currentAmount;
-  //   return recommended < 0 ? 0 : recommended;
-  // };
+    const recommended =
+      parlevelToInt +
+      calculatePercentage(parlevelToInt, buffer) -
+      dish.currentAmount;
+    return recommended < 0 ? 0 : recommended;
+  };
 
   const handleChange = (value) => {
     axios.patch(`/v1/dishes/edit/${dish._id}`, value);
@@ -88,8 +83,7 @@ const TableRow = (props) => {
             }}
             defaultValue={dish.neededAmount}
             onFocus={(e) => e.target.select()}
-            helperText={`Recommended: DONT KNOW
-            `}
+            helperText={`Recommended: ${recommendParlevels()}`}
           />
         </TableCell>
       )}

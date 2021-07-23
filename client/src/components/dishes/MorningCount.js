@@ -44,9 +44,8 @@ const MorningCount = (props) => {
   const [bufferSelected, setBufferSelected] = useState(10);
   const [open, setOpen] = useState(false);
 
-  const [par, setCurrentDay] = useParlevelsHook(dishes, soldItems);
+  const [parlevels] = useParlevelsHook(dishes, soldItems);
 
-  console.log(par);
 
   useEffect(() => {
     fetchSoldItems();
@@ -62,8 +61,7 @@ const MorningCount = (props) => {
     ];
 
     getMenuOptions(menuOptions);
-    setCurrentDay("Monday");
-  }, [getMenuOptions, setCurrentDay]);
+  }, [getMenuOptions]);
 
   const handleBufferChange = (e) => {
     setBufferSelected(e.target.value);
@@ -113,7 +111,7 @@ const MorningCount = (props) => {
           </Button>
         </DialogActions>
       </Dialog>
-      <DishCount time={"morning"} buffer={buffer} />
+      <DishCount parlevels={parlevels} time={"morning"} buffer={buffer} />
       <Zoom timeout={650} in>
         <Fab
           variant="extended"

@@ -64,17 +64,23 @@ const DishCount = (props) => {
             <TabPanel key={index} value={value} index={index}>
               <Table>
                 <TableBody>
-                  {dishes.map(
-                    (dish) =>
+                  {dishes.map((dish) => {
+                    const parlevel = parlevels.filter(
+                      ({ id }) => dish._id === id
+                    );
+
+                    return (
                       dish.section === section && (
                         <TableRow
+                          key={dish._id}
+                          parlevel={parlevel}
                           buffer={buffer}
                           time={time}
-                          key={dish._id}
                           dish={dish}
                         />
                       )
-                  )}
+                    );
+                  })}
                 </TableBody>
               </Table>
             </TabPanel>
