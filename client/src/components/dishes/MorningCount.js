@@ -45,9 +45,9 @@ const MorningCount = (props) => {
   const [bufferSelected, setBufferSelected] = useState(10);
   const [open, setOpen] = useState(false);
 
-  const x = useTest(dishes, soldItems);
+  const [par, setCurrentDay] = useTest(dishes, soldItems);
 
-  console.log(x);
+  console.log(par);
 
   useEffect(() => {
     fetchSoldItems();
@@ -63,7 +63,8 @@ const MorningCount = (props) => {
     ];
 
     getMenuOptions(menuOptions);
-  }, [getMenuOptions]);
+    setCurrentDay("Tuesday");
+  }, [getMenuOptions, setCurrentDay]);
 
   // Try to put parlevels logic here
   const parlevels = useAllParlevels(dishes, soldItems);

@@ -1,6 +1,8 @@
-const currentDay = "Monday";
+import { useState } from "react";
 
 export const useTest = (dishesArr, soldItemsArr) => {
+  const [currentDay, setCurrentDay] = useState("Monday");
+
   // Helpers
   const dateToDayString = (date) =>
     new Date(date).toLocaleDateString(navigator.language, {
@@ -27,5 +29,5 @@ export const useTest = (dishesArr, soldItemsArr) => {
     calculateParLevel(dish._id)
   );
 
-  return parlevelsForAllDishes;
+  return [parlevelsForAllDishes, setCurrentDay];
 };
