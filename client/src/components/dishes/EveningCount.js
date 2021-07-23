@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { fetchSoldItems, fetchDishes } from "../../actions";
+
 import DishCount from "./DishCount";
+import { useParlevelsHook } from "../../utils/useParlevelsHook";
 
 import { Fab, Zoom, makeStyles } from "@material-ui/core";
 
@@ -20,10 +24,17 @@ const useStyles = makeStyles((theme) => ({
 
 const EveningCount = (props) => {
   const classes = useStyles();
+  const { dishes, soldItems, fetchSoldItems, fetchDishes } = props;
+  const [parlevels] = useParlevelsHook(dishes, soldItems);
+
+  useEffect(() => {
+    fetchSoldItems();
+    fetchDishes();
+  }, [fetchSoldItems, fetchDishes]);
 
   return (
     <div>
-      <DishCount time={"evening"} />
+      <DishCount parlevels={parlevels} time={"evening"} />
       <Zoom timeout={650} in>
         <Fab
           variant="extended"
@@ -40,4 +51,12 @@ const EveningCount = (props) => {
   );
 };
 
-export default EveningCount;
+const mapStateToProps = (state) => ({
+  dishes: Object.values(state.dishes),
+  soldItems: Object.values(state.soldItems),
+});
+
+export default connect(mapStateToProps, {
+  fetchSoldItems,
+  fetchDishes,
+})(EveningCount);
