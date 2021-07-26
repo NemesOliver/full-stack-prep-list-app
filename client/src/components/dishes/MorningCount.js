@@ -46,7 +46,6 @@ const MorningCount = (props) => {
 
   const [parlevels] = useParlevelsHook(dishes, soldItems);
 
-
   useEffect(() => {
     fetchSoldItems();
     fetchDishes();
@@ -57,6 +56,10 @@ const MorningCount = (props) => {
       {
         text: "Add buffer",
         action: () => setOpen(true),
+      },
+      {
+        text: "Print",
+        action: () => history.push("/print"),
       },
     ];
 

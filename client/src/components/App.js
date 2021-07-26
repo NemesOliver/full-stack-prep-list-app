@@ -1,5 +1,5 @@
 import React from "react";
-import { Router, Route } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
 import history from "../history";
 
 // Material UI core
@@ -22,33 +22,41 @@ import DishShow from "./dishes/DishShow";
 import MorningDialog from "./dishes/MorningDialog";
 import Parlevels from "./statistics/Parlevels";
 import SoldYesterday from "./statistics/SoldYesterday";
+import Prepsheet from "./print/Prepsheet";
 
 const App = () => {
   return (
     <div>
       <Router history={history}>
         <CssBaseline />
-        <Header />
-        <Drawer />
-        <ScrollToTop />
-        <Route path="/prep-list/morning" exact component={MorningCount} />
-        <Route path="/prep-list/evening" exact component={EveningCount} />
-        <div style={{ marginBottom: "2rem" }}></div>
-        <Route path="/" exact component={DishList} />
-        <Route path="/statistics" exact component={Statistics} />
-        <Route path="/cooking" exact component={Cooking} />
-        <Route path="/show/:id" exact component={DishShow} />
-        <Route path="/edit/:id" exact component={DishEdit} />
-        <Route path="/add" exact component={DishAdd} />
-        <Route path="/delete/:id" exact component={DishDelete} />
-        <Route path="/record" exact component={RecordSales} />
-        <Route path="/parlevels" exact component={Parlevels} />
-        <Route path="/soldYesterday" exact component={SoldYesterday} />
-        <Route
-          path="/morning-preplist/submit"
-          exact
-          component={MorningDialog}
-        />
+        <Switch>
+          <Route path="/print" exact component={Prepsheet} />
+          <>
+            <Header />
+            <Drawer />
+            <ScrollToTop />
+            <main>
+              <Route path="/prep-list/morning" exact component={MorningCount} />
+              <Route path="/prep-list/evening" exact component={EveningCount} />
+              <div style={{ marginBottom: "2rem" }}></div>
+              <Route path="/" exact component={DishList} />
+              <Route path="/statistics" exact component={Statistics} />
+              <Route path="/cooking" exact component={Cooking} />
+              <Route path="/show/:id" exact component={DishShow} />
+              <Route path="/edit/:id" exact component={DishEdit} />
+              <Route path="/add" exact component={DishAdd} />
+              <Route path="/delete/:id" exact component={DishDelete} />
+              <Route path="/record" exact component={RecordSales} />
+              <Route path="/parlevels" exact component={Parlevels} />
+              <Route path="/soldYesterday" exact component={SoldYesterday} />
+              <Route
+                path="/morning-preplist/submit"
+                exact
+                component={MorningDialog}
+              />
+            </main>
+          </>
+        </Switch>
       </Router>
     </div>
   );
