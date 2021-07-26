@@ -31,9 +31,11 @@ const Prepsheet = (props) => {
 
   useEffect(() => {
     window.print();
-    setTimeout(() => {
-      history.push("/");
-    }, 800);
+    // setTimeout(() => {
+    //   history.push("/");
+    // }, 800);
+
+    // doesnt work on mobile __ prints home page
   }, []);
 
   useEffect(() => {

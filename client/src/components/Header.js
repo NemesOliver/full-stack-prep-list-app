@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header = ({ title, openDrawer }) => {
+export const Header = ({ title, openDrawer }) => {
   const AppBarText = title.title;
 
   // Styles
