@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { fetchDishes, fetchSoldItems, changeHeaderTitle } from "../../actions";
 
 // Utils
-import { useAllParlevels } from "../../utils/useParlevels";
+import { useParlevelsHook } from "../../utils/useParlevelsHook";
 
 // Material UI Core
 import {
@@ -62,7 +62,8 @@ const Parlevels = (props) => {
   const { dishes, soldItems, fetchDishes, fetchSoldItems, changeHeaderTitle } =
     props;
 
-  const [day, setDay] = useState(currentDay);
+  const [dayValue, setDayValue] = useState(currentDay);
+  const [parlevels, setDay] = useParlevelsHook(dishes, soldItems);
 
   useEffect(() => {
     fetchDishes();
@@ -74,15 +75,16 @@ const Parlevels = (props) => {
   }, [changeHeaderTitle]);
 
   const handleChange = (event) => {
+    setDayValue(event.target.value);
     setDay(event.target.value);
   };
 
-  const rows = useAllParlevels(dishes, soldItems).map((item) => {
-    const parlevel = item.parlevels.map(
-      (parlevel) => parlevel.day === day && parlevel.parlevel
-    );
+  const rows = parlevels.map(({ name, parlevel }) => {
+    if (!parlevel) {
+      return createData(name, 0);
+    }
 
-    return createData(item.name, parlevel);
+    return createData(name, parlevel);
   });
 
   function createData(name, parlevel) {
@@ -95,14 +97,14 @@ const Parlevels = (props) => {
         className={classes.dropdown}
         color="secondary"
         onChange={handleChange}
-        value={day}
+        value={dayValue}
         fullWidth
         label="Day"
         select
       >
-        {days.map((day) => (
-          <MenuItem key={day.value} value={day.value}>
-            {day.value}
+        {days.map(({ value }) => (
+          <MenuItem key={value} value={value}>
+            {value}
           </MenuItem>
         ))}
       </TextField>

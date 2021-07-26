@@ -7,9 +7,9 @@ export const useParlevelsHook = (dishesArr, soldItemsArr) => {
     weekday: "long",
   });
 
-  // useEffect(() => {
-  //   setDay(currentDay);
-  // }, [setDay, currentDay]);
+  useEffect(() => {
+    setDay(currentDay);
+  }, [setDay, currentDay]);
 
   // Helpers
   const dateToDayString = (date) =>
