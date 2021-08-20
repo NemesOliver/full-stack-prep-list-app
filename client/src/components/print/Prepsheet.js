@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { fetchDishes } from "../../actions";
-import history from "../../history";
+// import history from "../../history";
 
 // Material UI Core
 import {
@@ -70,7 +70,7 @@ const Prepsheet = (props) => {
                             <Typography>{dish.name}</Typography>
                           </TableCell>
                           <TableCell align="center">
-                            {dish.curentAmount}
+                            {dish.currentAmount}
                           </TableCell>
                           <TableCell align="center">
                             {dish.neededAmount}
