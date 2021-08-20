@@ -69,8 +69,12 @@ const Prepsheet = (props) => {
                           <TableCell component="th" scope="row">
                             <Typography>{dish.name}</Typography>
                           </TableCell>
-                          <TableCell align="center">15</TableCell>
-                          <TableCell align="center">33</TableCell>
+                          <TableCell align="center">
+                            {dish.curentAmount}
+                          </TableCell>
+                          <TableCell align="center">
+                            {dish.neededAmount}
+                          </TableCell>
                         </TableRow>
                       )
                   )}
