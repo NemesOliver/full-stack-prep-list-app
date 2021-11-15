@@ -15,6 +15,8 @@ import RecordSales from "./dishes/RecordSales";
 import MorningDialog from "./dishes/MorningDialog";
 import Prepsheet from "./print/Prepsheet";
 import Loader from "./Loader";
+
+// Main routes
 const DishList = lazy(() => import("./dishes/DishList"));
 const Statistics = lazy(() => import("./statistics/Statistics"));
 const DishEdit = lazy(() => import("./dishes/DishEdit"));
