@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 export const SoldYesterday = (props) => {
   const classes = useStyles();
   const { changeHeaderTitle, fetchSoldItems, soldItems } = props;
-  const [selectedDate, setSelectedDate] = useState(formatedYesterdayDate);
+  const [selectedDate, setSelectedDate] = useState("2021-11-15"); // Use "formatedYesterdayDate" in production
 
   useEffect(() => {
     changeHeaderTitle("History");
