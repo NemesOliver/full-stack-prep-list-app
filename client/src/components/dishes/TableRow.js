@@ -24,15 +24,14 @@ const TableRow = (props) => {
   };
 
   const recommendParlevels = () => {
-    const parlevelToInt = parseInt(amount);
-    if (!parlevel) {
-      return "No Data";
+    // const parlevelToInt = parseInt(amount);
+
+    if (amount === "No Data") {
+      return amount;
     }
 
     const recommended =
-      parlevelToInt +
-      calculatePercentage(parlevelToInt, buffer) -
-      dish.currentAmount;
+      amount + calculatePercentage(amount, buffer) - dish.currentAmount;
     return recommended < 0 ? 0 : recommended;
   };
 

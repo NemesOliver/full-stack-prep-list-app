@@ -31,6 +31,10 @@ export const useParlevelsHook = (dishesArr, soldItemsArr) => {
 
     const average = Math.round(totalSum / totalSoldPerDish.length);
 
+    if (!average) {
+      return "No Data";
+    }
+
     return average;
   };
 
